@@ -340,7 +340,7 @@ footer .tagline { width: min(100%, 880px); }
 .motion-control:hover { color:var(--uv); border-color:var(--uv); }
 .motion-control__glyph { width:22px; height:22px; display:grid; place-items:center; border:1px solid currentColor; border-radius:50%; font-size:.65rem; line-height:1; }
 .window-stage {
-  position:relative; width:min(100% - 2 * var(--gut), 1500px); height:clamp(520px,57vw,790px);
+  position:relative; width:min(calc(100% - var(--gut) - var(--gut)), 1500px); height:clamp(520px,57vw,790px);
   margin:0 auto; perspective:1200px; isolation:isolate;
 }
 .window-stage::before {
@@ -399,8 +399,9 @@ footer .tagline { width: min(100%, 880px); }
 .window-marquee span { padding:0 24px; color:rgba(232,232,232,.72); font:800 clamp(1.25rem,2.8vw,2.8rem)/1 var(--display); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
 .window-marquee span b { color:var(--uv); font-weight:900; }
 @keyframes marquee-travel { to { transform:translateX(-50%); } }
-.window-world.is-paused .film-window,.window-world.is-paused .window-marquee__track { animation-play-state:paused; }
 .window-world.is-paused .film-window { animation-play-state:paused; }
+.window-marquee.is-paused .window-marquee__track { animation-play-state:paused; }
+.motion-control:disabled { opacity:.48; cursor:not-allowed; }
 .window-viewer {
   width:min(94vw,1200px); max-width:none; max-height:92svh; padding:0; border:1px solid rgba(185,252,245,.28);
   background:#08070d; color:var(--bone); box-shadow:0 30px 140px rgba(0,0,0,.8);
@@ -874,21 +875,28 @@ footer .tagline { width: min(100%, 880px); }
 
 
   /* Monument-inspired moving windows: pointer parallax, pause control and accessible image viewer */
-  var world = $("#world"), stage = $("#window-stage"), motionButton = $("#motion-control"), motionLabel = $("#motion-label");
+  var world = $("#world"), stage = $("#window-stage"), motionButton = $("#motion-control"), motionLabel = $("#motion-label"), marquee = document.querySelector(".window-marquee");
   var windows = world ? [].slice.call(world.querySelectorAll(".film-window")) : [];
   var viewer = $("#window-viewer"), viewerImage = $("#window-viewer-image");
   var viewerKicker = $("#window-viewer-kicker"), viewerTitle = $("#window-viewer-title"), viewerText = $("#window-viewer-text");
   var viewerClose = $("#window-viewer-close");
   if (world && stage) {
-    if (reduce) world.classList.add("is-paused");
+    if (reduce) { world.classList.add("is-paused"); if (marquee) marquee.classList.add("is-paused"); }
     if (motionButton) {
-      if (reduce) { motionButton.setAttribute("aria-pressed","false"); motionLabel.textContent = "Play motion"; motionButton.querySelector(".motion-control__glyph").textContent = "▶"; }
-      motionButton.addEventListener("click", function () {
-        var paused = world.classList.toggle("is-paused");
-        motionButton.setAttribute("aria-pressed", String(!paused));
-        motionLabel.textContent = paused ? "Play motion" : "Pause motion";
-        motionButton.querySelector(".motion-control__glyph").textContent = paused ? "▶" : "Ⅱ";
-      });
+      if (reduce) {
+        motionButton.disabled = true;
+        motionButton.setAttribute("aria-pressed","false");
+        motionLabel.textContent = "Reduced motion";
+        motionButton.querySelector(".motion-control__glyph").textContent = "—";
+      } else {
+        motionButton.addEventListener("click", function () {
+          var paused = world.classList.toggle("is-paused");
+          if (marquee) marquee.classList.toggle("is-paused", paused);
+          motionButton.setAttribute("aria-pressed", String(!paused));
+          motionLabel.textContent = paused ? "Play motion" : "Pause motion";
+          motionButton.querySelector(".motion-control__glyph").textContent = paused ? "▶" : "Ⅱ";
+        });
+      }
     }
     if (!reduce) {
       var pointerFrame = 0;
