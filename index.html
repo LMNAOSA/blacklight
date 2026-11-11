@@ -306,6 +306,159 @@ footer .tagline { width: min(100%, 880px); }
   .hero.uv, .lt { animation: none; }
   .panel img { transition: none; }
 }
+
+/* MONUMENT-INSPIRED MOTION SYSTEM — drifting film windows, editorial scale, soft reveals */
+:root { --window-ink:#090812; --window-line:rgba(232,232,232,.18); }
+.window-world {
+  position:relative; z-index:3; overflow:hidden; isolation:isolate;
+  padding:clamp(74px,9vw,132px) 0 clamp(52px,7vw,100px);
+  background:
+    radial-gradient(ellipse at 52% 42%, rgba(76,58,104,.24), transparent 48%),
+    linear-gradient(180deg,#0d0a16 0%,#08070d 72%,#0b0813 100%);
+}
+.window-world::before {
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.18; z-index:-1;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:84px 84px; mask-image:linear-gradient(to bottom,transparent,black 18%,black 80%,transparent);
+}
+.window-world__head {
+  display:grid; grid-template-columns:minmax(0,1.15fr) minmax(240px,.65fr);
+  align-items:end; gap:30px; position:relative; z-index:2; margin-bottom:clamp(14px,3vw,42px);
+}
+.window-world__eyebrow { margin:0 0 16px; color:var(--uv); }
+.window-world__title {
+  margin:0; max-width:8ch; font-family:var(--display); font-size:clamp(4rem,10.5vw,11rem);
+  line-height:.78; letter-spacing:-.035em; text-transform:uppercase; font-weight:900;
+}
+.window-world__title em { color:var(--uv); font-style:normal; }
+.window-world__intro { max-width:34ch; margin:0 0 7px; color:var(--haze); font-size:clamp(1.05rem,1.35vw,1.28rem); }
+.window-world__tools { display:flex; align-items:center; justify-content:flex-end; gap:18px; margin-top:22px; }
+.motion-control {
+  display:inline-flex; align-items:center; gap:10px; padding:9px 0; border:0; border-bottom:1px solid var(--window-line);
+  color:var(--bone); background:transparent; font:500 .72rem var(--util); letter-spacing:.15em; text-transform:uppercase; cursor:pointer;
+}
+.motion-control:hover { color:var(--uv); border-color:var(--uv); }
+.motion-control__glyph { width:22px; height:22px; display:grid; place-items:center; border:1px solid currentColor; border-radius:50%; font-size:.65rem; line-height:1; }
+.window-stage {
+  position:relative; width:min(100% - 2 * var(--gut), 1500px); height:clamp(520px,57vw,790px);
+  margin:0 auto; perspective:1200px; isolation:isolate;
+}
+.window-stage::before {
+  content:""; position:absolute; width:min(52vw,700px); aspect-ratio:1; left:50%; top:48%;
+  transform:translate(-50%,-50%); border-radius:50%;
+  background:radial-gradient(circle,rgba(185,252,245,.09),rgba(185,252,245,.018) 45%,transparent 70%);
+  filter:blur(15px); pointer-events:none;
+}
+.window-stage__word {
+  position:absolute; z-index:0; left:50%; top:49%; transform:translate(-50%,-50%);
+  width:100%; text-align:center; pointer-events:none; font:900 clamp(4.2rem,12vw,13rem)/.76 var(--display);
+  letter-spacing:-.045em; text-transform:uppercase; color:rgba(232,232,232,.105);
+}
+.film-window {
+  --rot:0deg; --depth:1; --move-x:0px; --move-y:0px;
+  position:absolute; z-index:1; display:block; padding:0; border:1px solid rgba(232,232,232,.18);
+  background:#09080e; overflow:hidden; cursor:zoom-in; text-align:left;
+  box-shadow:0 28px 75px rgba(0,0,0,.42);
+  transform:translate3d(var(--move-x),var(--move-y),0) rotate(var(--rot));
+  transition:transform .42s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s,filter .5s;
+  animation:window-float var(--float-time,8s) ease-in-out var(--float-delay,0s) infinite;
+  will-change:transform;
+}
+.film-window img { display:block; width:100%; height:100%; object-fit:cover; filter:saturate(.78) contrast(1.04); transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .7s; }
+.film-window::after {
+  content:""; position:absolute; inset:35% 0 0; pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(7,6,12,.88));
+}
+.film-window__label {
+  position:absolute; z-index:1; left:14px; right:14px; bottom:12px; display:flex; justify-content:space-between; align-items:end; gap:10px;
+  color:#fff; font:500 .64rem/1.2 var(--util); letter-spacing:.15em; text-transform:uppercase; text-shadow:0 1px 10px #000;
+}
+.film-window__label b { color:var(--uv); font-weight:500; }
+.film-window:hover,.film-window:focus-visible {
+  z-index:8; border-color:var(--uv); box-shadow:0 34px 90px rgba(0,0,0,.65),0 0 28px rgba(185,252,245,.12);
+  animation-play-state:paused; transform:translate3d(var(--move-x),calc(var(--move-y) - 8px),0) rotate(0deg) scale(1.055);
+}
+.film-window:hover img,.film-window:focus-visible img { transform:scale(1.075); filter:saturate(1.12) contrast(1.05); }
+.window--a { left:2%; top:9%; width:23%; height:49%; --rot:-5deg; --depth:1.5; --float-time:9s; }
+.window--b { left:27%; top:34%; width:21%; height:33%; --rot:3deg; --depth:2.4; --float-delay:-2s; --float-time:7s; }
+.window--c { left:33%; top:1%; width:19%; height:30%; --rot:4deg; --depth:1.1; --float-delay:-4s; }
+.window--d { right:4%; top:8%; width:24%; height:48%; --rot:4deg; --depth:2; --float-delay:-1s; --float-time:10s; }
+.window--e { right:29%; bottom:4%; width:22%; height:35%; --rot:-3deg; --depth:1.7; --float-delay:-3s; }
+.window--f { left:8%; bottom:0; width:17%; height:27%; --rot:3deg; --depth:2.8; --float-delay:-5s; --float-time:7.5s; }
+.window--g { right:3%; bottom:0; width:18%; height:30%; --rot:-4deg; --depth:1.4; --float-delay:-2.7s; --float-time:8.5s; }
+@keyframes window-float { 0%,100% { translate:0 0; } 50% { translate:0 -15px; } }
+.window-world__foot {
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:18px;
+  margin-top:8px; padding-top:20px; border-top:1px solid var(--window-line);
+}
+.window-world__foot p { margin:0; }
+.window-world__foot .small { letter-spacing:.14em; text-transform:uppercase; font-size:.72rem; }
+.window-world__foot .window-count { color:var(--uv); }
+.window-marquee { overflow:hidden; padding:17px 0; border-top:1px solid var(--window-line); border-bottom:1px solid var(--window-line); background:#0b0912; }
+.window-marquee__track { display:flex; width:max-content; animation:marquee-travel 32s linear infinite; }
+.window-marquee span { padding:0 24px; color:rgba(232,232,232,.72); font:800 clamp(1.25rem,2.8vw,2.8rem)/1 var(--display); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
+.window-marquee span b { color:var(--uv); font-weight:900; }
+@keyframes marquee-travel { to { transform:translateX(-50%); } }
+.window-world.is-paused .film-window,.window-world.is-paused .window-marquee__track { animation-play-state:paused; }
+.window-world.is-paused .film-window { animation-play-state:paused; }
+.window-viewer {
+  width:min(94vw,1200px); max-width:none; max-height:92svh; padding:0; border:1px solid rgba(185,252,245,.28);
+  background:#08070d; color:var(--bone); box-shadow:0 30px 140px rgba(0,0,0,.8);
+}
+.window-viewer::backdrop { background:rgba(4,3,8,.88); backdrop-filter:blur(12px); }
+.window-viewer__inner { position:relative; display:grid; grid-template-columns:minmax(0,1.55fr) minmax(220px,.65fr); min-height:300px; }
+.window-viewer__image { display:block; width:100%; height:min(76vh,820px); object-fit:contain; background:#030306; }
+.window-viewer__copy { display:flex; flex-direction:column; justify-content:end; padding:clamp(22px,4vw,54px); }
+.window-viewer__copy .util { color:var(--uv); }
+.window-viewer__copy h2 { margin:8px 0 14px; font:900 clamp(2.4rem,5vw,5.8rem)/.86 var(--display); text-transform:uppercase; }
+.window-viewer__copy p:last-child { color:var(--haze); margin:0; }
+.window-viewer__close {
+  position:absolute; top:14px; right:14px; z-index:3; width:42px; height:42px; border:1px solid rgba(255,255,255,.35);
+  color:#fff; background:rgba(5,4,8,.7); font:400 1.35rem var(--util); cursor:pointer;
+}
+.window-viewer__close:hover { color:var(--uv); border-color:var(--uv); }
+.motion-ready .reveal { opacity:0; transform:translateY(34px); transition:opacity .8s ease,transform .9s cubic-bezier(.2,.7,.2,1); }
+.motion-ready .reveal.is-visible { opacity:1; transform:translateY(0); }
+@media (max-width:900px) {
+  .window-world__head { grid-template-columns:1fr; gap:18px; }
+  .window-world__tools { justify-content:flex-start; margin-top:8px; }
+  .window-stage { height:clamp(500px,80vw,680px); width:calc(100% - 24px); }
+  .window--a { left:1%; width:25%; }
+  .window--d { right:1%; width:25%; }
+}
+@media (max-width:650px) {
+  .window-world { padding-top:68px; }
+  .window-world__head { padding-left:20px; padding-right:20px; }
+  .window-world__title { font-size:clamp(4.1rem,17vw,7rem); }
+  .window-world__intro { max-width:38ch; }
+  .window-stage {
+    display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; width:auto; height:auto;
+    margin:30px 14px 0; perspective:none;
+  }
+  .window-stage::before,.window-stage__word { display:none; }
+  .film-window,.window--a,.window--b,.window--c,.window--d,.window--e,.window--f,.window--g {
+    position:relative; inset:auto; width:auto; height:auto; aspect-ratio:4/5; min-width:0; margin:0;
+    transform:none; animation:none; grid-column:span 1;
+  }
+  .window--b,.window--e { aspect-ratio:5/4; }
+  .window--c { grid-column:span 2; aspect-ratio:16/8; }
+  .window--d { aspect-ratio:4/5; }
+  .window--g { grid-column:span 2; aspect-ratio:16/8; }
+  .film-window__label { left:10px; right:10px; bottom:10px; font-size:.58rem; }
+  .window-world__foot { margin:22px 20px 0; }
+  .window-marquee { padding:13px 0; }
+  .window-viewer { width:94vw; max-height:88svh; overflow:auto; }
+  .window-viewer__inner { grid-template-columns:1fr; }
+  .window-viewer__image { height:auto; max-height:58svh; aspect-ratio:4/3; }
+  .window-viewer__copy { padding:22px; }
+  .window-viewer__copy h2 { font-size:3.2rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .film-window,.window-marquee__track { animation:none!important; }
+  .motion-ready .reveal { opacity:1; transform:none; transition:none; }
+  .film-window,.film-window img { transition:none!important; }
+}
+
 </style>
 <style>html{color-scheme:dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -327,6 +480,7 @@ footer .tagline { width: min(100%, 880px); }
 <header class="topbar" id="topbar">
   <a href="#top" aria-label="BLACKLIGHT, back to top"><svg class="topbar__logo" viewBox="71 55 2255 150" role="img" aria-label="BLACKLIGHT"><g fill="#e8e8e8"><path d="M71.051,197.131V62.912h45.877c32.986,0,48.342,13.08,48.342,35.071,0,13.649-8.531,24.834-21.612,28.436v.569c17.63,4.17,27.488,15.355,27.488,32.038,0,24.645-16.683,38.104-53.65,38.104h-46.446ZM104.227,117.7h11.753c12.512,0,18.579-5.119,18.579-15.166,0-9.479-6.066-14.219-19.526-14.219h-10.806v29.385ZM104.227,170.97h11.753c16.683,0,23.508-5.498,23.508-16.304,0-10.427-7.204-16.114-22.56-16.114h-12.702v32.418Z" /><path d="M305.368,62.912h33.176v104.835h55.735l-3.602,29.384h-85.309V62.912Z" /><path d="M601.677,62.912l48.911,133.271-.758.948h-36.588l-8.152-24.645h-46.825l-7.962,24.645h-36.02l-.758-.948,49.479-133.271h38.673ZM565.658,149.358h31.849l-7.204-22.18c-2.654-8.342-6.256-22.37-8.342-34.882h-.568c-2.275,12.512-5.877,26.54-8.531,35.071l-7.204,21.99Z" /><path d="M767.18,130.401c0-42.844,28.815-71.28,68.626-71.28,16.303,0,31.28,4.55,45.688,13.46l-4.739,32.038h-1.138c-11.185-9.668-23.697-14.787-36.398-14.787-22.18,0-36.588,15.925-36.588,40.001,0,24.455,14.597,40.379,37.157,40.379,12.512,0,25.403-5.118,36.588-14.787h1.137l4.55,31.85c-14.218,8.909-29.763,13.648-46.066,13.648-40.948,0-68.816-28.246-68.816-70.521Z" /><path d="M1091.546,119.406l50.048,76.588-.758,1.138h-37.915l-33.555-52.133-15.166,17.44v34.692h-33.176V62.912h33.176v21.611c0,11.185-.758,26.351-1.517,38.862h.569c7.204-10.427,13.27-18.768,20.095-27.108l27.868-33.365h37.915l.569,1.137-48.152,55.356Z" /></g><g fill="#b9fcf5" transform="translate(1207.331 0)"><path d="M71.282,62.913h33.176v104.835h55.735v29.384h-88.911V62.913Z" /><path d="M300.815,62.913h33.176v134.219h-33.176V62.913Z" /><path d="M479.919,130.78c0-42.844,30.522-71.659,70.901-71.659,21.232,0,38.294,6.635,51.375,14.598l-5.688,31.469h-1.137c-12.133-9.289-25.782-15.924-41.896-15.924-24.266,0-38.104,16.872-38.104,41.517,0,24.455,13.08,40.569,33.934,40.569,7.772,0,14.787-1.706,21.991-5.308v-20.475h-23.318v-22.749h53.081v63.318c-20.474,11.563-36.777,14.786-53.46,14.786-41.706,0-67.679-28.814-67.679-70.143Z" /><path d="M837.226,62.913h32.986v134.219h-32.986v-53.271h-51.186v53.271h-33.176V62.913h33.176v52.133h51.186v-52.133Z" /><path d="M1119.271,62.913v30.521h-38.294v103.697h-32.985v-103.697h-38.295v-30.521h109.574Z" /></g></svg></a>
   <nav aria-label="Sections">
+    <a href="#world" class="hide-s">World</a>
     <a href="#trailer" class="hide-s">Trailer</a>
     <a href="#story" class="hide-s">Story</a>
     <a href="#characters" class="hide-s">Characters</a>
@@ -363,6 +517,54 @@ footer .tagline { width: min(100%, 880px); }
     </div>
   </div>
 </section>
+
+
+<section class="window-world" id="world" aria-labelledby="world-title">
+  <div class="window-world__head wrap">
+    <div>
+      <p class="window-world__eyebrow util">BLACKLIGHT / ANDAMOOKA / SOUTH AUSTRALIA</p>
+      <h2 class="window-world__title" id="world-title">LOOK<br>CLOSER<span>.</span></h2>
+    </div>
+    <div>
+      <p class="window-world__intro">A town built on secrets. A world that shifts with the light. Step inside the fragments that make BLACKLIGHT.</p>
+      <div class="window-world__tools">
+        <button class="motion-control" id="motion-control" type="button" aria-pressed="true">
+          <span class="motion-control__glyph" aria-hidden="true">Ⅱ</span><span id="motion-label">Pause motion</span>
+        </button>
+        <span class="small">Select a frame to explore</span>
+      </div>
+    </div>
+  </div>
+  <div class="window-stage" id="window-stage" aria-label="Moving windows into the world of BLACKLIGHT">
+    <p class="window-stage__word" aria-hidden="true">BENEATH<br>THE SURFACE</p>
+    <button class="film-window window--a" type="button" data-depth="1.3" data-kicker="THE TOWN" data-title="A place of its own" data-copy="Andamooka. Red earth, long shadows and a town shaped by what lies beneath it." aria-label="Explore the town of Andamooka">
+      <img src="assets/street-day.jpg" alt="Andamooka's red dirt main street at dusk" loading="lazy"><span class="film-window__label"><b>01 / THE TOWN</b><span>AT DUSK</span></span>
+    </button>
+    <button class="film-window window--b" type="button" data-depth="2.1" data-kicker="THE GHOST" data-title="Everyone has a price" data-copy="Taj is the town's unofficial power broker. Part criminal, part folk hero. Easy to like. Hard to escape." aria-label="Explore the Ghost, Taj">
+      <img src="assets/taj.jpg" alt="Portrait of Taj, the Ghost" loading="lazy"><span class="film-window__label"><b>02 / THE GHOST</b><span>TAJ</span></span>
+    </button>
+    <button class="film-window window--c" type="button" data-depth="1" data-kicker="AFTER DARK" data-title="The other side of town" data-copy="By day the town works its claims. By night it settles its debts." aria-label="Explore Andamooka after dark">
+      <img src="assets/street-night.jpg" alt="Andamooka street at night" loading="lazy"><span class="film-window__label"><b>03 / AFTER DARK</b><span>THE DEBTS</span></span>
+    </button>
+    <button class="film-window window--d" type="button" data-depth="1.8" data-kicker="THE SON" data-title="Two heroes" data-copy="A teenager caught between the two men he admires most. Until one terrible choice changes everything." aria-label="Explore the Son">
+      <img src="assets/son.jpg" alt="Portrait of the Son" loading="lazy"><span class="film-window__label"><b>04 / THE SON</b><span>THE CHOICE</span></span>
+    </button>
+    <button class="film-window window--e" type="button" data-depth="2.5" data-kicker="THE FATHER" data-title="One find from everything" data-copy="A charismatic miner chasing the big strike. He answers to nobody, but leans on Taj more than he admits." aria-label="Explore the Father">
+      <img src="assets/father.jpg" alt="Portrait of the Father" loading="lazy"><span class="film-window__label"><b>05 / THE FATHER</b><span>THE FIND</span></span>
+    </button>
+    <button class="film-window window--f" type="button" data-depth="2.8" data-kicker="THE DIGGINGS" data-title="A world underneath" data-copy="Hand-cut shafts, white clay and rust-red rock. The ground keeps its own secrets." aria-label="Explore the opal diggings">
+      <img src="assets/mine.jpg" alt="A cut mine face in Andamooka" loading="lazy"><span class="film-window__label"><b>06 / THE DIGGINGS</b><span>BELOW</span></span>
+    </button>
+    <button class="film-window window--g" type="button" data-depth="1.5" data-kicker="DEEP TIME" data-title="Before the town" data-copy="Long before the miners, this country sat beneath an inland sea. The colour they chase is part of that ancient story." aria-label="Explore the ancient inland sea">
+      <img src="assets/sea.jpg" alt="Concept art of an ancient inland sea" loading="lazy"><span class="film-window__label"><b>07 / DEEP TIME</b><span>100M YEARS</span></span>
+    </button>
+  </div>
+  <div class="window-world__foot wrap">
+    <p class="small">A closer look at the world of BLACKLIGHT</p>
+    <p class="small window-count">07 FRAMES <span aria-hidden="true">↗</span></p>
+  </div>
+</section>
+<div class="window-marquee" aria-hidden="true"><div class="window-marquee__track"><span>THE TOWN REMEMBERS <b>✳</b></span><span>THE EARTH KEEPS SECRETS <b>✳</b></span><span>NOTHING STAYS BURIED <b>✳</b></span><span>THE TOWN REMEMBERS <b>✳</b></span><span>THE EARTH KEEPS SECRETS <b>✳</b></span><span>NOTHING STAYS BURIED <b>✳</b></span></div></div>
 
 <section class="trailer cut" id="trailer" aria-labelledby="t-h">
   <div class="wrap">
@@ -549,6 +751,19 @@ footer .tagline { width: min(100%, 880px); }
 </section>
 </main>
 
+<dialog class="window-viewer" id="window-viewer" aria-labelledby="window-viewer-title">
+  <div class="window-viewer__inner">
+    <button class="window-viewer__close" id="window-viewer-close" type="button" aria-label="Close image viewer">×</button>
+    <img class="window-viewer__image" id="window-viewer-image" src="" alt="">
+    <div class="window-viewer__copy">
+      <p class="util" id="window-viewer-kicker"></p>
+      <h2 id="window-viewer-title"></h2>
+      <p id="window-viewer-text"></p>
+    </div>
+  </div>
+</dialog>
+
+
 <footer>
   <div class="wrap">
     <svg class="tagline" viewBox="0 0 2288 70" role="img" aria-label="Some colours don't wash out."><use href="#tag-art" width="2288" height="70"/></svg>
@@ -656,6 +871,80 @@ footer .tagline { width: min(100%, 880px); }
       new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { var p = hv.play(); if (p && p.catch) p.catch(function () {}); } else { hv.pause(); } }); }, { threshold: .2 }).observe(hv);
     }
   }
+
+
+  /* Monument-inspired moving windows: pointer parallax, pause control and accessible image viewer */
+  var world = $("#world"), stage = $("#window-stage"), motionButton = $("#motion-control"), motionLabel = $("#motion-label");
+  var windows = world ? [].slice.call(world.querySelectorAll(".film-window")) : [];
+  var viewer = $("#window-viewer"), viewerImage = $("#window-viewer-image");
+  var viewerKicker = $("#window-viewer-kicker"), viewerTitle = $("#window-viewer-title"), viewerText = $("#window-viewer-text");
+  var viewerClose = $("#window-viewer-close");
+  if (world && stage) {
+    if (reduce) world.classList.add("is-paused");
+    if (motionButton) {
+      if (reduce) { motionButton.setAttribute("aria-pressed","false"); motionLabel.textContent = "Play motion"; motionButton.querySelector(".motion-control__glyph").textContent = "▶"; }
+      motionButton.addEventListener("click", function () {
+        var paused = world.classList.toggle("is-paused");
+        motionButton.setAttribute("aria-pressed", String(!paused));
+        motionLabel.textContent = paused ? "Play motion" : "Pause motion";
+        motionButton.querySelector(".motion-control__glyph").textContent = paused ? "▶" : "Ⅱ";
+      });
+    }
+    if (!reduce) {
+      var pointerFrame = 0;
+      stage.addEventListener("pointermove", function (event) {
+        if (event.pointerType === "touch" || world.classList.contains("is-paused")) return;
+        var bounds = stage.getBoundingClientRect();
+        var x = ((event.clientX - bounds.left) / bounds.width - .5) * 2;
+        var y = ((event.clientY - bounds.top) / bounds.height - .5) * 2;
+        if (pointerFrame) cancelAnimationFrame(pointerFrame);
+        pointerFrame = requestAnimationFrame(function () {
+          windows.forEach(function (card) {
+            var depth = parseFloat(card.getAttribute("data-depth")) || 1;
+            card.style.setProperty("--move-x", (x * depth * 13).toFixed(1) + "px");
+            card.style.setProperty("--move-y", (y * depth * 10).toFixed(1) + "px");
+          });
+        });
+      }, { passive:true });
+      stage.addEventListener("pointerleave", function () {
+        windows.forEach(function (card) { card.style.setProperty("--move-x","0px"); card.style.setProperty("--move-y","0px"); });
+      });
+    }
+    windows.forEach(function (card) {
+      card.addEventListener("click", function () {
+        if (!viewer || typeof viewer.showModal !== "function") return;
+        var image = $("img",card);
+        viewerImage.src = image.currentSrc || image.src;
+        viewerImage.alt = image.alt;
+        viewerKicker.textContent = card.getAttribute("data-kicker") || "BLACKLIGHT";
+        viewerTitle.textContent = card.getAttribute("data-title") || "BLACKLIGHT";
+        viewerText.textContent = card.getAttribute("data-copy") || "";
+        viewer.showModal();
+        viewerClose.focus();
+      });
+    });
+    if (viewerClose && viewer) viewerClose.addEventListener("click", function () { viewer.close(); });
+    if (viewer) viewer.addEventListener("click", function (event) {
+      if (event.target === viewer) viewer.close();
+    });
+  }
+
+  /* Scroll reveals stay progressive but all content remains available without JavaScript */
+  if (!reduce && "IntersectionObserver" in window) {
+    var revealTargets = [].slice.call(document.querySelectorAll(".beat,.chars__head,.panel,.setting__grid,.hut__grid,.sea__in,.close__grid,.trailer__head,.frame,.wide,.street"));
+    revealTargets.forEach(function (el) { el.classList.add("reveal"); });
+    document.documentElement.classList.add("motion-ready");
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold:.12, rootMargin:"0px 0px -4% 0px" });
+    revealTargets.forEach(function (el) { revealObserver.observe(el); });
+  }
+
 
   /* trailer */
   var play = $("#play"), note = $("#tnote"), vid = $("#vid"), slate = $("#slate");
