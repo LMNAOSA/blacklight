@@ -1,829 +1,70 @@
 <!doctype html>
-<html lang="en-AU">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="BLACKLIGHT, a feature film in pre-production. An Australian crime drama set in the opal-mining town of Andamooka, South Australia.">
-<meta property="og:title" content="BLACKLIGHT">
-<meta property="og:description" content="BLACKLIGHT, a feature film in pre-production. An Australian crime drama set in the opal-mining town of Andamooka, South Australia.">
-<meta name="theme-color" content="#0b0813">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<title>BLACKLIGHT</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Jost:wght@300;400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
-<style>
-/* Layout concept: a descent. Sun-bleached surface at the top, slanted cuts like shaft walls
-   between sections, a UV torch that restores colour wherever it lands, an opal-fire close.
-   Fixed rails carry the depth gauge and Andamooka's local time. */
-@property --r { syntax: "<length>"; inherits: true; initial-value: 46vmax; }
-:root {
-  --void: #0b0813;      /* the logo's violet-black */
-  --bone: #e8e8e8;      /* BLACK letters */
-  --uv: #b9fcf5;        /* LIGHT letters */
-  --haze: #a8a2c2;      /* secondary text, lilac-grey from the tagline */
-  --dirt: #a8421f;      /* Andamooka surface, from the photo */
-  --opal: #ff5fa8;      /* play-of-colour, used only near the end */
-  --display: "Big Shoulders Display", "Oswald", Impact, "Arial Narrow", sans-serif;
-  --body: "Newsreader", Georgia, "Times New Roman", serif;
-  --util: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
-  --gut: clamp(16px, 6vw, 120px);
-  --cut: clamp(28px, 5.5vw, 96px);
-  color-scheme: dark;
-}
-*, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--void); color: var(--bone);
-  font-family: var(--body); font-size: 1.125rem; line-height: 1.55;
-  overflow-x: hidden; -webkit-font-smoothing: antialiased;
-}
-a { color: inherit; }
-:focus-visible { outline: 2px solid var(--uv); outline-offset: 3px; }
-.wrap {
-  padding-left: max(var(--gut), env(safe-area-inset-left, 0px));
-  padding-right: max(var(--gut), env(safe-area-inset-right, 0px));
-}
-.util { font-family: var(--util); font-weight: 400; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; }
+<html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#09090d"><meta name="description" content="BLACKLIGHT — an Australian feature film in development. Explore the world, characters and story, and request the full treatment."><meta property="og:title" content="BLACKLIGHT"><meta property="og:description" content="True colours don't stay buried forever."><link rel="icon" href="favicon.svg" type="image/svg+xml"><title>BLACKLIGHT — True colours don't stay buried forever</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""><style>
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap');
+:root{--black:#09090d;--coal:#131217;--warm:#ded5ca;--dust:#a69a91;--uv:#b7f9ed;--edge:rgba(226,210,192,.19);--side:clamp(22px,6.5vw,110px)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--black);color:#f0e9e2;font:400 clamp(1rem,1.15vw,1.15rem)/1.55 "Newsreader",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}img{display:block;max-width:100%}a{color:inherit}button,input,select,textarea{font:inherit}button{cursor:pointer}h1,h2,h3,h4,.caps,.btn-premium,.utility{font-family:"Jost",Arial,sans-serif;text-transform:uppercase;letter-spacing:.115em}h1,h2,h3,h4{font-weight:500;text-wrap:balance}h2{font-size:clamp(2.5rem,7vw,7.6rem);line-height:1.03;letter-spacing:.105em;margin:0}h3{line-height:1.12}p{margin:0 0 1em}::selection{background:#a2e7dc;color:#0a0a0e}:focus-visible{outline:2px solid var(--uv);outline-offset:5px}.wrap{width:min(1440px,100%);margin-inline:auto;padding-inline:var(--side)}.muted{color:var(--dust)}.utility{font-size:.72rem;letter-spacing:.23em}.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;top:-80px;left:20px;z-index:100;background:var(--uv);color:#09090d;padding:8px 14px}.skip:focus{top:20px}
+.mini-nav{position:absolute;z-index:60;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:clamp(20px,3.5vw,42px) var(--side);pointer-events:none}.mini-nav a{pointer-events:auto;text-decoration:none;font:500 .8rem "Jost";text-transform:uppercase;letter-spacing:.2em}.mini-nav__home{opacity:.85}.mini-nav__skip{color:#e4dcd6;opacity:.85;border-bottom:1px solid rgba(228,220,214,.38);padding-bottom:3px}
+.hero{min-height:100svh;position:relative;display:flex;align-items:end;isolation:isolate;background:#09080c;overflow:hidden}.hero-bg{position:absolute;inset:0;background:url('assets/hero.jpg') 50% 15%/cover no-repeat;filter:saturate(.72) contrast(1.14) brightness(.58);z-index:-3}.hero-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#09090d 1%,rgba(9,9,13,.65) 30%,rgba(9,9,13,.09) 65%,rgba(9,9,13,.38) 100%)}.hero-ghost{position:absolute;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(90deg,#020207 0%,rgba(3,2,6,.93) 15%,rgba(3,2,6,.79) 28%,rgba(3,2,6,.36) 43%,transparent 57%),radial-gradient(ellipse 30% 60% at 21% 33%,#010103 0%,rgba(1,1,3,.8) 48%,transparent 100%)}.hero-inner{width:100%;padding-top:30vh;padding-bottom:clamp(70px,10vh,150px)}.wordmark{width:min(860px,83vw);margin-bottom:clamp(18px,3vw,34px)}.wordmark svg{display:block;width:100%;height:auto;overflow:visible}.hero-line{font:400 clamp(1.2rem,2vw,1.9rem)/1.3 "Newsreader";max-width:36ch;color:#e0d6cf;font-style:italic;letter-spacing:.005em}.hero-controls{margin-top:clamp(26px,4vw,56px);display:flex;gap:26px;align-items:center;flex-wrap:wrap}.text-link{font:500 .76rem "Jost";letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--dust);padding-bottom:8px}.text-link:hover{color:var(--uv);border-color:var(--uv)}.hero-disclaimer{font:400 .78rem "Jost";letter-spacing:.14em;text-transform:uppercase;color:#a69c96}
+.threshold{padding-block:clamp(110px,16vw,230px);background:radial-gradient(ellipse at 50% 100%,rgba(99,51,34,.24),transparent 62%),#0b0a0d;text-align:center}.threshold h2{font-size:clamp(3.6rem,11vw,12rem)}.threshold p{margin:28px auto 0;max-width:38ch;font-size:clamp(1.25rem,2.2vw,1.9rem);color:#c2b7ae;font-style:italic}.threshold .arrow{font:300 2.2rem "Jost";margin-top:28px;color:var(--uv);display:inline-block}
+.journey{background:#09090d;position:relative}.journey-track{height:410svh;position:relative}.journey-screen{position:sticky;top:0;height:100svh;isolation:isolate;overflow:hidden;background:#0a090d}.journey-map,.journey-arrival,.journey-fade,.journey-vignette{position:absolute;inset:0}.journey-map{z-index:0;filter:saturate(.65) sepia(.18) contrast(1.12) brightness(.64);background:url('assets/street-day.jpg') center/cover}.journey-map .leaflet-container{background:#1e1b1d!important}.journey-map .leaflet-control-attribution{background:rgba(8,8,11,.75)!important;color:#e5dfd9!important;font:10px "Jost"!important}.journey-map .leaflet-control-attribution a{color:#d9ddd5!important}.journey-fade{z-index:1;pointer-events:none;background:#08080b;opacity:0}.journey-arrival{z-index:2;background:url('assets/setting/underworld-arrival.webp') center 48%/cover no-repeat;opacity:1;filter:brightness(.7) saturate(.75);transform:scale(1)}.journey.is-playing .journey-arrival{opacity:0}.journey-arrival::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,5,9,.88),transparent 72%),linear-gradient(90deg,rgba(6,5,9,.53),transparent 78%)}.journey-vignette{z-index:3;background:radial-gradient(ellipse at center,transparent 27%,rgba(0,0,0,.38) 100%);pointer-events:none}.journey-guidance{position:absolute;z-index:4;left:var(--side);top:clamp(30px,6vh,70px);font:500 .75rem "Jost";letter-spacing:.2em;text-transform:uppercase;color:rgba(240,233,226,.92)}.journey-guidance span{display:block;margin-top:8px;color:#b7a7a0;font-size:.7rem}.journey-arrival-copy{position:absolute;z-index:5;left:var(--side);right:var(--side);bottom:clamp(46px,11vh,130px);width:min(810px,calc(100% - var(--side) - var(--side)));opacity:1;transform:none}.journey.is-playing .journey-arrival-copy{opacity:0}.journey-arrival-copy h2{font-size:clamp(3.1rem,9.7vw,10rem);margin-bottom:28px}.journey-arrival-copy p{font-size:clamp(1.24rem,2.2vw,1.85rem);line-height:1.3;font-style:italic;max-width:37ch}.journey-progress{position:absolute;z-index:6;bottom:0;left:0;width:100%;height:2px;background:rgba(255,255,255,.12)}.journey-progress span{display:block;background:var(--uv);height:100%;width:0;box-shadow:0 0 20px rgba(178,255,242,.6)}.journey.is-static .journey-track{height:100svh}.journey.is-static .journey-map,.journey.is-static .journey-guidance,.journey.is-static .journey-progress{display:none}
+.characters{padding-block:clamp(98px,12vw,180px);background:linear-gradient(#0b0a0d,#141014 60%,#09090d);position:relative}.characters-header{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:clamp(40px,5vw,80px)}.characters-header h2{font-size:clamp(2.4rem,5.7vw,6rem);max-width:15ch}.characters-header p{max-width:29ch;font-style:italic;font-size:1.35rem;color:#bdb2ad}.portrait-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(12px,1.8vw,24px);align-items:start}.portrait-card{grid-column:span 2;background:#171319;border:1px solid var(--edge);position:relative;overflow:hidden;transition:background .45s,border-color .45s,box-shadow .45s,transform .45s}.portrait-card:nth-child(4){grid-column:2/span 2}.portrait-card:nth-child(5){grid-column:4/span 2}.portrait-card.is-open{background:#0c0d16;border-color:rgba(182,250,235,.65);box-shadow:0 12px 60px rgba(0,0,0,.45),inset 0 0 40px rgba(59,93,100,.12)}.portrait-card--girl.is-open{border-color:var(--uv);box-shadow:0 0 34px rgba(91,213,209,.22),inset 0 0 28px rgba(95,229,218,.1)}.characters.is-exposed .portrait-card:not(.portrait-card--girl){box-shadow:inset 0 0 20px rgba(127,108,174,.14);border-color:rgba(138,121,177,.45)}.portrait-card__trigger{width:100%;display:block;text-align:left;border:0;padding:0;background:none;color:inherit}.portrait-card__image{height:clamp(280px,32vw,470px);overflow:hidden;position:relative;background:linear-gradient(140deg,#695144,#161116)}.portrait-card__image img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;filter:saturate(.72) contrast(1.03);transition:filter .65s,transform .85s}.portrait-card.is-open .portrait-card__image img{filter:saturate(.32) contrast(1.27) brightness(.52);transform:scale(1.05)}.portrait-card__image::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(13,10,15,.72),transparent 55%)}.portrait-card__surface{min-height:120px;padding:clamp(17px,2vw,27px);display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center}.portrait-card__name{font:500 clamp(1.04rem,1.7vw,1.5rem) "Jost";letter-spacing:.13em;text-transform:uppercase}.portrait-card__sign{font:300 2rem "Jost";color:var(--uv);line-height:1}.portrait-card__surface p{grid-column:1/-1;margin:0;font-size:1.04rem;line-height:1.3;font-style:italic;color:#beb2aa}.portrait-card__depth{max-height:0;opacity:0;overflow:hidden;transition:max-height .55s cubic-bezier(.2,.7,.2,1),opacity .35s}.portrait-card.is-open .portrait-card__depth{max-height:510px;opacity:1}.portrait-card__depth-inner{padding:5px clamp(17px,2vw,27px) 28px;border-top:1px solid rgba(164,226,222,.25);background:radial-gradient(ellipse at 90% 100%,rgba(65,41,83,.35),transparent 70%)}.portrait-card__depth-inner h3{font:500 .7rem "Jost";color:var(--uv);letter-spacing:.24em;margin:22px 0 9px}.portrait-card__depth-inner p{font-size:1.08rem;line-height:1.4;color:#d5d0d8;margin:0 0 13px}.portrait-card__depth-inner dl{margin:18px 0 0;display:grid;grid-template-columns:1fr;gap:10px}.portrait-card__depth-inner dt{font:500 .67rem "Jost";letter-spacing:.14em;text-transform:uppercase;color:#a6b9b9}.portrait-card__depth-inner dd{margin:3px 0 0;font:400 1rem "Newsreader";color:#eee5df}.portrait-foot{color:#958d91;font:400 .75rem "Jost";letter-spacing:.11em;text-transform:uppercase;margin-top:25px}.portrait-foot em{font-style:normal;color:var(--uv)}
+.story{background:linear-gradient(180deg,#0a090c,#291718 42%,#0a090e);padding-block:clamp(110px,14vw,220px)}.story-head{margin-bottom:clamp(65px,10vw,130px)}.story-head h2{max-width:10ch}.story-head p{margin-top:20px;max-width:34ch;color:#c2b4b0;font-style:italic;font-size:1.28rem}.story-body{display:grid;grid-template-columns:70px minmax(0,750px);gap:clamp(20px,6vw,100px);justify-content:center}.depth-track{position:sticky;top:18vh;height:65vh;align-self:start;display:flex;flex-direction:column;align-items:center;justify-content:space-between;font:400 .73rem "Jost";letter-spacing:.12em;color:#b8a7a0}.depth-track__line{width:1px;flex:1;margin:15px 0;position:relative;background:rgba(239,229,220,.25)}.depth-track__fill{display:block;width:2px;background:var(--uv);height:0;position:absolute;top:0;left:-.5px;transition:height .16s linear;box-shadow:0 0 18px var(--uv)}.story-beat{min-height:76vh;display:flex;flex-direction:column;justify-content:center;padding-block:clamp(46px,7vw,100px);border-bottom:1px solid rgba(227,211,198,.13)}.story-beat:last-child{border-bottom:0}.story-beat h3{font-size:clamp(2rem,4vw,4.6rem);margin:0 0 26px;opacity:var(--lum,.57);transition:text-shadow .15s,color .15s;letter-spacing:.095em;color:#f0eae4;text-shadow:0 0 calc(24px * var(--glow,0)) rgba(180,247,237,.72)}.story-beat p{max-width:37ch;font-size:clamp(1.16rem,1.65vw,1.45rem);line-height:1.42;color:#d3c5bf}.story-beat[data-key=light] h3{color:#cbfaf4}.story-advisory{font:400 .85rem "Newsreader";color:#93868b;max-width:55ch;margin-top:40px}
+.treatment{padding-block:clamp(120px,14vw,210px);background:radial-gradient(ellipse at 12% 10%,rgba(88,62,49,.24),transparent 56%),linear-gradient(140deg,#111013,#09090d 70%);border-top:1px solid #342d2e}.treatment-head{display:grid;grid-template-columns:1fr minmax(300px,.7fr);gap:8vw;align-items:end;margin-bottom:62px}.treatment-head h2{font-size:clamp(3rem,7.3vw,8rem)}.treatment-head p{font-size:clamp(1.25rem,1.8vw,1.55rem);line-height:1.3;color:#c5b9b2;font-style:italic}.treatment-layout{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1fr);gap:clamp(50px,9vw,160px);align-items:start}.treatment-description{font-size:clamp(1.2rem,1.6vw,1.5rem);color:#d3c8c0;max-width:26ch}.treatment-form{background:#161317;border:1px solid #4b4140;padding:clamp(22px,3.4vw,50px);box-shadow:0 26px 70px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.1)}.treatment-form label{font:500 .68rem "Jost";text-transform:uppercase;letter-spacing:.16em;color:#c7bbb4;display:block;margin-bottom:10px}.treatment-form :is(input,select,textarea){border-radius:0;width:100%;display:block;background:#0e0e12;color:#f4ede5;border:1px solid #433938;padding:15px 16px;font:400 1.03rem "Jost";margin-bottom:24px;min-height:50px}.treatment-form textarea{min-height:110px;resize:vertical}.form-pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}.btn-premium{border:1px solid rgba(243,218,185,.55);border-radius:3px;min-height:58px;padding:18px 26px;background:linear-gradient(180deg,#69584a,#392b26 50%,#251d1d);box-shadow:inset 0 1px rgba(255,244,219,.32),inset 0 -3px rgba(0,0,0,.4),0 12px 25px rgba(0,0,0,.35);color:#fff4e5;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:24px;font-size:.78rem;font-weight:500;transition:transform .18s,box-shadow .18s,background .18s}.btn-premium:hover{transform:translateY(-2px);box-shadow:inset 0 1px rgba(255,244,219,.47),inset 0 -3px rgba(0,0,0,.4),0 18px 32px rgba(0,0,0,.5);background:linear-gradient(180deg,#806c58,#453329 50%,#2b2220)}.btn-premium:active{transform:translateY(2px);box-shadow:inset 0 3px 8px rgba(0,0,0,.65),0 3px 6px rgba(0,0,0,.2)}.form-note{font-size:.88rem;color:#a79a97;margin:18px 0 0}.email-copy{margin-top:25px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font:.85rem "Jost";color:#b5aaa7}.email-copy button{background:transparent;color:var(--uv);border:0;border-bottom:1px solid currentColor;padding:3px}.email-copy code{font:.81rem "Jost";word-break:break-word}.treatment-status{min-height:1.4em;color:var(--uv);font:.78rem "Jost";margin-top:14px}.endcap{background:#08080b;padding-block:40px;border-top:1px solid #302a2c}.endcap .wrap{display:flex;justify-content:space-between;gap:25px;align-items:center}.endcap span{font:400 .7rem "Jost";letter-spacing:.13em;text-transform:uppercase;color:#9f9597}
+@media(max-width:930px){.characters-header,.treatment-head,.treatment-layout{grid-template-columns:1fr;display:grid;gap:26px}.characters-header{justify-content:start}.portrait-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.portrait-card,.portrait-card:nth-child(4),.portrait-card:nth-child(5){grid-column:span 1}.portrait-card:nth-child(5){grid-column:1/-1;width:min(55%,450px);justify-self:center}.portrait-card__image{height:clamp(280px,48vw,480px)}}
+@media(max-width:620px){:root{--side:20px}.mini-nav{padding:22px var(--side)}.mini-nav__skip{font-size:.66rem}.hero{min-height:100svh}.hero-bg{background-position:50% top;background-size:auto 74%;background-repeat:no-repeat}.hero-ghost{background:linear-gradient(90deg,#020207 0%,rgba(3,2,6,.95) 23%,rgba(3,2,6,.75) 34%,transparent 58%),radial-gradient(ellipse 46% 38% at 22% 27%,#010103 0%,transparent 100%)}.hero-inner{padding-top:50vh;padding-bottom:60px}.wordmark{width:100%;margin-bottom:12px}.hero-line{font-size:1.24rem}.hero-controls{gap:16px;margin-top:24px}.threshold{padding-block:100px}.threshold h2{font-size:clamp(3.25rem,15vw,6rem)}.threshold p{font-size:1.3rem}.journey-track{height:290svh}.journey-guidance{top:24px;font-size:.61rem}.journey-arrival{background-position:52% center}.journey-arrival-copy{bottom:6vh}.journey-arrival-copy h2{font-size:clamp(3.1rem,14vw,5rem);margin-bottom:20px}.journey-arrival-copy p{font-size:1.15rem;max-width:28ch}.characters{padding-block:95px}.characters-header h2{font-size:clamp(2.25rem,9vw,4rem)}.portrait-grid{display:grid;grid-template-columns:1fr;gap:18px}.portrait-card,.portrait-card:nth-child(4),.portrait-card:nth-child(5){grid-column:auto;width:100%}.portrait-card__image{height:clamp(350px,105vw,560px)}.portrait-card__surface{min-height:108px}.story{padding-block:100px}.story-body{grid-template-columns:24px minmax(0,1fr);gap:17px}.depth-track{top:12vh;height:64vh;font-size:.6rem}.story-beat{min-height:65vh;padding-block:65px}.story-beat h3{font-size:clamp(1.72rem,7.1vw,3rem);letter-spacing:.06em}.story-beat p{font-size:1.11rem}.treatment{padding-block:110px}.treatment-head h2{font-size:clamp(2.8rem,12vw,5rem)}.treatment-form{padding:20px}.form-pair{grid-template-columns:1fr;gap:0}.btn-premium{width:100%}.endcap .wrap{align-items:start;flex-direction:column}.journey.is-static .journey-track{height:100svh}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.story-beat h3{opacity:1!important;text-shadow:none!important}}
 
-/* type */
-.h-xl {
-  font-family: var(--display); font-weight: 900; text-transform: uppercase;
-  font-size: clamp(3rem, 10.5vw, 10.5rem); line-height: .86; letter-spacing: -.005em;
-  margin: 0; text-wrap: balance;
+/* BLACKLIGHT / reveal v3: the photograph, not just the words, expands. */
+.portrait-grid{grid-auto-flow:row;align-items:start}
+.portrait-card{min-width:0;transition:background .4s,border-color .4s,box-shadow .4s}
+.portrait-card.is-open{grid-column:1/-1!important;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);column-gap:0;border-color:rgba(151,172,201,.55);background:#0d0e15;box-shadow:0 18px 55px #0009,0 0 20px rgba(91,115,168,.1),inset 0 0 0 1px rgba(177,201,225,.12)}
+.portrait-card.is-open .portrait-card__trigger{min-width:0;align-self:start}
+.portrait-card.is-open .portrait-card__depth{align-self:stretch;max-height:none;opacity:1;display:flex;border-left:1px solid rgba(149,178,211,.22)}
+.portrait-card.is-open .portrait-card__depth-inner{width:100%;display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4.5vw,68px);background:radial-gradient(ellipse at 10% 85%,rgba(48,53,81,.24),transparent 65%),#0c0c12;border-top:0}
+.portrait-card__image{height:clamp(280px,31vw,470px);transition:height .6s cubic-bezier(.2,.7,.2,1)}
+.portrait-card.is-open .portrait-card__image{height:clamp(440px,58vw,790px)}
+.portrait-card__image .portrait-card__surface-img,.portrait-card__image .portrait-card__reveal-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;transition:opacity .65s ease,transform .85s ease,filter .65s}
+.portrait-card__image .portrait-card__reveal-img{opacity:0;filter:saturate(.72) contrast(1.08)}
+.portrait-card.is-open .portrait-card__image .portrait-card__surface-img{opacity:0;transform:scale(1.025)}
+.portrait-card.is-open .portrait-card__image .portrait-card__reveal-img{opacity:1;transform:scale(1.025)}
+.portrait-card.is-open .portrait-card__image::after{background:linear-gradient(0deg,rgba(11,10,15,.75),transparent 33%)}
+.portrait-card.is-open .portrait-card__surface{background:#101015}
+.portrait-card__depth-inner h3{color:#b6c8dd}
+.portrait-card__depth-inner dt{color:#a5b7c8}
+.portrait-card.is-open:not(.portrait-card--girl) .portrait-card__image{box-shadow:inset 0 0 30px rgba(95,114,166,.18)}
+/* The Girl is the source of revelation, not another person put under the light. */
+.portrait-card--girl.is-open{border-color:rgba(238,210,184,.36);box-shadow:0 18px 55px #0009; background:#161217}
+.portrait-card--girl.is-open .portrait-card__image .portrait-card__surface-img{opacity:1;transform:scale(1.035)}
+.portrait-card--girl.is-open .portrait-card__depth-inner{background:linear-gradient(150deg,#1b1717,#110f13)}
+.portrait-card--girl .portrait-card__depth-inner h3{color:#e4d0b9}
+.portrait-card--girl .portrait-card__depth-inner dt{color:#c9b5a4}
+.characters.is-exposed .portrait-card:not(.portrait-card--girl){border-color:rgba(145,159,186,.32);box-shadow:0 0 18px rgba(101,118,166,.07)}
+@media(max-width:930px){
+ .portrait-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .portrait-card.is-open{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}
+ .portrait-card.is-open .portrait-card__image{height:clamp(440px,64vw,680px)}
 }
-.lede { font-size: clamp(1.15rem, 1.6vw, 1.45rem); max-width: 38ch; color: var(--bone); margin: 0; }
-.small { font-family: var(--util); font-weight: 300; font-size: .9rem; color: var(--haze); line-height: 1.5; }
+@media(max-width:620px){
+ .portrait-grid{grid-template-columns:minmax(0,1fr)}
+ .portrait-card,.portrait-card:nth-child(4),.portrait-card:nth-child(5){width:100%}
+ .portrait-card.is-open{grid-template-columns:minmax(0,1fr)}
+ .portrait-card__image{height:clamp(350px,104vw,550px)}
+ .portrait-card.is-open .portrait-card__image{height:clamp(470px,145vw,720px)}
+ .portrait-card.is-open .portrait-card__depth{border-left:0;border-top:1px solid rgba(149,178,211,.22)}
+ .portrait-card.is-open .portrait-card__depth-inner{padding:30px 24px 38px}
+}
+@media(prefers-reduced-motion:reduce){.portrait-card__image,.portrait-card__image img{transition:none!important}}
 
-/* buttons */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: .6em;
-  font-family: var(--display); font-weight: 800; font-size: 1.25rem; letter-spacing: .04em; text-transform: uppercase;
-  padding: .7em 1.4em; min-height: 48px; text-decoration: none; cursor: pointer; border: 0;
-  background: var(--uv); color: var(--void);
-  clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
-  transition: background .2s, color .2s;
-}
-.btn:hover { background: var(--bone); }
-.btn--line { background: transparent; color: var(--bone); box-shadow: inset 0 0 0 2px var(--bone); clip-path: none; }
-.btn--line:hover { background: var(--bone); color: var(--void); }
-
-/* top bar */
-.topbar {
-  position: fixed; inset: 0 0 auto 0; z-index: 50;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding-top: calc(14px + env(safe-area-inset-top, 0px)); padding-bottom: 14px;
-  padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px));
-  transition: background .3s;
-}
-.topbar.solid { background: color-mix(in srgb, var(--void) 86%, transparent); backdrop-filter: blur(8px); }
-.topbar__logo { display: block; width: clamp(120px, 14vw, 190px); }
-.topbar nav { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 34px); }
-.topbar nav a:not(.btn) { font-family: var(--util); font-weight: 400; font-size: .85rem; text-decoration: none; letter-spacing: .08em; text-transform: uppercase; padding: 8px 0; }
-.topbar nav a:not(.btn):hover { color: var(--uv); }
-.topbar .btn { font-size: 1rem; min-height: 40px; padding: .5em 1.1em; }
-
-/* rails */
-.rail { position: fixed; top: 50%; z-index: 40; display: none; flex-direction: column; align-items: center; gap: 18px; color: var(--haze); mix-blend-mode: difference; }
-.rail span { writing-mode: vertical-rl; font-family: var(--util); font-size: .7rem; letter-spacing: .24em; text-transform: uppercase; white-space: nowrap; }
-.rail--l { left: max(14px, env(safe-area-inset-left, 0px)); transform: translateY(-50%); }
-.rail--r { right: max(14px, env(safe-area-inset-right, 0px)); transform: translateY(-50%); }
-.rail__line { width: 1px; height: 120px; background: color-mix(in srgb, var(--haze) 40%, transparent); position: relative; }
-.rail__line b { position: absolute; left: -3px; top: 0; width: 7px; height: 7px; background: var(--uv); border-radius: 50%; transition: top .15s linear; }
-@media (min-width: 900px) { .rail { display: flex; } }
-
-/* UV torch: grey base, colour layer revealed under a moving light */
-.uv { --tx: 50%; --ty: 35%; --r: 46vmax; position: relative; isolation: isolate; overflow: hidden; }
-.uv__lit {
-  position: absolute; inset: 0; z-index: 1;
-  -webkit-mask-image: radial-gradient(circle at var(--tx) var(--ty), #000 0, rgba(0,0,0,.92) calc(var(--r) * .4), transparent var(--r));
-  mask-image: radial-gradient(circle at var(--tx) var(--ty), #000 0, rgba(0,0,0,.92) calc(var(--r) * .4), transparent var(--r));
-}
-.uv__glow {
-  position: absolute; inset: 0; z-index: 2; pointer-events: none; mix-blend-mode: screen;
-  background: radial-gradient(circle at var(--tx) var(--ty), color-mix(in srgb, var(--uv) 26%, transparent), transparent calc(var(--r) * .6));
-}
-
-/* hero — withholding, not announcing */
-.hero {
-  min-height:max(640px,min(100svh,62rem));
-  display:grid; align-items:end; background:var(--void);
-  --r:clamp(190px,30vmax,430px);
-  touch-action:pan-y;
-}
-.hero__stage { position:absolute; inset:0; }
-.hero__stage > * { position:absolute; inset:0; }
-.bg-hero { background-image:url(assets/hero.jpg); background-size:cover; background-position:50% 0; }
-.hero__base { filter:grayscale(1) contrast(1.2) brightness(.38); }
-.hero__lit { filter:saturate(1.12) contrast(1.05); }
-.hero__ghost-shadow {
-  z-index:3; pointer-events:none;
-  /* A broad, graded fall-off holds the entire left figure in shadow. No hard face-shaped patch. */
-  background:
-    linear-gradient(90deg,
-      rgba(3,2,6,.9) 0%,
-      rgba(3,2,6,.84) 13%,
-      rgba(3,2,6,.74) 25%,
-      rgba(3,2,6,.52) 36%,
-      rgba(3,2,6,.2) 48%,
-      transparent 61%),
-    radial-gradient(ellipse 34% 78% at 23% 43%,
-      rgba(2,1,4,.44) 0%,
-      rgba(2,1,4,.28) 57%,
-      transparent 100%);
-}
-.hero__shade {
-  z-index:3;
-  background:linear-gradient(to bottom,rgba(11,8,19,.46) 0,transparent 20%,transparent 42%,rgba(11,8,19,.38) 70%,var(--void) 96%);
-}
-.hero__copy {
-  position:relative; z-index:4; display:grid; gap:clamp(12px,1.6vw,22px);
-  padding-top:40vh; padding-bottom:calc(var(--cut) + 24px);
-  padding-left:max(var(--gut),env(safe-area-inset-left,0px));
-  padding-right:max(var(--gut),env(safe-area-inset-right,0px));
-}
-.hero__brand {
-  position:relative; width:clamp(280px,56vw,760px); max-width:100%;
-  --beam-x:-50%; --beam-y:50%;
-}
-.logo { display:block; width:100%; height:auto; overflow:visible; }
-.logo--light {
-  position:absolute; inset:0; pointer-events:none;
-  -webkit-mask-image:radial-gradient(circle var(--beam-radius,148px) at var(--beam-x) var(--beam-y),
-    #000 0,rgba(0,0,0,.96) 44%,rgba(0,0,0,.72) 67%,transparent 100%);
-  mask-image:radial-gradient(circle var(--beam-radius,148px) at var(--beam-x) var(--beam-y),
-    #000 0,rgba(0,0,0,.96) 44%,rgba(0,0,0,.72) 67%,transparent 100%);
-  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
-  filter:drop-shadow(0 0 12px rgba(185,252,245,.42));
-}
-.hero__torch-hint {
-  position:absolute; right:0; bottom:-18px; margin:0; pointer-events:none;
-  color:rgba(185,252,245,.62); font:500 .57rem var(--util);
-  letter-spacing:.18em; text-transform:uppercase;
-}
-.hero__torch-hint i { display:inline-block; margin-left:8px; color:var(--uv); font-style:normal; }
-.hero__hint-mobile { display:none; }
-.tagline { display:block; width:min(54%,620px); height:auto; margin-top:5px; }
-.hero__row {
-  display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between;
-  gap:20px 36px; margin-top:clamp(8px,1.5vw,20px);
-}
-.facts { display:grid; grid-template-columns:repeat(3,auto); gap:6px clamp(18px,3.5vw,48px); margin:0; }
-.facts dt { font-family:var(--util); font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--haze); }
-.facts dd { margin:2px 0 0; font-family:var(--body); font-size:1.05rem; max-width:22ch; }
-.hero__cta { display:flex; flex-wrap:wrap; gap:12px; }
-@media (max-width:820px) {
-  .hero { display:block; min-height:0; --r:clamp(150px,42vw,220px); }
-  .hero__stage { position:relative; aspect-ratio:1150 / 860; max-height:66svh; width:100%; }
-  .hero__shade {
-    background:linear-gradient(to bottom,rgba(11,8,19,.22) 0,transparent 26%,rgba(11,8,19,.12) 54%,var(--void) 100%);
-  }
-  .hero__ghost-shadow {
-    background:
-      linear-gradient(90deg,
-        rgba(3,2,6,.9) 0%,
-        rgba(3,2,6,.84) 13%,
-        rgba(3,2,6,.74) 25%,
-        rgba(3,2,6,.52) 36%,
-        rgba(3,2,6,.2) 48%,
-        transparent 61%),
-      radial-gradient(ellipse 36% 78% at 23% 43%,
-        rgba(2,1,4,.44) 0%,
-        rgba(2,1,4,.28) 57%,
-        transparent 100%);
-  }
-  .hero__copy { padding-top:10px; padding-bottom:calc(26px + env(safe-area-inset-bottom,0px)); gap:13px; }
-  .hero__brand { width:clamp(250px,76vw,340px); --beam-radius:92px; }
-  .hero__torch-hint { bottom:-15px; font-size:.49rem; letter-spacing:.15em; }
-  .hero__hint-desktop { display:none; }
-  .hero__hint-mobile { display:inline; }
-  .tagline { width:min(84%,360px); }
-  .facts { grid-template-columns:1fr; gap:8px; }
-  .facts dd { font-size:.98rem; }
-  .hero__row { align-items:start; gap:16px; }
-  .hero__cta { gap:9px; }
-  .hero__cta .btn { font-size:1.02rem; }
-  .bg-hero { background-position:50% 0; }
-}
-@media (prefers-reduced-motion:reduce) {
-  .logo--light { transition:none; }
-}
-/* slanted cut: each section's top edge leans like a shaft wall */
-.cut { position: relative; margin-top: calc(var(--cut) * -1); padding-top: calc(var(--cut) + clamp(32px, 5vw, 80px)); clip-path: polygon(0 var(--cut), 100% 0, 100% 100%, 0 100%); }
-
-/* trailer */
-.trailer { background: #130d1f; padding-bottom: clamp(56px, 9vw, 130px); z-index: 2; }
-.trailer__head { display: grid; gap: 18px; margin-bottom: clamp(28px, 4vw, 56px); }
-.frame { position: relative; aspect-ratio: 16 / 9; background: #000; clip-path: polygon(var(--s) 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%); --s: clamp(0px, 4.5vw, 72px); overflow: hidden; }
-.frame video, .slate { position: absolute; inset: 0; width: 100%; height: 100%; }
-.frame video { object-fit: cover; background: #000; z-index: 3; }
-.slate { display: grid; place-items: center; }
-.slate__img { position: absolute; inset: 0; background-image: url(assets/hero.jpg); background-size: 280%; background-position: 92% 14%; filter: grayscale(1) brightness(.42) contrast(1.15); }
-.slate__tint { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--uv) 24%, transparent), transparent 62%); mix-blend-mode: screen; }
-.play {
-  position: relative; z-index: 2; display: grid; place-items: center; width: clamp(76px, 10vw, 132px); aspect-ratio: 1; border-radius: 50%;
-  border: 2px solid var(--uv); background: color-mix(in srgb, var(--void) 55%, transparent); color: var(--uv); cursor: pointer;
-  box-shadow: 0 0 60px color-mix(in srgb, var(--uv) 45%, transparent), inset 0 0 28px color-mix(in srgb, var(--uv) 25%, transparent);
-  transition: transform .25s, background .25s;
-}
-.play:hover { transform: scale(1.06); background: color-mix(in srgb, var(--uv) 20%, transparent); }
-.play svg { width: 34%; height: 34%; margin-left: 6%; fill: currentColor; }
-.slate__cap { position: absolute; left: calc(var(--s) + 18px); bottom: 16px; z-index: 2; margin: 0; }
-.trailer__note { margin: 20px 0 0; min-height: 1.5em; color: var(--haze); font-family: var(--util); font-weight: 300; }
-.trailer__note a { color: var(--uv); }
-
-/* STORY / EXCAVATION — the synopsis reads like a descent through the diggings */
-.story.excavation {
-  z-index:3; padding-top:calc(var(--cut) + clamp(44px,6vw,92px));
-  padding-bottom:clamp(44px,7vw,104px);
-  color:var(--bone);
-  background:
-    radial-gradient(ellipse at 82% 21%,rgba(185,252,245,.055),transparent 34%),
-    linear-gradient(180deg,#7b351f 0%,#381c1b 18%,#1b1420 48%,#0b0813 100%);
-}
-.excavation__intro {
-  display:grid; grid-template-columns:minmax(0,1.1fr) minmax(250px,.62fr);
-  align-items:end; gap:clamp(28px,6vw,90px); margin-bottom:clamp(38px,6vw,86px);
-}
-.excavation__eyebrow { color:var(--uv); margin:0 0 18px; }
-.excavation__title {
-  margin:0; font:900 clamp(4rem,10vw,10.8rem)/.78 var(--display);
-  letter-spacing:-.035em; text-transform:uppercase; text-wrap:balance;
-}
-.excavation__title span { color:var(--uv); }
-.excavation__intro-copy { max-width:36ch; padding-bottom:4px; }
-.excavation__intro-copy p:first-child {
-  margin:0 0 14px; font:500 clamp(1.3rem,2vw,2rem)/1.08 var(--body); color:var(--bone);
-}
-.excavation__intro-copy .small { margin:0; }
-.excavation__start {
-  display:inline-flex; align-items:center; gap:18px; margin-top:28px; padding-bottom:8px;
-  border-bottom:1px solid rgba(185,252,245,.55); color:var(--uv); text-decoration:none;
-  font:500 .7rem var(--util); letter-spacing:.16em;
-}
-.excavation__start span { font-size:1rem; transition:transform .25s; }
-.excavation__start:hover span { transform:translateY(4px); }
-.excavation__surface {
-  position:relative; display:grid; grid-template-columns:2fr 1fr; gap:8px;
-  height:clamp(230px,35vw,460px); margin:0 0 clamp(54px,8vw,116px);
-}
-.excavation__surface-day,.excavation__surface-night {
-  position:relative; background-size:cover; background-position:center;
-  overflow:hidden;
-}
-.excavation__surface-day { background-image:linear-gradient(0deg,rgba(8,6,12,.42),transparent 65%),url(assets/street-day.jpg); }
-.excavation__surface-night { background-image:linear-gradient(0deg,rgba(8,6,12,.46),transparent 65%),url(assets/street-night.jpg); }
-.excavation__surface-day span,.excavation__surface-night span {
-  position:absolute; left:18px; bottom:16px; color:#fff; font-size:.67rem; letter-spacing:.16em;
-}
-.excavation__surface figcaption {
-  position:absolute; right:0; bottom:-30px; margin:0; color:rgba(232,232,232,.7);
-  font-size:.72rem; letter-spacing:.07em;
-}
-.excavation__layout {
-  display:grid; grid-template-columns:minmax(260px,.78fr) minmax(0,1.22fr);
-  gap:clamp(32px,7vw,112px); align-items:start;
-}
-.excavation__visual {
-  --dig-progress:0;
-  position:sticky; top:clamp(88px,12vh,140px); height:min(70vh,680px); min-height:500px;
-  display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; isolation:isolate;
-  border:1px solid rgba(232,232,232,.18);
-  background:#100d16 url(assets/mine.jpg) center 50% / cover no-repeat;
-  box-shadow:0 28px 90px rgba(0,0,0,.25);
-}
-.excavation__visual::before {
-  content:""; position:absolute; inset:0; z-index:-1;
-  background:linear-gradient(180deg,rgba(9,7,13,.68),rgba(9,7,13,.06) 35%,rgba(9,7,13,.62));
-}
-.excavation__visual-top,.excavation__visual-bottom {
-  position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; gap:12px;
-  padding:18px 18px; color:rgba(255,255,255,.82);
-}
-.excavation__visual-top { font-size:.62rem; letter-spacing:.15em; }
-.excavation__cross-section {
-  position:absolute; inset:7% 0 9%; overflow:hidden; opacity:.95;
-  background:linear-gradient(180deg,rgba(140,60,29,.12),rgba(17,13,24,.2) 40%,rgba(8,7,12,.58));
-}
-.excavation__strata { position:absolute; left:-12%; width:124%; height:30%; opacity:.48; mix-blend-mode:multiply; }
-.excavation__strata--one { top:12%; background:#9b4d2b; clip-path:polygon(0 12%,25% 0,50% 13%,76% 4%,100% 17%,100% 100%,0 100%); }
-.excavation__strata--two { top:35%; height:26%; background:#b2a08a; opacity:.35; clip-path:polygon(0 20%,22% 8%,45% 18%,70% 0,100% 12%,100% 100%,0 100%); }
-.excavation__strata--three { top:58%; height:27%; background:#4a3540; opacity:.62; clip-path:polygon(0 8%,28% 18%,53% 0,77% 18%,100% 6%,100% 100%,0 100%); }
-.excavation__strata--four { bottom:0; height:26%; background:#171322; opacity:.8; clip-path:polygon(0 15%,24% 0,52% 20%,75% 4%,100% 12%,100% 100%,0 100%); }
-.excavation__shaft-wall {
-  position:absolute; left:43%; top:0; width:14%; height:100%;
-  background:linear-gradient(90deg,rgba(4,3,8,.2),rgba(4,3,8,.94) 30%,rgba(4,3,8,.95) 70%,rgba(4,3,8,.2));
-  clip-path:polygon(15% 0,85% 0,100% 100%,0 100%);
-  box-shadow:0 0 32px rgba(0,0,0,.5);
-}
-.excavation__shaft {
-  position:absolute; left:50%; top:1%; bottom:0; width:2px; transform:translateX(-50%);
-  background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,.14),rgba(185,252,245,.25));
-}
-.excavation__rope { position:absolute; inset:0; width:1px; margin:auto; background:rgba(232,232,232,.62); }
-.excavation__bucket {
-  position:absolute; top:0; left:50%; width:13px; height:13px; transform:translate(-50%,-50%);
-  border:1px solid var(--uv); border-radius:50%; background:#090812; box-shadow:0 0 18px rgba(185,252,245,.75);
-}
-.excavation__marker {
-  position:absolute; top:0; left:50%; width:34px; height:34px; transform:translate(-50%,-50%);
-  border:1px solid var(--uv); border-radius:50%; background:rgba(9,8,18,.76);
-  box-shadow:0 0 0 7px rgba(185,252,245,.08),0 0 32px rgba(185,252,245,.55);
-  transition:top .8s cubic-bezier(.2,.75,.2,1);
-}
-.excavation__marker::before,.excavation__marker::after {
-  content:""; position:absolute; left:50%; top:50%; background:var(--uv); transform:translate(-50%,-50%);
-}
-.excavation__marker::before { width:14px; height:1px; }
-.excavation__marker::after { width:1px; height:14px; }
-.excavation__opal {
-  position:absolute; left:0; right:0; bottom:4%; width:100%; height:24%;
-  opacity:var(--seam-opacity,.12); transform:scaleX(var(--seam-scale,.65));
-  transform-origin:center; transition:opacity .8s,transform .8s; filter:drop-shadow(0 0 14px rgba(185,252,245,.32));
-}
-.excavation__meter {
-  position:absolute; z-index:2; left:16px; top:19%; bottom:20%; width:2px;
-  background:rgba(255,255,255,.25);
-}
-.excavation__meter span {
-  display:block; width:100%; height:0; background:var(--uv); box-shadow:0 0 12px var(--uv);
-  transition:height .8s cubic-bezier(.2,.75,.2,1);
-}
-.excavation__visual-bottom {
-  align-items:end; padding-top:14px; padding-bottom:20px;
-  background:linear-gradient(0deg,rgba(7,6,12,.72),transparent);
-}
-.excavation__visual-bottom div { display:grid; gap:2px; }
-.excavation__visual-bottom .util { color:rgba(255,255,255,.68); font-size:.61rem; letter-spacing:.16em; }
-.excavation__visual-bottom strong { font:900 clamp(3.4rem,6vw,5.6rem)/.8 var(--display); color:#fff; }
-.excavation__visual-bottom strong small { font-size:.34em; color:var(--uv); }
-.excavation__visual-note { max-width:12ch; text-align:right; color:var(--uv); font:500 .66rem var(--util); letter-spacing:.13em; }
-.excavation__chapters { min-width:0; }
-.excavation__chapter {
-  position:relative; min-height:clamp(440px,66vh,660px); padding:clamp(44px,7vw,94px) 0;
-  display:flex; flex-direction:column; justify-content:center; border-bottom:1px solid rgba(232,232,232,.18);
-  opacity:.58; transform:translateY(12px); transition:opacity .65s,transform .7s,border-color .5s;
-}
-.excavation__chapter:first-child { border-top:1px solid rgba(232,232,232,.18); }
-.excavation__chapter.is-active { opacity:1; transform:translateY(0); border-color:rgba(185,252,245,.4); }
-.excavation__chapter-meta {
-  display:flex; justify-content:space-between; gap:12px; margin:0 0 25px;
-  color:var(--uv); font:500 .65rem var(--util); letter-spacing:.17em; text-transform:uppercase;
-}
-.excavation__chapter h3 {
-  max-width:11ch; margin:0 0 24px; font:900 clamp(3.2rem,6vw,6.8rem)/.83 var(--display);
-  letter-spacing:-.025em; text-transform:uppercase; text-wrap:balance;
-}
-.excavation__chapter p:not(.excavation__chapter-meta) {
-  max-width:39ch; margin:0; color:rgba(232,232,232,.82); font-size:clamp(1.04rem,1.35vw,1.22rem); line-height:1.48;
-}
-.excavation__chapter--rupture h3 {
-  margin:0 0 25px; max-width:12ch; color:var(--uv);
-  font:900 clamp(3.6rem,7.8vw,8.4rem)/.78 var(--display); text-transform:uppercase;
-  text-wrap:balance; text-shadow:0 0 38px rgba(185,252,245,.22);
-}
-.excavation__request {
-  display:inline-flex; align-items:center; gap:20px; margin-top:30px; padding-bottom:9px; width:max-content;
-  border-bottom:1px solid rgba(185,252,245,.6); color:var(--uv); text-decoration:none;
-  font:500 .7rem var(--util); letter-spacing:.16em;
-}
-.excavation__request span { transition:transform .25s; }
-.excavation__request:hover span { transform:translate(4px,-4px); }
-.excavation .advisory { margin-top:clamp(44px,7vw,92px); }
-@media (max-width:900px) {
-  .excavation__intro { grid-template-columns:1fr; gap:26px; }
-  .excavation__intro-copy { max-width:44ch; }
-  .excavation__layout { grid-template-columns:minmax(210px,.72fr) minmax(0,1.28fr); gap:28px; }
-  .excavation__visual { top:95px; min-height:440px; height:65vh; }
-  .excavation__chapter { min-height:58vh; }
-}
-@media (max-width:650px) {
-  .story.excavation { padding-top:calc(var(--cut) + 38px); }
-  .excavation__title { font-size:clamp(4rem,16vw,6.8rem); }
-  .excavation__surface { grid-template-columns:1fr 1fr; height:220px; gap:5px; margin-bottom:70px; }
-  .excavation__surface-day span,.excavation__surface-night span { left:10px; bottom:10px; font-size:.55rem; }
-  .excavation__surface figcaption { left:0; right:auto; bottom:-30px; font-size:.65rem; }
-  .excavation__layout { display:block; }
-  .excavation__visual {
-    position:sticky; top:76px; z-index:10; height:88px; min-height:88px; margin-bottom:16px;
-    background-position:center 46%; box-shadow:0 12px 30px rgba(0,0,0,.32);
-  }
-  .excavation__cross-section { inset:0; }
-  .excavation__visual-top { display:none; }
-  .excavation__visual-bottom {
-    height:100%; padding:7px 14px 7px 22px; align-items:center;
-    background:linear-gradient(90deg,rgba(7,6,12,.92),rgba(7,6,12,.65) 55%,rgba(7,6,12,.14));
-  }
-  .excavation__visual-bottom strong { font-size:2.75rem; }
-  .excavation__visual-bottom .util { font-size:.52rem; }
-  .excavation__visual-note { font-size:.57rem; max-width:12ch; }
-  .excavation__meter { left:8px; top:12px; bottom:12px; }
-  .excavation__chapter {
-    min-height:0; padding:56px 2px 62px; opacity:.72;
-  }
-  .excavation__chapter.is-active { opacity:1; }
-  .excavation__chapter h3 { font-size:clamp(3.2rem,14vw,5.5rem); margin-bottom:18px; }
-  .excavation__chapter--rupture h3 { font-size:clamp(3.6rem,15vw,6.2rem); }
-  .excavation__chapter p:not(.excavation__chapter-meta) { max-width:42ch; font-size:1.03rem; }
-  .excavation__chapter-meta { margin-bottom:18px; font-size:.6rem; }
-}
-@media (prefers-reduced-motion:reduce) {
-  .excavation__chapter,.excavation__marker,.excavation__meter span,.excavation__opal { transition:none!important; }
-}
-/* characters */
-.chars { background: var(--void); z-index: 4; padding-bottom: clamp(60px, 10vw, 150px); }
-.chars__head { display: grid; gap: 22px; margin-bottom: clamp(32px, 5vw, 72px); }
-.panels { display: grid; grid-template-columns: repeat(3, 1fr); --s: clamp(0px, 5vw, 84px); padding-left: max(8px, env(safe-area-inset-left, 0px)); padding-right: max(8px, env(safe-area-inset-right, 0px)); }
-.panel { position: relative; aspect-ratio: 410 / 700; overflow: hidden; background: #000; clip-path: polygon(var(--s) 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%); margin-left: calc(var(--s) * -1 + 8px); }
-.panel:first-child { margin-left: 0; clip-path: polygon(0 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%); }
-.panel:last-child { clip-path: polygon(var(--s) 0, 100% 0, 100% 100%, 0 100%); }
-.panel img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 8%; transform: scale(1.12); filter: grayscale(.92) brightness(.68) contrast(1.12); transition: filter 1s, transform 1.4s; }
-.panel.lit img, .panel:hover img { filter: none; transform: scale(1.04); }
-.panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,8,19,.96) 0, rgba(11,8,19,.7) 32%, transparent 62%); }
-.panel__txt { position: absolute; z-index: 2; left: calc(var(--s) + 14px); right: calc(var(--s) + 10px); bottom: clamp(16px, 2.4vw, 36px); }
-.panel:first-child .panel__txt { left: clamp(16px, 2.4vw, 36px); }
-.panel:last-child .panel__txt { right: clamp(16px, 2.4vw, 36px); }
-.panel .role { margin: 0; color: var(--uv); }
-.panel h3 { margin: 2px 0 10px; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.6rem, 6.4vw, 6.2rem); line-height: .86; }
-.panel p:not(.role) { margin: 0; font-size: clamp(.95rem, 1.15vw, 1.1rem); line-height: 1.4; max-width: 30ch; }
-@media (max-width: 820px) {
-  .panels { grid-template-columns: 1fr; gap: 10px; --s: 0px; }
-  .panel, .panel:first-child, .panel:last-child { margin-left: 0; clip-path: none; aspect-ratio: 4 / 5; }
-  .panel__txt, .panel:first-child .panel__txt, .panel:last-child .panel__txt { left: 18px; right: 18px; }
-}
-.minor { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(20px, 4vw, 64px); margin-top: clamp(40px, 6vw, 90px); }
-.minor article { border-top: 1px solid color-mix(in srgb, var(--haze) 35%, transparent); padding-top: 18px; }
-.minor h3 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2rem, 4vw, 3.6rem); line-height: .9; margin: 4px 0 10px; }
-.minor p { margin: 0; max-width: 42ch; }
-@media (max-width: 700px) { .minor { grid-template-columns: 1fr; gap: 32px; } }
-
-/* setting */
-.setting { z-index: 5; color: var(--bone); padding-bottom: clamp(60px, 10vw, 150px); }
-.setting .uv__base, .setting .uv__lit { background-image: url(assets/mine.jpg); background-size: cover; background-position: 50% 38%; }
-.setting .uv__base { position: absolute; inset: 0; filter: grayscale(1) brightness(.3) contrast(1.15); }
-.setting .uv__lit { filter: brightness(.78) saturate(1.2); }
-.setting .uv__scrim { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(to bottom, rgba(10,7,16,.5), rgba(10,7,16,.25) 38%, rgba(10,7,16,.78)); }
-.setting .uv__base-old { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 .58 0 0 0 0 .7 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E"); }
-.setting.uv { --r: 34vmax; }
-.close canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.setting__in { position: relative; z-index: 3; }
-.setting__in .cap-mine { margin-top: 28px; }
-.word { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(3.4rem, 17.5vw, 19rem); line-height: .8; margin: 0; color: transparent; -webkit-text-stroke: 2px var(--bone); letter-spacing: -.01em; overflow-wrap: anywhere; }
-.setting__grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 90px); margin-top: clamp(28px, 4vw, 60px); }
-.setting__grid p { margin: 0 0 1em; max-width: 44ch; text-shadow: 0 1px 14px #0a0710; }
-.setting__grid h2 { margin: 0 0 22px; }
-.setting dl { margin: 0; display: grid; gap: 0; align-content: start; }
-.setting dl div { border-top: 1px solid color-mix(in srgb, var(--bone) 28%, transparent); padding: 14px 0 16px; background: color-mix(in srgb, var(--void) 55%, transparent); }
-.setting dt { font-family: var(--util); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--haze); }
-.setting dd { margin: 4px 0 0; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(1.4rem, 2.4vw, 2.1rem); line-height: 1.05; }
-@media (max-width: 820px) { .setting__grid { grid-template-columns: 1fr; } .word { -webkit-text-stroke-width: 1.5px; } }
-
-/* close: express interest */
-.close { z-index: 8; padding-bottom: clamp(40px, 6vw, 80px); background: var(--void); }
-.close .uv__base { position: absolute; inset: 0; background: #08060e; }
-.close.uv { --r: 58vmax; }
-.close__in { position: relative; z-index: 3; display: grid; gap: clamp(28px, 4vw, 56px); }
-.close .h-xl { font-size: clamp(3.4rem, 14vw, 14rem); text-shadow: 0 0 60px rgba(8,6,14,.6); }
-.close__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
-.close__grid .lede { text-shadow: 0 1px 20px #08060e; }
-.card { background: color-mix(in srgb, var(--void) 84%, transparent); backdrop-filter: blur(10px); padding: clamp(20px, 3vw, 40px); border: 1px solid color-mix(in srgb, var(--uv) 30%, transparent); }
-.field { display: grid; gap: 6px; margin-bottom: 18px; }
-.field label, .field legend { font-family: var(--util); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--haze); padding: 0; }
-.field input[type=text], .field textarea, .field select {
-  width: 100%; font: inherit; font-size: 1.05rem; color: var(--bone); background: rgba(255,255,255,.06);
-  border: 1px solid color-mix(in srgb, var(--haze) 50%, transparent); border-radius: 0; padding: 12px 14px; min-height: 48px;
-}
-.field textarea { min-height: 120px; resize: vertical; }
-.field select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--uv) 50%), linear-gradient(135deg, var(--uv) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px; background-repeat: no-repeat; }
-.field select option { background: var(--void); color: var(--bone); }
-.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 8px; }
-.addr { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 22px; padding-top: 18px; border-top: 1px solid color-mix(in srgb, var(--haze) 30%, transparent); }
-.addr code { font-family: var(--util); font-size: 1rem; color: var(--uv); word-break: break-all; user-select: all; }
-.copy-btn { font-family: var(--util); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; background: transparent; color: var(--bone); border: 1px solid var(--haze); padding: 9px 14px; min-height: 40px; cursor: pointer; }
-.copy-btn:hover { border-color: var(--uv); color: var(--uv); }
-.status { min-height: 1.4em; margin: 10px 0 0; }
-@media (max-width: 860px) { .close__grid { grid-template-columns: 1fr; } .pair { grid-template-columns: 1fr; } }
-
-footer { position: relative; z-index: 9; background: var(--void); padding-top: clamp(36px, 5vw, 70px); padding-bottom: calc(clamp(30px, 4vw, 56px)); border-top: 1px solid color-mix(in srgb, var(--haze) 25%, transparent); }
-footer .wrap { display: grid; gap: 22px; }
-footer .tagline { width: min(100%, 880px); }
-.foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 30px; }
-
-
-/* concept imagery: street diptych, dwelling strip, Jim, 1950s huts, deep time */
-.street { display: grid; grid-template-columns: 2.1fr 1fr; gap: 10px; height: clamp(240px, 40vw, 540px); margin: 0 0 clamp(70px, 11vw, 190px); --s: clamp(0px, 4vw, 64px); }
-.street > div { position: relative; background-size: cover; background-position: 50% 60%; }
-.street__day { background-image: url(assets/street-day.jpg); clip-path: polygon(0 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%); }
-.street__night { background-image: url(assets/street-night.jpg); background-position: 50% 50%; clip-path: polygon(var(--s) 0, 100% 0, 100% 100%, 0 100%); margin-left: calc(var(--s) * -1); }
-.street span, .wide figcaption { text-shadow: 0 1px 16px rgba(11,8,19,.9); }
-.street span { position: absolute; left: 18px; bottom: 14px; font-family: var(--util); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; }
-.street__night span { left: calc(var(--s) + 18px); }
-.street + .cap { margin: calc(clamp(70px, 11vw, 190px) * -.78) 0 clamp(70px, 11vw, 190px); max-width: 48ch; }
-.wide { position: relative; margin: 0 0 clamp(70px, 11vw, 190px); aspect-ratio: 16 / 7; overflow: hidden; --s: clamp(0px, 5vw, 80px); clip-path: polygon(var(--s) 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%); background: #000; }
-.wide img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 55%; }
-.wide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,8,19,.82) 0, transparent 46%); }
-.wide figcaption { position: absolute; z-index: 2; left: calc(var(--s) + 20px); bottom: 18px; right: 20px; max-width: 44ch; }
-@media (max-width: 820px) {
-  .street { grid-template-columns: 1fr; height: auto; --s: 0px; }
-  .street > div { aspect-ratio: 16 / 10; clip-path: none; margin-left: 0; }
-  .street__night span { left: 18px; }
-  .street + .cap { margin-top: -50px; }
-  .wide { aspect-ratio: 4 / 3; clip-path: none; --s: 0px; }
-}
-.hut { background: #120c1b; z-index: 6; padding-bottom: clamp(56px, 9vw, 130px); }
-.hut__grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.4fr); gap: clamp(24px, 5vw, 80px); align-items: center; }
-.hut h2 { margin: 6px 0 22px; font-size: clamp(2.6rem, 6.4vw, 6.4rem); }
-.hut p { margin: 0 0 1em; max-width: 40ch; }
-.hut__video { position: relative; aspect-ratio: 1280 / 706; background: #000; --s: clamp(0px, 4vw, 64px); clip-path: polygon(var(--s) 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%); }
-.hut__video video { width: 100%; height: 100%; object-fit: cover; display: block; }
-@media (max-width: 820px) { .hut__grid { grid-template-columns: 1fr; } .hut__video { clip-path: none; --s: 0px; } }
-.sea { z-index: 7; min-height: max(560px, 82svh); display: grid; align-items: end; background: #05121c; }
-.sea__img { position: absolute; inset: 0; background-image: url(assets/sea.jpg); background-size: cover; background-position: 50% 40%; }
-.sea::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to right, rgba(5,10,20,.86) 0, rgba(5,10,20,.5) 40%, transparent 72%), linear-gradient(to top, rgba(5,10,20,.82), transparent 48%); }
-.sea__in { position: relative; z-index: 2; padding-bottom: clamp(32px, 6vw, 90px); max-width: 52rem; }
-.sea h2 { margin: 6px 0 22px; font-size: clamp(3rem, 9vw, 9rem); }
-.sea p { max-width: 42ch; margin: 0 0 1em; text-shadow: 0 1px 18px rgba(5,10,20,.9); }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .hero.uv, .lt { animation: none; }
-  .panel img { transition: none; }
-}
-
-/* MONUMENT-INSPIRED MOTION SYSTEM — drifting film windows, editorial scale, soft reveals */
-:root { --window-ink:#090812; --window-line:rgba(232,232,232,.18); }
-.window-world {
-  position:relative; z-index:3; overflow:hidden; isolation:isolate;
-  padding:clamp(74px,9vw,132px) 0 clamp(52px,7vw,100px);
-  background:
-    radial-gradient(ellipse at 52% 42%, rgba(76,58,104,.24), transparent 48%),
-    linear-gradient(180deg,#0d0a16 0%,#08070d 72%,#0b0813 100%);
-}
-.window-world::before {
-  content:""; position:absolute; inset:0; pointer-events:none; opacity:.18; z-index:-1;
-  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:84px 84px; mask-image:linear-gradient(to bottom,transparent,black 18%,black 80%,transparent);
-}
-.window-world__head {
-  display:grid; grid-template-columns:minmax(0,1.15fr) minmax(240px,.65fr);
-  align-items:end; gap:30px; position:relative; z-index:2; margin-bottom:clamp(14px,3vw,42px);
-}
-.window-world__eyebrow { margin:0 0 16px; color:var(--uv); }
-.window-world__title {
-  margin:0; max-width:8ch; font-family:var(--display); font-size:clamp(4rem,10.5vw,11rem);
-  line-height:.78; letter-spacing:-.035em; text-transform:uppercase; font-weight:900;
-}
-.window-world__title em { color:var(--uv); font-style:normal; }
-.window-world__intro { max-width:34ch; margin:0 0 7px; color:var(--haze); font-size:clamp(1.05rem,1.35vw,1.28rem); }
-.window-world__tools { display:flex; align-items:center; justify-content:flex-end; gap:18px; margin-top:22px; }
-.motion-control {
-  display:inline-flex; align-items:center; gap:10px; padding:9px 0; border:0; border-bottom:1px solid var(--window-line);
-  color:var(--bone); background:transparent; font:500 .72rem var(--util); letter-spacing:.15em; text-transform:uppercase; cursor:pointer;
-}
-.motion-control:hover { color:var(--uv); border-color:var(--uv); }
-.motion-control__glyph { width:22px; height:22px; display:grid; place-items:center; border:1px solid currentColor; border-radius:50%; font-size:.65rem; line-height:1; }
-.window-stage {
-  position:relative; width:min(calc(100% - var(--gut) - var(--gut)), 1500px); height:clamp(520px,57vw,790px);
-  margin:0 auto; perspective:1200px; isolation:isolate;
-}
-.window-stage::before {
-  content:""; position:absolute; width:min(52vw,700px); aspect-ratio:1; left:50%; top:48%;
-  transform:translate(-50%,-50%); border-radius:50%;
-  background:radial-gradient(circle,rgba(185,252,245,.09),rgba(185,252,245,.018) 45%,transparent 70%);
-  filter:blur(15px); pointer-events:none;
-}
-.window-stage__word {
-  position:absolute; z-index:0; left:50%; top:49%; transform:translate(-50%,-50%);
-  width:100%; text-align:center; pointer-events:none; font:900 clamp(4.2rem,12vw,13rem)/.76 var(--display);
-  letter-spacing:-.045em; text-transform:uppercase; color:rgba(232,232,232,.105);
-}
-.film-window {
-  --rot:0deg; --depth:1; --move-x:0px; --move-y:0px;
-  position:absolute; z-index:1; display:block; padding:0; border:1px solid rgba(232,232,232,.18);
-  background:#09080e; overflow:hidden; cursor:zoom-in; text-align:left;
-  box-shadow:0 28px 75px rgba(0,0,0,.42);
-  transform:translate3d(var(--move-x),var(--move-y),0) rotate(var(--rot));
-  transition:transform .42s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s,filter .5s;
-  animation:window-float var(--float-time,8s) ease-in-out var(--float-delay,0s) infinite;
-  will-change:transform;
-}
-.film-window img { display:block; width:100%; height:100%; object-fit:cover; filter:saturate(.78) contrast(1.04); transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .7s; }
-/* Portrait source files are tall; anchor their crop to the top of frame so faces lead. */
-.window--b img,.window--d img,.window--e img {
-  object-position:50% 3%; transform:scale(1.13); transform-origin:50% 14%;
-}
-.film-window.window--b:hover img,.film-window.window--d:hover img,.film-window.window--e:hover img { transform:scale(1.22); }
-
-.film-window::after {
-  content:""; position:absolute; inset:35% 0 0; pointer-events:none;
-  background:linear-gradient(to bottom,transparent,rgba(7,6,12,.88));
-}
-.film-window__label {
-  position:absolute; z-index:1; left:14px; right:14px; bottom:12px; display:flex; justify-content:space-between; align-items:end; gap:10px;
-  color:#fff; font:500 .64rem/1.2 var(--util); letter-spacing:.15em; text-transform:uppercase; text-shadow:0 1px 10px #000;
-}
-.film-window__label b { color:var(--uv); font-weight:500; }
-.film-window:hover,.film-window:focus-visible {
-  z-index:8; border-color:var(--uv); box-shadow:0 34px 90px rgba(0,0,0,.65),0 0 28px rgba(185,252,245,.12);
-  animation-play-state:paused; transform:translate3d(var(--move-x),calc(var(--move-y) - 8px),0) rotate(0deg) scale(1.055);
-}
-.film-window:hover img,.film-window:focus-visible img { transform:scale(1.075); filter:saturate(1.12) contrast(1.05); }
-.window--a { left:2%; top:9%; width:23%; height:49%; --rot:-5deg; --depth:1.5; --float-time:9s; }
-.window--b { left:27%; top:34%; width:21%; height:33%; --rot:3deg; --depth:2.4; --float-delay:-2s; --float-time:7s; }
-.window--c { left:33%; top:1%; width:19%; height:30%; --rot:4deg; --depth:1.1; --float-delay:-4s; }
-.window--d { right:4%; top:8%; width:24%; height:48%; --rot:4deg; --depth:2; --float-delay:-1s; --float-time:10s; }
-.window--e { right:29%; bottom:4%; width:22%; height:35%; --rot:-3deg; --depth:1.7; --float-delay:-3s; }
-.window--f { left:8%; bottom:0; width:17%; height:27%; --rot:3deg; --depth:2.8; --float-delay:-5s; --float-time:7.5s; }
-.window--g { right:3%; bottom:0; width:18%; height:30%; --rot:-4deg; --depth:1.4; --float-delay:-2.7s; --float-time:8.5s; }
-@keyframes window-float { 0%,100% { translate:0 0; } 50% { translate:0 -15px; } }
-.window-world__foot {
-  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:18px;
-  margin-top:8px; padding-top:20px; border-top:1px solid var(--window-line);
-}
-.window-world__foot p { margin:0; }
-.window-world__foot .small { letter-spacing:.14em; text-transform:uppercase; font-size:.72rem; }
-.window-world__foot .window-count { color:var(--uv); }
-.window-marquee { overflow:hidden; padding:17px 0; border-top:1px solid var(--window-line); border-bottom:1px solid var(--window-line); background:#0b0912; }
-.window-marquee__track { display:flex; width:max-content; animation:marquee-travel 32s linear infinite; }
-.window-marquee span { padding:0 24px; color:rgba(232,232,232,.72); font:800 clamp(1.25rem,2.8vw,2.8rem)/1 var(--display); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
-.window-marquee span b { color:var(--uv); font-weight:900; }
-@keyframes marquee-travel { to { transform:translateX(-50%); } }
-.window-world.is-paused .film-window { animation-play-state:paused; }
-.window-marquee.is-paused .window-marquee__track { animation-play-state:paused; }
-.motion-control:disabled { opacity:.48; cursor:not-allowed; }
-.window-viewer {
-  width:min(94vw,1200px); max-width:none; max-height:92svh; padding:0; border:1px solid rgba(185,252,245,.28);
-  background:#08070d; color:var(--bone); box-shadow:0 30px 140px rgba(0,0,0,.8);
-}
-.window-viewer::backdrop { background:rgba(4,3,8,.88); backdrop-filter:blur(12px); }
-.window-viewer__inner { position:relative; display:grid; grid-template-columns:minmax(0,1.55fr) minmax(220px,.65fr); min-height:300px; }
-.window-viewer__image { display:block; width:100%; height:min(76vh,820px); object-fit:contain; background:#030306; }
-.window-viewer__copy { display:flex; flex-direction:column; justify-content:end; padding:clamp(22px,4vw,54px); }
-.window-viewer__copy .util { color:var(--uv); }
-.window-viewer__copy h2 { margin:8px 0 14px; font:900 clamp(2.4rem,5vw,5.8rem)/.86 var(--display); text-transform:uppercase; }
-.window-viewer__copy p:last-child { color:var(--haze); margin:0; }
-.window-viewer__close {
-  position:absolute; top:14px; right:14px; z-index:3; width:42px; height:42px; border:1px solid rgba(255,255,255,.35);
-  color:#fff; background:rgba(5,4,8,.7); font:400 1.35rem var(--util); cursor:pointer;
-}
-.window-viewer__close:hover { color:var(--uv); border-color:var(--uv); }
-.motion-ready .reveal { opacity:0; transform:translateY(34px); transition:opacity .8s ease,transform .9s cubic-bezier(.2,.7,.2,1); }
-.motion-ready .reveal.is-visible { opacity:1; transform:translateY(0); }
-@media (max-width:900px) {
-  .window-world__head { grid-template-columns:1fr; gap:18px; }
-  .window-world__tools { justify-content:flex-start; margin-top:8px; }
-  .window-stage { height:clamp(500px,80vw,680px); width:calc(100% - 24px); }
-  .window--a { left:1%; width:25%; }
-  .window--d { right:1%; width:25%; }
-}
-@media (max-width:650px) {
-  .window-world { padding-top:68px; }
-  .window-world__head { padding-left:20px; padding-right:20px; }
-  .window-world__title { font-size:clamp(4.1rem,17vw,7rem); }
-  .window-world__intro { max-width:38ch; }
-  .window-stage {
-    display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; width:auto; height:auto;
-    margin:30px 14px 0; perspective:none;
-  }
-  .window-stage::before,.window-stage__word { display:none; }
-  .film-window,.window--a,.window--b,.window--c,.window--d,.window--e,.window--f,.window--g {
-    position:relative; inset:auto; width:auto; height:auto; aspect-ratio:4/5; min-width:0; margin:0;
-    transform:none; animation:none; grid-column:span 1;
-  }
-  .window--b,.window--e { aspect-ratio:5/4; }
-  .window--c { grid-column:span 2; aspect-ratio:16/8; }
-  .window--d { aspect-ratio:4/5; }
-  .window--g { grid-column:span 2; aspect-ratio:16/8; }
-  .film-window__label { left:10px; right:10px; bottom:10px; font-size:.58rem; }
-  .window-world__foot { margin:22px 20px 0; }
-  .window-marquee { padding:13px 0; }
-  .window-viewer { width:94vw; max-height:88svh; overflow:auto; }
-  .window-viewer__inner { grid-template-columns:1fr; }
-  .window-viewer__image { height:auto; max-height:58svh; aspect-ratio:4/3; }
-  .window-viewer__copy { padding:22px; }
-  .window-viewer__copy h2 { font-size:3.2rem; }
-}
-@media (prefers-reduced-motion:reduce) {
-  .film-window,.window-marquee__track { animation:none!important; }
-  .motion-ready .reveal { opacity:1; transform:none; transition:none; }
-  .film-window,.film-window img { transition:none!important; }
-}
-
-
-/* SETTING JOURNEY — a scroll-controlled geographical arrival into the BLACKLIGHT underworld */
-.setting-journey { position:relative; z-index:5; background:#050509; color:var(--bone); }
-.setting-journey__track { height:760vh; position:relative; }
-.setting-journey__viewport {
-  position:sticky; top:0; width:100%; height:100svh; min-height:560px;
-  overflow:hidden; isolation:isolate; background:#050509;
-}
-.setting-journey__maps,.setting-journey__surface,.setting-journey__arrival,.setting-journey__vignette {
-  position:absolute; inset:0;
-}
-.setting-journey__maps { z-index:0; overflow:hidden; background:#111; }
-.setting-journey__frame {
-  position:absolute; inset:0; opacity:0; background-image:url("assets/setting/satellite-atlas.webp");
-  background-repeat:no-repeat; background-size:400% 300%;
-  transform:scale(1.015); will-change:opacity,transform;
-}
-.journey-frame--1 { background-position:0% 0%; }
-.journey-frame--2 { background-position:33.3333% 0%; }
-.journey-frame--3 { background-position:66.6667% 0%; }
-.journey-frame--4 { background-position:100% 0%; }
-.journey-frame--5 { background-position:0% 50%; }
-.journey-frame--6 { background-position:33.3333% 50%; }
-.journey-frame--7 { background-position:66.6667% 50%; }
-.journey-frame--8 { background-position:100% 50%; }
-.journey-frame--9 { background-position:0% 100%; }
-.setting-journey__surface {
-  z-index:1; pointer-events:none; opacity:0;
-  background:
-    radial-gradient(ellipse at 50% 48%,rgba(7,5,5,.08),rgba(4,3,5,.8) 75%),
-    linear-gradient(180deg,rgba(7,5,5,.08),rgba(7,5,5,.56));
-  will-change:opacity;
-}
-.setting-journey__arrival {
-  z-index:2; opacity:0; background:#09070a url("assets/setting/underworld-arrival.webp") center 50% / cover no-repeat;
-  transform:scale(1.1); filter:brightness(.78) saturate(.82);
-  will-change:opacity,transform;
-}
-.setting-journey__arrival::after {
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(90deg,rgba(4,3,4,.64),transparent 62%),linear-gradient(0deg,rgba(4,3,4,.4),transparent 55%);
-}
-.setting-journey__vignette {
-  z-index:3; pointer-events:none;
-  background:radial-gradient(ellipse at 50% 48%,transparent 38%,rgba(0,0,0,.18) 74%,rgba(0,0,0,.45));
-}
-.setting-journey__hud {
-  position:absolute; z-index:4; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:space-between;
-  padding:clamp(28px,6vh,64px) var(--gut) clamp(28px,5vh,54px); text-align:center;
-  transition:opacity .25s;
-}
-.setting-journey__hud p { margin:0; font:500 .68rem var(--util); letter-spacing:.2em; color:rgba(255,255,255,.88); }
-.setting-journey__location {
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  font:900 clamp(2.8rem,8.5vw,9rem)/.82 var(--display)!important;
-  letter-spacing:.015em!important; color:#fff!important; text-shadow:0 3px 30px rgba(0,0,0,.35);
-}
-.setting-journey__scroll {
-  display:flex; align-items:center; gap:12px; color:rgba(255,255,255,.78);
-  font-size:.62rem!important; letter-spacing:.19em!important;
-}
-.setting-journey__scroll i { font-style:normal; font-size:1.1rem; animation:setting-scroll-hint 1.8s ease-in-out infinite; }
-@keyframes setting-scroll-hint { 0%,100% { transform:translateY(0); } 50% { transform:translateY(7px); } }
-.setting-journey__arrival-copy {
-  position:absolute; z-index:5; left:max(var(--gut),calc((100vw - 1320px)/2)); bottom:clamp(44px,9vh,104px);
-  width:min(760px,calc(100% - var(--gut) - var(--gut))); opacity:0; transform:translateY(22px);
-  transition:none; text-shadow:0 2px 24px rgba(0,0,0,.52); pointer-events:none;
-}
-.setting-journey__arrival-copy > p:first-child {
-  margin:0 0 16px; color:var(--uv); font:500 .68rem var(--util); letter-spacing:.2em;
-}
-.setting-journey__arrival-copy h2 {
-  margin:0 0 20px; color:#fff; font:900 clamp(4rem,11vw,11rem)/.78 var(--display);
-  letter-spacing:-.025em; text-transform:uppercase;
-}
-.setting-journey__line {
-  max-width:39ch; margin:0; color:#f1ece8; font:italic clamp(1.2rem,2vw,1.75rem)/1.25 var(--body);
-}
-.setting-journey__welcome {
-  margin:30px 0 0; color:var(--uv); font-size:.66rem; letter-spacing:.19em;
-}
-.setting-journey__progress {
-  position:absolute; z-index:6; left:0; right:0; bottom:0; height:2px; background:rgba(255,255,255,.15);
-}
-.setting-journey__progress span {
-  display:block; width:100%; height:100%; transform:scaleX(0); transform-origin:left center;
-  background:var(--uv); box-shadow:0 0 12px rgba(185,252,245,.8);
-}
-@media (max-width:760px) {
-  .setting-journey__track { height:650vh; }
-  .setting-journey__viewport { min-height:520px; }
-  .setting-journey__frame { background-size:400% 300%; }
-  .setting-journey__arrival { background-position:54% center; }
-  .setting-journey__hud { padding:calc(25px + env(safe-area-inset-top,0px)) 18px calc(24px + env(safe-area-inset-bottom,0px)); }
-  .setting-journey__hud p { font-size:.58rem; }
-  .setting-journey__location { width:100%; font-size:clamp(3.2rem,15vw,6rem)!important; }
-  .setting-journey__arrival-copy {
-    left:22px; bottom:calc(36px + env(safe-area-inset-bottom,0px)); width:calc(100% - 44px);
-  }
-  .setting-journey__arrival-copy > p:first-child { font-size:.58rem; }
-  .setting-journey__arrival-copy h2 { font-size:clamp(3.8rem,17vw,6rem); margin-bottom:15px; }
-  .setting-journey__line { max-width:33ch; font-size:1.14rem; line-height:1.26; }
-  .setting-journey__welcome { margin-top:22px; font-size:.58rem; }
-}
-@media (prefers-reduced-motion:reduce) {
-  .setting-journey__scroll i { animation:none; }
-}
-
-</style>
-<style>html{color-scheme:dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-</head>
-<body>
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+/* Refined photographic reveal, not a neon or injury effect. */
+.portrait-card.is-open .portrait-card__image .portrait-card__reveal-img{filter:saturate(.63) contrast(1.08) brightness(.88)}
+.portrait-card.is-open .portrait-card__image .portrait-card__surface-img{filter:saturate(.82) contrast(1.02) brightness(.98)}
+.portrait-card--girl.is-open .portrait-card__image .portrait-card__surface-img{filter:saturate(.93) contrast(1) brightness(1)}
+.portrait-card:not(.portrait-card--girl).is-open{box-shadow:0 16px 55px rgba(0,0,0,.5),0 0 12px rgba(135,165,205,.1),inset 0 0 0 1px rgba(172,192,216,.2)}
+.journey-map .leaflet-container{background:transparent!important}
+.journey-map .leaflet-tile{image-rendering:auto}
+.journey-map.is-fallback{background:url('assets/street-day.jpg') center/cover no-repeat}
+</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="logo-black-art" viewBox="71 19 2296 223"><g fill="#e8e8e8"><path d="M71.051,197.131V62.912h45.877c32.986,0,48.342,13.08,48.342,35.071,0,13.649-8.531,24.834-21.612,28.436v.569c17.63,4.17,27.488,15.355,27.488,32.038,0,24.645-16.683,38.104-53.65,38.104h-46.446ZM104.227,117.7h11.753c12.512,0,18.579-5.119,18.579-15.166,0-9.479-6.066-14.219-19.526-14.219h-10.806v29.385ZM104.227,170.97h11.753c16.683,0,23.508-5.498,23.508-16.304,0-10.427-7.204-16.114-22.56-16.114h-12.702v32.418Z" /><path d="M305.368,62.912h33.176v104.835h55.735l-3.602,29.384h-85.309V62.912Z" /><path d="M601.677,62.912l48.911,133.271-.758.948h-36.588l-8.152-24.645h-46.825l-7.962,24.645h-36.02l-.758-.948,49.479-133.271h38.673ZM565.658,149.358h31.849l-7.204-22.18c-2.654-8.342-6.256-22.37-8.342-34.882h-.568c-2.275,12.512-5.877,26.54-8.531,35.071l-7.204,21.99Z" /><path d="M767.18,130.401c0-42.844,28.815-71.28,68.626-71.28,16.303,0,31.28,4.55,45.688,13.46l-4.739,32.038h-1.138c-11.185-9.668-23.697-14.787-36.398-14.787-22.18,0-36.588,15.925-36.588,40.001,0,24.455,14.597,40.379,37.157,40.379,12.512,0,25.403-5.118,36.588-14.787h1.137l4.55,31.85c-14.218,8.909-29.763,13.648-46.066,13.648-40.948,0-68.816-28.246-68.816-70.521Z" /><path d="M1091.546,119.406l50.048,76.588-.758,1.138h-37.915l-33.555-52.133-15.166,17.44v34.692h-33.176V62.912h33.176v21.611c0,11.185-.758,26.351-1.517,38.862h.569c7.204-10.427,13.27-18.768,20.095-27.108l27.868-33.365h37.915l.569,1.137-48.152,55.356Z" /></g></symbol>
 <symbol id="logo-light-art" viewBox="71 19 2296 223"><image href="assets/glow.webp" x="1237.9" y="18.8" width="1129" height="223" opacity="1"/><g fill="#b9fcf5" transform="translate(1207.331 0)"><path d="M71.282,62.913h33.176v104.835h55.735v29.384h-88.911V62.913Z" /><path d="M300.815,62.913h33.176v134.219h-33.176V62.913Z" /><path d="M479.919,130.78c0-42.844,30.522-71.659,70.901-71.659,21.232,0,38.294,6.635,51.375,14.598l-5.688,31.469h-1.137c-12.133-9.289-25.782-15.924-41.896-15.924-24.266,0-38.104,16.872-38.104,41.517,0,24.455,13.08,40.569,33.934,40.569,7.772,0,14.787-1.706,21.991-5.308v-20.475h-23.318v-22.749h53.081v63.318c-20.474,11.563-36.777,14.786-53.46,14.786-41.706,0-67.679-28.814-67.679-70.143Z" /><path d="M837.226,62.913h32.986v134.219h-32.986v-53.271h-51.186v53.271h-33.176V62.913h33.176v52.133h51.186v-52.133Z" /><path d="M1119.271,62.913v30.521h-38.294v103.697h-32.985v-103.697h-38.295v-30.521h109.574Z" /></g></symbol>
@@ -832,673 +73,188 @@ footer .tagline { width: min(100%, 880px); }
     </symbol>
   </defs>
 </svg>
-
-<header class="topbar" id="topbar">
-  <a href="#top" aria-label="BLACKLIGHT, back to top"><svg class="topbar__logo" viewBox="71 55 2255 150" role="img" aria-label="BLACKLIGHT"><g fill="#e8e8e8"><path d="M71.051,197.131V62.912h45.877c32.986,0,48.342,13.08,48.342,35.071,0,13.649-8.531,24.834-21.612,28.436v.569c17.63,4.17,27.488,15.355,27.488,32.038,0,24.645-16.683,38.104-53.65,38.104h-46.446ZM104.227,117.7h11.753c12.512,0,18.579-5.119,18.579-15.166,0-9.479-6.066-14.219-19.526-14.219h-10.806v29.385ZM104.227,170.97h11.753c16.683,0,23.508-5.498,23.508-16.304,0-10.427-7.204-16.114-22.56-16.114h-12.702v32.418Z" /><path d="M305.368,62.912h33.176v104.835h55.735l-3.602,29.384h-85.309V62.912Z" /><path d="M601.677,62.912l48.911,133.271-.758.948h-36.588l-8.152-24.645h-46.825l-7.962,24.645h-36.02l-.758-.948,49.479-133.271h38.673ZM565.658,149.358h31.849l-7.204-22.18c-2.654-8.342-6.256-22.37-8.342-34.882h-.568c-2.275,12.512-5.877,26.54-8.531,35.071l-7.204,21.99Z" /><path d="M767.18,130.401c0-42.844,28.815-71.28,68.626-71.28,16.303,0,31.28,4.55,45.688,13.46l-4.739,32.038h-1.138c-11.185-9.668-23.697-14.787-36.398-14.787-22.18,0-36.588,15.925-36.588,40.001,0,24.455,14.597,40.379,37.157,40.379,12.512,0,25.403-5.118,36.588-14.787h1.137l4.55,31.85c-14.218,8.909-29.763,13.648-46.066,13.648-40.948,0-68.816-28.246-68.816-70.521Z" /><path d="M1091.546,119.406l50.048,76.588-.758,1.138h-37.915l-33.555-52.133-15.166,17.44v34.692h-33.176V62.912h33.176v21.611c0,11.185-.758,26.351-1.517,38.862h.569c7.204-10.427,13.27-18.768,20.095-27.108l27.868-33.365h37.915l.569,1.137-48.152,55.356Z" /></g><g fill="#b9fcf5" transform="translate(1207.331 0)"><path d="M71.282,62.913h33.176v104.835h55.735v29.384h-88.911V62.913Z" /><path d="M300.815,62.913h33.176v134.219h-33.176V62.913Z" /><path d="M479.919,130.78c0-42.844,30.522-71.659,70.901-71.659,21.232,0,38.294,6.635,51.375,14.598l-5.688,31.469h-1.137c-12.133-9.289-25.782-15.924-41.896-15.924-24.266,0-38.104,16.872-38.104,41.517,0,24.455,13.08,40.569,33.934,40.569,7.772,0,14.787-1.706,21.991-5.308v-20.475h-23.318v-22.749h53.081v63.318c-20.474,11.563-36.777,14.786-53.46,14.786-41.706,0-67.679-28.814-67.679-70.143Z" /><path d="M837.226,62.913h32.986v134.219h-32.986v-53.271h-51.186v53.271h-33.176V62.913h33.176v52.133h51.186v-52.133Z" /><path d="M1119.271,62.913v30.521h-38.294v103.697h-32.985v-103.697h-38.295v-30.521h109.574Z" /></g></svg></a>
-  <nav aria-label="Sections">
-    <a href="#world" class="hide-s">World</a>
-    <a href="#trailer" class="hide-s">Trailer</a>
-    <a href="#story" class="hide-s">Story</a>
-    <a href="#characters" class="hide-s">Characters</a>
-    <a href="#setting" class="hide-s">Setting</a>
-    <a href="#interest" class="btn">Register interest</a>
-  </nav>
-</header>
-<style>@media (max-width: 760px) { .hide-s { display: none !important; } }</style>
-
-<aside class="rail rail--l" aria-hidden="true"><span>Scroll to descend</span><i class="rail__line"><b id="mark"></b></i></aside>
-<aside class="rail rail--r" aria-hidden="true"><span id="depth">Depth 0 m</span><span id="clock">Andamooka</span></aside>
-
-<main>
-<section class="hero uv" id="top" data-home=".72,.40" data-uv>
-  <div class="hero__stage" role="img" aria-label="Three figures before a rusted mine headframe in red desert country; the Ghost remains obscured in shadow.">
-    <div class="hero__base bg-hero"></div>
-    <div class="hero__lit uv__lit bg-hero"></div>
-    <div class="uv__glow"></div>
-    <div class="hero__ghost-shadow" aria-hidden="true"></div>
-    <div class="hero__shade"></div>
-  </div>
-  <div class="hero__copy">
-    <div class="hero__brand" id="hero-brand" role="img" aria-label="BLACKLIGHT">
-      <svg class="logo logo--base" viewBox="71 19 2296 223" aria-hidden="true"><use href="#logo-black-art" width="2296" height="223"/></svg>
-      <svg class="logo logo--light" viewBox="71 19 2296 223" aria-hidden="true"><use href="#logo-light-art" width="2296" height="223"/></svg>
-      <p class="hero__torch-hint"><span class="hero__hint-desktop">MOVE THE LIGHT TO REVEAL</span><span class="hero__hint-mobile">TAP THE WORD TO REVEAL</span><i aria-hidden="true">↗</i></p>
-    </div>
-    <svg class="tagline" viewBox="0 0 2288 70" role="img" aria-label="Some colours don't wash out."><use href="#tag-art" width="2288" height="70"/></svg>
-    <div class="hero__row">
-      <dl class="facts">
-        <div><dt>Film</dt><dd>Crime drama and psychological thriller</dd></div>
-        <div><dt>Place</dt><dd>Andamooka, South Australia, late 1980s</dd></div>
-        <div><dt>Status</dt><dd>In pre-production</dd></div>
-      </dl>
-      <div class="hero__cta">
-        <a class="btn" href="#interest">Register interest</a>
-        <a class="btn btn--line" href="#trailer">Teaser</a>
-      </div>
-    </div>
+<a class="skip" href="#content">Skip to story</a>
+<header class="mini-nav" aria-label="Page controls"><a href="#top" class="mini-nav__home" aria-label="Back to BLACKLIGHT hero">BLACKLIGHT</a><a href="#characters" class="mini-nav__skip">Explore characters ↘</a></header>
+<main id="content">
+<section class="hero" id="top" aria-label="BLACKLIGHT film introduction">
+  <div class="hero-bg" role="img" aria-label="Three figures in the desert; the left-hand figure remains obscured by shadow"></div><div class="hero-ghost" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div>
+  <div class="hero-inner wrap">
+    <div class="wordmark" role="img" aria-label="BLACKLIGHT"><svg viewBox="71 19 2296 223" aria-hidden="true"><use href="#logo-black-art" width="2296" height="223"></use><use href="#logo-light-art" width="2296" height="223"></use></svg></div>
+    <p class="hero-line">An outsider arrives. The town shows her one face. It has another.</p>
+    <div class="hero-controls"><a class="text-link" href="#dig-deeper">Enter the world ↓</a><span class="hero-disclaimer">A feature film in development</span></div>
   </div>
 </section>
-
-
-<section class="window-world" id="world" aria-labelledby="world-title">
-  <div class="window-world__head wrap">
-    <div>
-      <p class="window-world__eyebrow util">BLACKLIGHT / ANDAMOOKA / SOUTH AUSTRALIA</p>
-      <h2 class="window-world__title" id="world-title">LOOK<br>CLOSER<span>.</span></h2>
-    </div>
-    <div>
-      <p class="window-world__intro">A town built on secrets. A world that shifts with the light. Step inside the fragments that make BLACKLIGHT.</p>
-      <div class="window-world__tools">
-        <button class="motion-control" id="motion-control" type="button" aria-pressed="true">
-          <span class="motion-control__glyph" aria-hidden="true">Ⅱ</span><span id="motion-label">Pause motion</span>
+<section class="threshold" id="dig-deeper"><div class="wrap"><h2>DIG DEEPER</h2><p>Some places don't give up their secrets. You have to go beneath the surface.</p><a href="#setting" class="arrow" aria-label="Descend to the setting">↓</a></div></section>
+<section class="journey" id="setting" aria-label="Geographic journey into the setting">
+  <div class="journey-track" id="journey-track"><div class="journey-screen">
+    <div class="journey-map" id="journey-map" aria-hidden="true"></div>
+    <div class="journey-fade" id="journey-fade" aria-hidden="true"></div>
+    <div class="journey-arrival" id="journey-arrival" role="img" aria-label="An underground passage in the Australian outback"></div>
+    <div class="journey-vignette" aria-hidden="true"></div>
+    <div class="journey-guidance" id="journey-guidance">AUSTRALIA<span>SCROLL TO DESCEND ↓</span></div>
+    <div class="journey-arrival-copy" id="journey-arrival-copy"><h2>ANDAMOOKA</h2><p>A town as unforgiving on the surface as the underworld beneath it. Here, debts, secrets and loyalties are written in stone.</p></div>
+    <div class="journey-progress" aria-hidden="true"><span id="journey-progress-fill"></span></div>
+  </div></div>
+</section>
+<section class="characters" id="characters" aria-labelledby="characters-title">
+  <div class="wrap">
+    <header class="characters-header"><h2 id="characters-title">TRUE COLOURS<br>DON'T STAY<br>BURIED FOREVER.</h2><p>Every face tells one story. Underneath, another. Select a portrait to see what lies beneath.</p></header>
+    <div class="portrait-grid" id="portrait-grid">
+      <article class="portrait-card" data-character="father">
+        <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="father-depth" aria-label="Reveal the Father's private conflicts">
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/father.jpg" alt="The Father, in work clothes against the desert" loading="lazy"><img class="portrait-card__reveal-img" src="assets/father.jpg" alt="The Father's guarded, weary expression" loading="lazy" aria-hidden="true"></div>
+          <div class="portrait-card__surface"><span class="portrait-card__name">THE FATHER</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>A charismatic miner. One strike away from everything.</p></div>
         </button>
-        <span class="small">Select a frame to explore</span>
-      </div>
-    </div>
-  </div>
-  <div class="window-stage" id="window-stage" aria-label="Moving windows into the world of BLACKLIGHT">
-    <p class="window-stage__word" aria-hidden="true">BENEATH<br>THE SURFACE</p>
-    <button class="film-window window--a" type="button" data-depth="1.3" data-kicker="THE TOWN" data-title="A place of its own" data-copy="Andamooka. Red earth, long shadows and a town shaped by what lies beneath it." aria-label="Explore the town of Andamooka">
-      <img src="assets/street-day.jpg" alt="Andamooka's red dirt main street at dusk" loading="lazy"><span class="film-window__label"><b>01 / THE TOWN</b><span>AT DUSK</span></span>
-    </button>
-    <button class="film-window window--b" type="button" data-depth="2.1" data-kicker="THE GHOST" data-title="Everyone has a price" data-copy="Taj is the town's unofficial power broker. Part criminal, part folk hero. Easy to like. Hard to escape." aria-label="Explore the Ghost, Taj">
-      <img src="assets/taj.jpg" alt="Portrait of Taj, the Ghost" loading="lazy"><span class="film-window__label"><b>02 / THE GHOST</b><span>TAJ</span></span>
-    </button>
-    <button class="film-window window--c" type="button" data-depth="1" data-kicker="AFTER DARK" data-title="The other side of town" data-copy="By day the town works its claims. By night it settles its debts." aria-label="Explore Andamooka after dark">
-      <img src="assets/street-night.jpg" alt="Andamooka street at night" loading="lazy"><span class="film-window__label"><b>03 / AFTER DARK</b><span>THE DEBTS</span></span>
-    </button>
-    <button class="film-window window--d" type="button" data-depth="1.8" data-kicker="THE SON" data-title="Two heroes" data-copy="A teenager caught between the two men he admires most. Until one terrible choice changes everything." aria-label="Explore the Son">
-      <img src="assets/son.jpg" alt="Portrait of the Son" loading="lazy"><span class="film-window__label"><b>04 / THE SON</b><span>THE CHOICE</span></span>
-    </button>
-    <button class="film-window window--e" type="button" data-depth="2.5" data-kicker="THE FATHER" data-title="One find from everything" data-copy="A charismatic miner chasing the big strike. He answers to nobody, but leans on Taj more than he admits." aria-label="Explore the Father">
-      <img src="assets/father.jpg" alt="Portrait of the Father" loading="lazy"><span class="film-window__label"><b>05 / THE FATHER</b><span>THE FIND</span></span>
-    </button>
-    <button class="film-window window--f" type="button" data-depth="2.8" data-kicker="THE DIGGINGS" data-title="An underworld" data-copy="Hand-cut shafts, white clay and rust-red rock. The ground keeps its own secrets." aria-label="Explore the opal diggings">
-      <img src="assets/mine.jpg" alt="A cut mine face in Andamooka" loading="lazy"><span class="film-window__label"><b>06 / THE DIGGINGS</b><span>BELOW</span></span>
-    </button>
-    <button class="film-window window--g" type="button" data-depth="1.5" data-kicker="DEEP TIME" data-title="Before the town" data-copy="Long before the miners, this country sat beneath an inland sea. The colour they chase is part of that ancient story." aria-label="Explore the ancient inland sea">
-      <img src="assets/sea.jpg" alt="Concept art of an ancient inland sea" loading="lazy"><span class="film-window__label"><b>07 / DEEP TIME</b><span>100M YEARS</span></span>
-    </button>
-  </div>
-  <div class="window-world__foot wrap">
-    <p class="small">A closer look at the world of BLACKLIGHT</p>
-    <p class="small window-count">07 FRAMES <span aria-hidden="true">↗</span></p>
-  </div>
-</section>
-<div class="window-marquee" aria-hidden="true"><div class="window-marquee__track"><span>THE TOWN REMEMBERS <b>✳</b></span><span>THE EARTH KEEPS SECRETS <b>✳</b></span><span>NOTHING STAYS BURIED <b>✳</b></span><span>THE TOWN REMEMBERS <b>✳</b></span><span>THE EARTH KEEPS SECRETS <b>✳</b></span><span>NOTHING STAYS BURIED <b>✳</b></span></div></div>
-
-<section class="trailer cut" id="trailer" aria-labelledby="t-h">
-  <div class="wrap">
-    <div class="trailer__head">
-      <h2 class="h-xl" id="t-h">Trailer</h2>
-      <p class="lede">A first look at the colour, the country and the three men at the centre of it.</p>
-    </div>
-    <div class="frame" id="frame">
-      <video id="vid" controls playsinline preload="none" hidden></video>
-      <div class="slate" id="slate">
-        <div class="slate__img"></div><div class="slate__tint"></div>
-        <button class="play" id="play" type="button" aria-label="Play the teaser"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2.5v19l16-9.5z"/></svg></button>
-        <p class="slate__cap small">Teaser, in the edit</p>
-      </div>
-    </div>
-    <p class="trailer__note" id="tnote" role="status"></p>
-  </div>
-</section>
-
-<section class="story cut excavation" id="story" aria-label="The BLACKLIGHT synopsis">
-  <div class="excavation__intro wrap">
-    <div>
-      <p class="util excavation__eyebrow">THE SYNOPSIS / A DESCENT INTO BLACKLIGHT</p>
-      <h2 class="excavation__title">EVERYTHING<br>HAS A DEPTH<span>.</span></h2>
-    </div>
-    <div class="excavation__intro-copy">
-      <p>In Andamooka, the best things are buried. So are the worst.</p>
-      <p class="small">Start at the surface. Scroll down. See what comes to light.</p>
-      <a class="excavation__start" href="#excavation-01">BEGIN THE DESCENT <span aria-hidden="true">↓</span></a>
-    </div>
-  </div>
-
-  <figure class="excavation__surface wrap" aria-label="Andamooka at dusk, above and below ground">
-    <div class="excavation__surface-day"><span class="util">THE SURFACE / DUSK</span></div>
-    <div class="excavation__surface-night"><span class="util">AFTER DARK</span></div>
-    <figcaption class="small">By day, the town works its claims. By night, it settles its debts.</figcaption>
-  </figure>
-
-  <div class="excavation__layout wrap">
-    <aside class="excavation__visual" id="excavation-visual" aria-label="A cutaway view of the opal diggings. The depth marker moves as the synopsis is explored.">
-      <div class="excavation__visual-top">
-        <span class="util">FIELD / ANDAMOOKA</span>
-        <span class="util">LATE 1980s</span>
-      </div>
-      <div class="excavation__cross-section" aria-hidden="true">
-        <div class="excavation__strata excavation__strata--one"></div>
-        <div class="excavation__strata excavation__strata--two"></div>
-        <div class="excavation__strata excavation__strata--three"></div>
-        <div class="excavation__strata excavation__strata--four"></div>
-        <div class="excavation__shaft-wall"></div>
-        <div class="excavation__shaft">
-          <span class="excavation__rope"></span>
-          <span class="excavation__bucket"></span>
-          <span class="excavation__marker" id="excavation-marker"></span>
-        </div>
-        <svg class="excavation__opal" viewBox="0 0 460 180" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="opal-seam" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#a5f5e9" stop-opacity=".1"/>
-              <stop offset=".35" stop-color="#9bf6ed"/>
-              <stop offset=".58" stop-color="#f5a3d0"/>
-              <stop offset=".78" stop-color="#e7dcff"/>
-              <stop offset="1" stop-color="#a5f5e9" stop-opacity=".15"/>
-            </linearGradient>
-            <filter id="opal-glow"><feGaussianBlur stdDeviation="7"/></filter>
-          </defs>
-          <path d="M8 116 C58 100 75 123 119 105 S190 76 226 91 S302 116 345 80 S410 58 452 67" fill="none" stroke="url(#opal-seam)" stroke-width="15" opacity=".6" filter="url(#opal-glow)"/>
-          <path d="M8 116 C58 100 75 123 119 105 S190 76 226 91 S302 116 345 80 S410 58 452 67" fill="none" stroke="url(#opal-seam)" stroke-width="4"/>
-          <path d="M48 142 L98 119 L144 133 L189 104 L243 119 L288 132 L338 103 L392 93" fill="none" stroke="#d9fff9" stroke-width="1" opacity=".72"/>
-        </svg>
-      </div>
-      <div class="excavation__meter" aria-hidden="true"><span id="excavation-meter-fill"></span></div>
-      <div class="excavation__visual-bottom" aria-live="polite" aria-atomic="true">
-        <div><span class="util">CURRENT DEPTH</span><strong id="excavation-depth">0 <small>m</small></strong></div>
-        <span class="excavation__visual-note" id="excavation-layer">THE SURFACE</span>
-      </div>
-    </aside>
-
-    <div class="excavation__chapters" id="excavation-chapters">
-      <article class="excavation__chapter is-active" id="excavation-01" data-depth="0" data-layer="THE SURFACE">
-        <p class="excavation__chapter-meta"><span>01 / THE SURFACE</span><span>0 METRES</span></p>
-        <h3>Above, red dirt.<br>Below, a labyrinth.</h3>
-        <p>Andamooka. Late 1980s. Above ground: dust and heat. Beneath it: hand-cut shafts running in every direction. Opal promises fortune. Every claim carries a debt.</p>
+        <div class="portrait-card__depth" id="father-depth" role="region" aria-label="The Father's private nature"><div class="portrait-card__depth-inner"><h3>What he conceals</h3><p>His pride is stronger than his judgement. He wants his son's admiration, but cannot face what protecting him may cost.</p><dl><div><dt>Age</dt><dd>Adult — age to be finalised</dd></div><div><dt>What he wants</dt><dd>The find that will vindicate his life.</dd></div><div><dt>What he hides</dt><dd>Dependence, denial and fear of failure.</dd></div></dl></div></div>
       </article>
-
-      <article class="excavation__chapter" id="excavation-02" data-depth="6" data-layer="THE GHOST">
-        <p class="excavation__chapter-meta"><span>02 / THE GHOST</span><span>6 METRES</span></p>
-        <h3>Taj takes<br>a percentage.</h3>
-        <p>Part criminal, part folk hero. Taj settles disputes and takes his cut. His charm makes him easy to like. That's what makes him dangerous.</p>
+      <article class="portrait-card" data-character="son">
+        <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="son-depth" aria-label="Reveal the Son's private conflicts">
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/son.jpg" alt="The Son, a young man standing in the outback" loading="lazy"><img class="portrait-card__reveal-img" src="assets/son.jpg" alt="The Son's troubled, conflicted expression" loading="lazy" aria-hidden="true"></div>
+          <div class="portrait-card__surface"><span class="portrait-card__name">THE SON</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>A boy searching for someone worth becoming.</p></div>
+        </button>
+        <div class="portrait-card__depth" id="son-depth" role="region" aria-label="The Son's private nature"><div class="portrait-card__depth-inner"><h3>What he carries</h3><p>He loves the Father and admires the Ghost. The Girl changes what he believes about both. His idea of justice will take him somewhere he cannot return from.</p><dl><div><dt>Age</dt><dd>Teenager — age to be finalised</dd></div><div><dt>What he wants</dt><dd>Belonging, approval and a way to do right.</dd></div><div><dt>What he hides</dt><dd>Rage, confusion and a capacity for violence.</dd></div></dl></div></div>
       </article>
-
-      <article class="excavation__chapter" id="excavation-03" data-depth="14" data-layer="THE FATHER">
-        <p class="excavation__chapter-meta"><span>03 / THE FATHER</span><span>14 METRES</span></p>
-        <h3>One find<br>from everything.</h3>
-        <p>A charismatic miner chasing the big strike. He drinks. He answers to nobody—though he leans on Taj more than he would ever admit.</p>
+      <article class="portrait-card" data-character="ghost">
+        <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="ghost-depth" aria-label="Reveal the Ghost's private conflicts">
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/taj.jpg" alt="The Ghost, a charming but watchful man" loading="lazy"><img class="portrait-card__reveal-img" src="assets/taj.jpg" alt="The Ghost's watchful expression" loading="lazy" aria-hidden="true"></div>
+          <div class="portrait-card__surface"><span class="portrait-card__name">THE GHOST</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>The man who knows everyone. And what they owe.</p></div>
+        </button>
+        <div class="portrait-card__depth" id="ghost-depth" role="region" aria-label="The Ghost's private nature"><div class="portrait-card__depth-inner"><h3>What he never shows</h3><p>Part folk hero, part power broker. His protection is genuine, but it always comes with a price. Being needed is how he maintains control.</p><dl><div><dt>Age</dt><dd>Adult — age to be finalised</dd></div><div><dt>What he wants</dt><dd>Loyalty and influence.</dd></div><div><dt>What he hides</dt><dd>The cost of every favour.</dd></div></dl></div></div>
       </article>
-
-      <article class="excavation__chapter" id="excavation-04" data-depth="22" data-layer="THE SON">
-        <p class="excavation__chapter-meta"><span>04 / THE SON</span><span>22 METRES</span></p>
-        <h3>Two heroes.<br>One terrible choice.</h3>
-        <p>The son idolises his father. He idolises Taj. When a girl he cares about is harmed by an older man the town prefers not to see, he goes into the diggings to confront him. The man never comes back.</p>
+      <article class="portrait-card" data-character="mother">
+        <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="mother-depth" aria-label="Reveal the Mother's private conflicts">
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/characters/mother.webp" alt="Concept portrait of the Mother, a thoughtful red-haired woman" loading="lazy"><img class="portrait-card__reveal-img" src="assets/characters/mother.webp" alt="The Mother, tired and overwhelmed" loading="lazy" aria-hidden="true"></div>
+          <div class="portrait-card__surface"><span class="portrait-card__name">THE MOTHER</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>The steady centre of a family under pressure.</p></div>
+        </button>
+        <div class="portrait-card__depth" id="mother-depth" role="region" aria-label="The Mother's private nature"><div class="portrait-card__depth-inner"><h3>What she hides</h3><p>She can see the fractures long before anyone names them. Understanding the damage is not the same as having the power to prevent it.</p><dl><div><dt>Age</dt><dd>Adult — age to be finalised</dd></div><div><dt>What she wants</dt><dd>To keep her family from breaking.</dd></div><div><dt>What she hides</dt><dd>Exhaustion, anger and fear.</dd></div></dl></div></div>
       </article>
-
-      <article class="excavation__chapter excavation__chapter--rupture" id="excavation-05" data-depth="30" data-layer="THE RUPTURE">
-        <p class="excavation__chapter-meta"><span>05 / THE RUPTURE</span><span>30 METRES</span></p>
-        <h3>The truth<br>divides them.</h3>
-        <p>The father hides what happened. Taj takes the boy's side. Father and son are driven apart, while the mother sees the damage and cannot stop it.</p>
-      </article>
-
-      <article class="excavation__chapter excavation__chapter--deeper" id="excavation-06" data-depth="38" data-layer="DEEPER">
-        <p class="excavation__chapter-meta"><span>06 / DEEPER</span><span>38 METRES</span></p>
-        <h3>The rest stays<br>underground.</h3>
-        <p>Some things are left to be found. The full treatment and screenplay are available to prospective cast, crew and financing partners.</p>
-        <a class="excavation__request" href="#interest">REQUEST THE TREATMENT <span aria-hidden="true">↗</span></a>
+      <article class="portrait-card portrait-card--girl" data-character="girl">
+        <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="girl-depth" aria-label="Reveal the Girl's place in the story">
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/characters/girl.webp" alt="Concept portrait of the Girl, a teenage brunette from the town" loading="lazy"></div>
+          <div class="portrait-card__surface"><span class="portrait-card__name">THE GIRL</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>Funny, independent, and familiar with the town's rough edges.</p></div>
+        </button>
+        <div class="portrait-card__depth" id="girl-depth" role="region" aria-label="The Girl's character"><div class="portrait-card__depth-inner"><h3>Her own story</h3><p>She knows the town's rough edges, but she won't allow what happened to her to become another secret controlled by men. Her choices and refusal to be defined by the violence around her reveal what others would rather conceal.</p><dl><div><dt>Age</dt><dd>Mid-teens — age to be finalised</dd></div><div><dt>What she wants</dt><dd>Connection, trust and a place to belong.</dd></div><div><dt>What she reveals</dt><dd>The town's true colours.</dd></div></dl></div></div>
       </article>
     </div>
-  </div>
-
-  <p class="advisory small wrap">Content advisory for readers of the treatment: violence, sexual assault (never shown on screen), alcohol and coarse language. Intended for mature audiences.</p>
-</section>
-
-<section class="chars cut" id="characters" aria-labelledby="c-h">
-  <div class="wrap chars__head">
-    <h2 class="h-xl" id="c-h">Who owes whom</h2>
-    <p class="lede">Three men at the centre. Two people who see what it costs.</p>
-  </div>
-  <div class="panels">
-    <article class="panel">
-      <img src="assets/taj.jpg" alt="The Ghost, a bearded man in a dusty tan work shirt, arms crossed, looking off to one side." loading="lazy">
-      <div class="panel__txt"><p class="role util">Power broker</p><h3>The Ghost</h3><p>Taj is part criminal, part folk hero. He takes a percentage and settles disputes. Charming, and dangerous.</p></div>
-    </article>
-    <article class="panel">
-      <img src="assets/son.jpg" alt="The Son, a curly-haired teenager in a mud-streaked grey work shirt, hands in his pockets." loading="lazy">
-      <div class="panel__txt"><p class="role util">Teenager</p><h3>The Son</h3><p>A teenager who idolises his father and Taj. He is about to learn what each of them will do for him.</p></div>
-    </article>
-    <article class="panel">
-      <img src="assets/father.jpg" alt="The Father, a dark-haired man with a beard in a red check flannel shirt, a mine headframe behind him." loading="lazy">
-      <div class="panel__txt"><p class="role util">Miner</p><h3>The Father</h3><p>A charismatic miner chasing the big find. He drinks, answers to nobody, and needs Taj more than he admits.</p></div>
-    </article>
-  </div>
-  <div class="wrap minor">
-    <article><p class="role util small">The Girl</p><h3>The Girl</h3><p>The son's friend, in her mid-teens. The film treats what happens to her with restraint and never shows it.</p></article>
-    <article><p class="role util small">The Mother</p><h3>The Mother</h3><p>She sees the damage before anyone says it aloud, and has no power to stop it.</p></article>
+    <p class="portrait-foot">SELECT A FACE TO <em>REVEAL THE DEPTH BENEATH.</em> &nbsp; / &nbsp; CONCEPT CHARACTER PORTRAITS.</p>
   </div>
 </section>
-
-<section class="setting-journey" id="setting" aria-label="A journey into Andamooka">
-  <div class="setting-journey__track" id="setting-journey-track">
-    <div class="setting-journey__viewport" id="setting-journey-viewport">
-      <div class="setting-journey__maps" aria-hidden="true">
-        <div class="setting-journey__frame journey-frame--1"></div>
-        <div class="setting-journey__frame journey-frame--2"></div>
-        <div class="setting-journey__frame journey-frame--3"></div>
-        <div class="setting-journey__frame journey-frame--4"></div>
-        <div class="setting-journey__frame journey-frame--5"></div>
-        <div class="setting-journey__frame journey-frame--6"></div>
-        <div class="setting-journey__frame journey-frame--7"></div>
-        <div class="setting-journey__frame journey-frame--8"></div>
-        <div class="setting-journey__frame journey-frame--9"></div>
-      </div>
-      <div class="setting-journey__surface" id="setting-journey-surface" aria-hidden="true"></div>
-      <div class="setting-journey__arrival" id="setting-journey-arrival" role="img" aria-label="A dark passage cut through the red and white rock beneath Andamooka."></div>
-      <div class="setting-journey__vignette" aria-hidden="true"></div>
-
-      <div class="setting-journey__hud" id="setting-journey-hud" aria-live="polite">
-        <p class="util">BLACKLIGHT / THE SETTING</p>
-        <p class="setting-journey__location" id="setting-journey-location">AUSTRALIA</p>
-        <span class="setting-journey__scroll util">SCROLL TO ARRIVE <i aria-hidden="true">↓</i></span>
-      </div>
-
-      <div class="setting-journey__arrival-copy" id="setting-journey-copy">
-        <p class="util">THE SETTING / BLACKLIGHT</p>
-        <h2>ANDAMOOKA</h2>
-        <p class="setting-journey__line">On the surface, a town shaped by the desert. Beneath it, an underworld of debts, secrets and rules written in stone.</p>
-        <p class="setting-journey__welcome util">WELCOME TO THE UNDERWORLD.</p>
-      </div>
-      <div class="setting-journey__progress" aria-hidden="true"><span id="setting-journey-progress"></span></div>
+<section class="story" id="story" aria-labelledby="story-title"><div class="wrap">
+  <div class="story-head"><h2 id="story-title">THE STORY</h2><p>One newcomer. One irreversible act. And a town that would rather keep its secrets.</p></div>
+  <div class="story-body">
+    <aside class="depth-track" aria-hidden="true"><span>0 M</span><div class="depth-track__line"><span class="depth-track__fill" id="depth-fill"></span></div><span>38 M</span></aside>
+    <div class="story-beats" id="story-beats">
+      <article class="story-beat" data-depth="0" data-key="light"><h3>THE WORLD AS IT APPEARS.</h3><p>A teenage girl and a miner's son share jokes, loyalty and a friendship neither quite knows how to name. Around them, Andamooka is harsh, generous, strange and full of unwritten rules.</p></article>
+      <article class="story-beat" data-depth="6"><h3>TWO MEN. TWO KINDS OF LOYALTY.</h3><p>The Son looks up to his larger-than-life Father and the charming, influential Ghost. Each offers a different idea of what loyalty means.</p></article>
+      <article class="story-beat" data-depth="14"><h3>THE TOWN HAS ITS OWN RULES.</h3><p>Claims, favours and debts bind the town together. The Ghost settles disputes. The Father chases one final big find. Everybody knows more than they say.</p></article>
+      <article class="story-beat" data-depth="22"><h3>THE SURFACE BREAKS.</h3><p>After a local man sexually assaults the Girl, the town's silence becomes impossible to ignore. She resists becoming someone else's story. The Son, overwhelmed by anger, wants to make things right.</p></article>
+      <article class="story-beat" data-depth="30"><h3>ONE CHOICE CANNOT BE UNDONE.</h3><p>The Son confronts the perpetrator among the diggings. The man dies. The Father conceals what happened, believing he can save his son by burying the truth.</p></article>
+      <article class="story-beat" data-depth="38"><h3>THE TRUTH DIVIDES THEM.</h3><p>The Ghost knows what the Son did—and offers acceptance without pretence. The harder the Father tries to keep them apart, the closer the boy moves to the Ghost. The Mother watches the family fracture, while the Girl refuses to disappear beneath their secrets.</p></article>
     </div>
   </div>
-</section>
-
-<section class="close uv cut" id="interest" aria-labelledby="i-h" data-home=".5,.28">
-  <div class="uv__base"></div>
-  <div class="uv__lit"><canvas data-opal="1.25" aria-hidden="true"></canvas></div>
-  <div class="uv__glow"></div>
-  <div class="close__in wrap">
-    <h2 class="h-xl" id="i-h">What'd you get?</h2>
-    <div class="close__grid">
-      <div>
-        <p class="lede">BLACKLIGHT is in pre-production. We're looking for investors and funding partners, cast and crew, distributors, and people in and around Andamooka who want to be part of it. Tell us what you'd bring.</p>
-      </div>
-      <form class="card" id="eoi" autocomplete="on" novalidate>
-        <div class="field"><label for="f-role">I'm interested as</label>
-          <select id="f-role" name="role">
-            <option>An investor or funding partner</option>
-            <option>Cast or an agent</option>
-            <option>Crew</option>
-            <option>A distributor or sales agent</option>
-            <option>A local, a supplier or a location owner</option>
-            <option>Press</option>
-            <option>Something else</option>
-          </select></div>
-        <div class="pair">
-          <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name"></div>
-          <div class="field"><label for="f-org">Company or agency</label><input id="f-org" name="org" type="text" autocomplete="organization"></div>
-        </div>
-        <div class="field"><label for="f-msg">What would you bring?</label><textarea id="f-msg" name="msg" placeholder="A line or two is plenty."></textarea></div>
-        <div class="actions">
-          <a class="btn" id="mailto" href="mailto:info@australianprovenanceproject.com.au">Open in your email app</a>
-        </div>
-        <p class="status small" id="status" role="status">This fills in an email for you to send. Nothing is sent from this page.</p>
-        <div class="addr">
-          <span class="small">Or write to</span>
-          <code id="addr">info@australianprovenanceproject.com.au</code>
-          <button class="copy-btn" id="copy" type="button">Copy</button>
-        </div>
-      </form>
-    </div>
+  <p class="story-advisory">The full treatment contains mature themes, including violence and sexual assault. The incident is not depicted on screen.</p>
+</div></section>
+<section class="treatment" id="interest" aria-labelledby="claim-title"><div class="wrap">
+  <header class="treatment-head"><h2 id="claim-title">STAKE YOUR<br>CLAIM.</h2><p>Some claims cost more than others.</p></header>
+  <div class="treatment-layout">
+    <div class="treatment-description"><p>The full treatment is available by request for potential investors, producers, cast, crew and collaborators.</p><p>Tell us how you'd like to be involved.</p></div>
+    <form class="treatment-form" id="treatment-form" autocomplete="on">
+      <label for="interest-role">I'm interested as</label><select id="interest-role"><option>An investor or funding partner</option><option>A producer or production partner</option><option>Cast or an agent</option><option>Crew or creative collaborator</option><option>A distributor or sales agent</option><option>Something else</option></select>
+      <div class="form-pair"><div><label for="interest-name">Your name</label><input id="interest-name" autocomplete="name" required></div><div><label for="interest-org">Company / agency</label><input id="interest-org" autocomplete="organization"></div></div>
+      <label for="interest-message">A note about your interest</label><textarea id="interest-message" placeholder="A line or two is plenty."></textarea>
+      <a class="btn-premium" id="treatment-email" href="mailto:info@australianprovenanceproject.com.au">REQUEST THE FULL TREATMENT <span aria-hidden="true">↗</span></a>
+      <p class="form-note">Opens a prepared message in your email app. Nothing is submitted automatically.</p>
+      <div class="email-copy"><span>OR WRITE TO</span> <code>info@australianprovenanceproject.com.au</code><button id="copy-email" type="button">COPY</button></div><p class="treatment-status" id="treatment-status" role="status"></p>
+    </form>
   </div>
-</section>
+</div></section>
 </main>
-
-<dialog class="window-viewer" id="window-viewer" aria-labelledby="window-viewer-title">
-  <div class="window-viewer__inner">
-    <button class="window-viewer__close" id="window-viewer-close" type="button" aria-label="Close image viewer">×</button>
-    <img class="window-viewer__image" id="window-viewer-image" src="" alt="">
-    <div class="window-viewer__copy">
-      <p class="util" id="window-viewer-kicker"></p>
-      <h2 id="window-viewer-title"></h2>
-      <p id="window-viewer-text"></p>
-    </div>
-  </div>
-</dialog>
-
-
-<footer>
-  <div class="wrap">
-    <svg class="tagline" viewBox="0 0 2288 70" role="img" aria-label="Some colours don't wash out."><use href="#tag-art" width="2288" height="70"/></svg>
-    <div class="foot__row small">
-      <span>BLACKLIGHT is a feature film in development. Mature themes. Images and footage are concept material.</span>
-      <span>Set in Andamooka, South Australia.</span>
-    </div>
-  </div>
-</footer>
-
-<script>
-(function () {
-  "use strict";
-  var TRAILER_SRC = ""; // set to a video URL to enable the teaser player
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var $ = function (s, r) { return (r || document).querySelector(s); };
-
-  /* top bar state */
-  var bar = $("#topbar"), mark = $("#mark"), depth = $("#depth");
-  function onScroll() {
-    var y = window.scrollY || 0, max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    var p = Math.min(1, Math.max(0, y / max));
-    bar.classList.toggle("solid", y > 40);
-    if (mark) mark.style.top = Math.round(p * 113) + "px";
-    if (depth) depth.textContent = "Depth " + Math.round(p * 40) + " m";
-  }
-  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
-
-  /* Andamooka local time (Adelaide zone) */
-  var clock = $("#clock");
-  function tick() {
-    try {
-      clock.textContent = "Andamooka " + new Intl.DateTimeFormat("en-AU", { timeZone: "Australia/Adelaide", hour: "numeric", minute: "2-digit" }).format(new Date());
-    } catch (e) { clock.textContent = "Andamooka"; }
-  }
-  tick(); setInterval(tick, 30000);
-
-  /* UV torch */
-  var torches = [].slice.call(document.querySelectorAll("[data-uv], .uv")).filter(function (el, i, a) { return a.indexOf(el) === i; });
-  var T = torches.map(function (el) {
-    var h = (el.getAttribute("data-home") || ".5,.4").split(",").map(parseFloat);
-    var s = { el: el, hx: h[0], hy: h[1], x: h[0], y: h[1], tx: h[0], ty: h[1], last: -1e9, vis: false, ph: Math.random() * 6 };
-    function placeTorch(e) {
-      var r = el.getBoundingClientRect();
-      s.tx = Math.max(0,Math.min(1,(e.clientX - r.left) / r.width));
-      s.ty = Math.max(0,Math.min(1,(e.clientY - r.top) / r.height));
-      s.last = performance.now();
-      if (e.pointerType === "touch") s.manual = true;
-      if (e.pointerType === "touch" || reduce) {
-        /* A tap should reveal immediately; a drag then follows smoothly. */
-        s.x = s.tx; s.y = s.ty; setPos(s);
-        if (s.el.id === "top") syncLogoBeam(s);
-      }
-    }
-    el.addEventListener("pointermove",placeTorch,{passive:true});
-    el.addEventListener("pointerdown",placeTorch,{passive:true});
-    return s;
+<footer class="endcap"><div class="wrap"><span>BLACKLIGHT — A FEATURE FILM IN DEVELOPMENT</span><span>Concept imagery. All story materials subject to development.</span></div></footer>
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script><script>
+(function(){
+'use strict';
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $=function(q,r){return (r||document).querySelector(q)};
+var $$=function(q,r){return [].slice.call((r||document).querySelectorAll(q))};
+var clamp=function(n){return Math.min(1,Math.max(0,n))};
+/* A portrait is a threshold, not a flip: one card opens at a time. */
+var characterSection=$('#characters');
+$$('.portrait-card__trigger').forEach(function(btn){
+ btn.addEventListener('click',function(){
+  var card=btn.closest('.portrait-card'),isOpen=card.classList.contains('is-open');
+  $$('.portrait-card').forEach(function(c){
+   c.classList.remove('is-open');
+   var b=$('.portrait-card__trigger',c);if(b){b.setAttribute('aria-expanded','false');$('.portrait-card__sign',b).textContent='+'}
   });
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { T.forEach(function (s) { if (s.el === e.target) s.vis = e.isIntersecting; }); }); }, { rootMargin: "100px" });
-    T.forEach(function (s) { io.observe(s.el); });
-  } else { T.forEach(function (s) { s.vis = true; }); }
-  function setPos(s) { s.el.style.setProperty("--tx", (s.x * 100).toFixed(2) + "%"); s.el.style.setProperty("--ty", (s.y * 100).toFixed(2) + "%"); }
-  var heroBrand = document.getElementById("hero-brand");
-  function syncLogoBeam(torch) {
-    if (!heroBrand) return;
-    var heroRect = torch.el.getBoundingClientRect();
-    var brandRect = heroBrand.getBoundingClientRect();
-    if (!brandRect.width || !brandRect.height) return;
-    var screenX = heroRect.left + torch.x * heroRect.width;
-    var screenY = heroRect.top + torch.y * heroRect.height;
-    var x = ((screenX - brandRect.left) / brandRect.width) * 100;
-    var y = ((screenY - brandRect.top) / brandRect.height) * 100;
-    heroBrand.style.setProperty("--beam-x", x.toFixed(2) + "%");
-    heroBrand.style.setProperty("--beam-y", y.toFixed(2) + "%");
-  }
-  T.forEach(function (torch) {
-    setPos(torch);
-    if (torch.el.id === "top") syncLogoBeam(torch);
-  });
-
-  /* opal colour field, drawn small and scaled up */
-  var fields = [].slice.call(document.querySelectorAll("canvas[data-opal]")).map(function (cv) {
-    var W = cv.width = 360, H = cv.height = 200, ctx = cv.getContext("2d");
-    var gain = parseFloat(cv.getAttribute("data-opal")) || 1;
-    var hues = [172, 322, 28, 262, 142, 198, 345];
-    var blobs = hues.map(function (h, i) { return { h: h, sx: .06 + .05 * ((i * 37) % 7) / 7, ph: i * 1.7, r: .16 + .14 * (((i * 53) % 5) / 5), ax: .3 + .12 * (i % 3), ay: .22 + .1 * (i % 2) }; });
-    return { cv: cv, draw: function (t) {
-      ctx.globalCompositeOperation = "source-over"; ctx.fillStyle = "#0a0710"; ctx.fillRect(0, 0, W, H);
-      ctx.globalCompositeOperation = "lighter";
-      blobs.forEach(function (b, i) {
-        var x = W * (.5 + b.ax * Math.sin(t * b.sx + b.ph)), y = H * (.5 + b.ay * Math.cos(t * b.sx * 1.3 + b.ph * 1.4)), r = W * b.r;
-        var g = ctx.createRadialGradient(x, y, 0, x, y, r);
-        g.addColorStop(0, "hsla(" + b.h + ",95%,58%," + (.62 * gain).toFixed(2) + ")"); g.addColorStop(1, "hsla(" + b.h + ",95%,50%,0)");
-        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-      });
-      ctx.globalCompositeOperation = "source-over";
-    }, vis: false };
-  });
-  fields.forEach(function (f) { f.draw(2); });
-  if ("IntersectionObserver" in window) {
-    var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { fields.forEach(function (f) { if (f.cv === e.target) f.vis = e.isIntersecting; }); }); });
-    fields.forEach(function (f) { io2.observe(f.cv); });
-  }
-
-  var t0 = performance.now(), lastDraw = 0;
-  function frame(now) {
-    var t = (now - t0) / 1000;
-    T.forEach(function (s) {
-      if (!s.vis) return;
-      if (!reduce && !s.manual && now - s.last > 2200) { s.tx = s.hx + .22 * Math.sin(t * .31 + s.ph); s.ty = s.hy + .1 * Math.sin(t * .47 + s.ph * 1.3); }
-      s.x += (s.tx - s.x) * .07; s.y += (s.ty - s.y) * .07; setPos(s);
-      if (s.el.id === "top") syncLogoBeam(s);
-    });
-    if (!reduce && now - lastDraw > 50) { lastDraw = now; fields.forEach(function (f) { if (f.vis) f.draw(t); }); }
-    requestAnimationFrame(frame);
-  }
-  if (!reduce) requestAnimationFrame(frame);
-
-  /* character panels light up as they arrive */
-  var panels = [].slice.call(document.querySelectorAll(".panel"));
-  if ("IntersectionObserver" in window) {
-    var io3 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) e.target.classList.add("lit"); }); }, { threshold: .35 });
-    panels.forEach(function (p) { io3.observe(p); });
-  } else { panels.forEach(function (p) { p.classList.add("lit"); }); }
-
-  /* 1950s footage: plays while on screen, never autoplays for reduced motion */
-  var hv = $("#hutv");
-  if (hv) {
-    if (reduce) { hv.removeAttribute("autoplay"); hv.pause(); hv.controls = true; }
-    else if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { var p = hv.play(); if (p && p.catch) p.catch(function () {}); } else { hv.pause(); } }); }, { threshold: .2 }).observe(hv);
-    }
-  }
-
-
-  /* Monument-inspired moving windows: pointer parallax, pause control and accessible image viewer */
-  var world = $("#world"), stage = $("#window-stage"), motionButton = $("#motion-control"), motionLabel = $("#motion-label"), marquee = document.querySelector(".window-marquee");
-  var windows = world ? [].slice.call(world.querySelectorAll(".film-window")) : [];
-  var viewer = $("#window-viewer"), viewerImage = $("#window-viewer-image");
-  var viewerKicker = $("#window-viewer-kicker"), viewerTitle = $("#window-viewer-title"), viewerText = $("#window-viewer-text");
-  var viewerClose = $("#window-viewer-close");
-  if (world && stage) {
-    if (reduce) { world.classList.add("is-paused"); if (marquee) marquee.classList.add("is-paused"); }
-    if (motionButton) {
-      if (reduce) {
-        motionButton.disabled = true;
-        motionButton.setAttribute("aria-pressed","false");
-        motionLabel.textContent = "Reduced motion";
-        motionButton.querySelector(".motion-control__glyph").textContent = "—";
-      } else {
-        motionButton.addEventListener("click", function () {
-          var paused = world.classList.toggle("is-paused");
-          if (marquee) marquee.classList.toggle("is-paused", paused);
-          motionButton.setAttribute("aria-pressed", String(!paused));
-          motionLabel.textContent = paused ? "Play motion" : "Pause motion";
-          motionButton.querySelector(".motion-control__glyph").textContent = paused ? "▶" : "Ⅱ";
-        });
-      }
-    }
-    if (!reduce) {
-      var pointerFrame = 0;
-      stage.addEventListener("pointermove", function (event) {
-        if (event.pointerType === "touch" || world.classList.contains("is-paused")) return;
-        var bounds = stage.getBoundingClientRect();
-        var x = ((event.clientX - bounds.left) / bounds.width - .5) * 2;
-        var y = ((event.clientY - bounds.top) / bounds.height - .5) * 2;
-        if (pointerFrame) cancelAnimationFrame(pointerFrame);
-        pointerFrame = requestAnimationFrame(function () {
-          windows.forEach(function (card) {
-            var depth = parseFloat(card.getAttribute("data-depth")) || 1;
-            card.style.setProperty("--move-x", (x * depth * 13).toFixed(1) + "px");
-            card.style.setProperty("--move-y", (y * depth * 10).toFixed(1) + "px");
-          });
-        });
-      }, { passive:true });
-      stage.addEventListener("pointerleave", function () {
-        windows.forEach(function (card) { card.style.setProperty("--move-x","0px"); card.style.setProperty("--move-y","0px"); });
-      });
-    }
-    windows.forEach(function (card) {
-      card.addEventListener("click", function () {
-        if (!viewer || typeof viewer.showModal !== "function") return;
-        var image = $("img",card);
-        viewerImage.src = image.currentSrc || image.src;
-        viewerImage.alt = image.alt;
-        viewerKicker.textContent = card.getAttribute("data-kicker") || "BLACKLIGHT";
-        viewerTitle.textContent = card.getAttribute("data-title") || "BLACKLIGHT";
-        viewerText.textContent = card.getAttribute("data-copy") || "";
-        viewer.showModal();
-        viewerClose.focus();
-      });
-    });
-    if (viewerClose && viewer) viewerClose.addEventListener("click", function () { viewer.close(); });
-    if (viewer) viewer.addEventListener("click", function (event) {
-      if (event.target === viewer) viewer.close();
-    });
-  }
-
-  /* The synopsis behaves like a descent: chapter focus advances the shaft marker and opal seam. */
-  var excavationVisual = $("#excavation-visual");
-  var excavationDepth = $("#excavation-depth");
-  var excavationLayer = $("#excavation-layer");
-  var excavationMarker = $("#excavation-marker");
-  var excavationMeter = $("#excavation-meter-fill");
-  var excavationChapters = excavationVisual ? [].slice.call(document.querySelectorAll(".excavation__chapter")) : [];
-  function activateExcavationChapter(chapter) {
-    var index = excavationChapters.indexOf(chapter);
-    if (index < 0) return;
-    excavationChapters.forEach(function (item) { item.classList.toggle("is-active", item === chapter); });
-    var depth = parseInt(chapter.getAttribute("data-depth"),10) || 0;
-    var progress = Math.max(0, Math.min(1, depth / 38));
-    if (excavationDepth) excavationDepth.innerHTML = depth + ' <small>m</small>';
-    if (excavationLayer) excavationLayer.textContent = chapter.getAttribute("data-layer") || "BELOW";
-    if (excavationVisual) {
-      excavationVisual.style.setProperty("--dig-progress", progress.toFixed(3));
-      excavationVisual.style.setProperty("--seam-opacity", (0.12 + progress * 0.88).toFixed(3));
-      excavationVisual.style.setProperty("--seam-scale", (0.65 + progress * 0.35).toFixed(3));
-    }
-    if (excavationMarker) excavationMarker.style.top = (progress * 82 + 6).toFixed(1) + "%";
-    if (excavationMeter) excavationMeter.style.height = (progress * 100).toFixed(1) + "%";
-  }
-  if (excavationChapters.length) {
-    activateExcavationChapter(excavationChapters[0]);
-    if ("IntersectionObserver" in window) {
-      var excavationObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) { if (entry.isIntersecting) activateExcavationChapter(entry.target); });
-      }, { threshold:0, rootMargin:"-38% 0px -42% 0px" });
-      excavationChapters.forEach(function (chapter) { excavationObserver.observe(chapter); });
-    }
-  }
-
-
-  /* Geographic arrival: nine satellite frames dissolve in sequence, then give way to the mine interior. */
-  var settingJourney = $("#setting-journey-track");
-  var settingFrames = settingJourney ? [].slice.call(settingJourney.querySelectorAll(".setting-journey__frame")) : [];
-  var settingSurface = $("#setting-journey-surface");
-  var settingArrival = $("#setting-journey-arrival");
-  var settingCopy = $("#setting-journey-copy");
-  var settingHud = $("#setting-journey-hud");
-  var settingLocation = $("#setting-journey-location");
-  var settingProgress = $("#setting-journey-progress");
-  if (settingJourney && settingFrames.length) {
-    var journeyTick = 0;
-    var journeyClamp = function (v) { return Math.max(0, Math.min(1, v)); };
-    var journeyEase = function (v) { v = journeyClamp(v); return v * v * (3 - 2 * v); };
-    var drawSettingJourney = function () {
-      journeyTick = 0;
-      var rect = settingJourney.getBoundingClientRect();
-      var scrollRange = Math.max(1, settingJourney.offsetHeight - window.innerHeight);
-      var progress = journeyClamp(-rect.top / scrollRange);
-
-      /* Frames 1–9: crossfade only between adjacent, successively closer locations. */
-      var mapProgress = journeyClamp(progress / .78) * (settingFrames.length - 1);
-      var frameIndex = Math.min(settingFrames.length - 1, Math.floor(mapProgress));
-      var blend = frameIndex === settingFrames.length - 1 ? 0 : mapProgress - frameIndex;
-      settingFrames.forEach(function (frame, index) {
-        var opacity = index === frameIndex ? 1 - blend : (index === frameIndex + 1 ? blend : 0);
-        frame.style.opacity = opacity.toFixed(3);
-        var localScale = index === frameIndex ? blend : (index === frameIndex + 1 ? 1 - blend : 0);
-        frame.style.transform = "scale(" + (1.015 + localScale * .032).toFixed(3) + ")";
-      });
-
-      /* Fade through the ground, then settle into the supplied underground photograph. */
-      var descent = journeyEase((progress - .755) / .105);
-      var arrival = journeyEase((progress - .815) / .14);
-      if (settingSurface) settingSurface.style.opacity = descent.toFixed(3);
-      if (settingArrival) {
-        settingArrival.style.opacity = arrival.toFixed(3);
-        settingArrival.style.transform = "scale(" + (1.105 - arrival * .105).toFixed(3) + ")";
-      }
-
-      /* Location label disappears as the final place is reached. */
-      if (settingHud) settingHud.style.opacity = (1 - journeyEase((progress - .79) / .09)).toFixed(3);
-      if (settingLocation) {
-        var place = progress < .17 ? "AUSTRALIA" : progress < .43 ? "SOUTH AUSTRALIA" : progress < .7 ? "THE OUTBACK" : "ANDAMOOKA";
-        if (settingLocation.textContent !== place) settingLocation.textContent = place;
-      }
-
-      /* The title resolves only once the visitor has arrived underground. */
-      var copyProgress = journeyEase((progress - .91) / .085);
-      if (settingCopy) {
-        settingCopy.style.opacity = copyProgress.toFixed(3);
-        settingCopy.style.transform = "translateY(" + ((1 - copyProgress) * 22).toFixed(1) + "px)";
-      }
-      if (settingProgress) settingProgress.style.transform = "scaleX(" + progress.toFixed(4) + ")";
-    };
-    var requestSettingJourney = function () {
-      if (!journeyTick) journeyTick = requestAnimationFrame(drawSettingJourney);
-    };
-    window.addEventListener("scroll", requestSettingJourney, { passive:true });
-    window.addEventListener("resize", requestSettingJourney);
-    requestSettingJourney();
-  }
-
-  /* Scroll reveals stay progressive but all content remains available without JavaScript */
-  if (!reduce && "IntersectionObserver" in window) {
-    var revealTargets = [].slice.call(document.querySelectorAll(".excavation__intro,.excavation__surface,.chars__head,.panel,.setting__grid,.hut__grid,.sea__in,.close__grid,.trailer__head,.frame,.wide"));
-    revealTargets.forEach(function (el) { el.classList.add("reveal"); });
-    document.documentElement.classList.add("motion-ready");
-    var revealObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold:.12, rootMargin:"0px 0px -4% 0px" });
-    revealTargets.forEach(function (el) { revealObserver.observe(el); });
-  }
-
-
-  /* trailer */
-  var play = $("#play"), note = $("#tnote"), vid = $("#vid"), slate = $("#slate");
-  play.addEventListener("click", function () {
-    if (TRAILER_SRC) { vid.src = TRAILER_SRC; vid.hidden = false; slate.hidden = true; vid.play().catch(function () {}); return; }
-    note.innerHTML = 'The teaser is still in the edit. <a href="#interest">Register interest</a> and it comes to you first.';
-  });
-
-  /* express interest: build the email, never claim it was sent */
-  var form = $("#eoi"), link = $("#mailto"), ADDR = "info@australianprovenanceproject.com.au";
-  function build() {
-    var role = $("#f-role").value, name = $("#f-name").value.trim(), org = $("#f-org").value.trim(), msg = $("#f-msg").value.trim();
-    var body = "Hello,\n\n" + (name ? "I'm " + name + (org ? " from " + org : "") + ". " : (org ? "I'm with " + org + ". " : "")) + "I'm interested in BLACKLIGHT as " + role.charAt(0).toLowerCase() + role.slice(1) + ".\n\n" + (msg ? msg + "\n\n" : "") + "Please send me the treatment and any next steps.\n";
-    link.href = "mailto:" + ADDR + "?subject=" + encodeURIComponent("BLACKLIGHT: interest from " + (name || "a reader")) + "&body=" + encodeURIComponent(body);
-  }
-  form.addEventListener("input", build); form.addEventListener("change", build);
-  form.addEventListener("submit", function (e) { e.preventDefault(); });
-  build();
-  $("#copy").addEventListener("click", function () {
-    var st = $("#status"), code = $("#addr");
-    function fallback() { var r = document.createRange(); r.selectNodeContents(code); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); st.textContent = "Address selected. Copy it with your keyboard."; }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(ADDR).then(function () { st.textContent = "Address copied."; }, fallback);
-    } else { fallback(); }
-  });
+  if(!isOpen){card.classList.add('is-open');btn.setAttribute('aria-expanded','true');$('.portrait-card__sign',btn).textContent='−'}
+  characterSection.classList.toggle('is-exposed',!!$('.portrait-card--girl.is-open'));
+ });
+});
+/* Legible, true-scale maps replace the former 320px-wide sprite. */
+var journey=$('#setting'),track=$('#journey-track'),map=null;
+var south=[-30.44972,137.16365];
+function initMap(){
+ if(!window.L||!$('#journey-map')){$('#journey-map').classList.add('is-fallback');return}
+ map=L.map('journey-map',{zoomControl:false,attributionControl:true,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,touchZoom:false,zoomSnap:0,zoomDelta:.1,preferCanvas:true});
+ var layer=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);var tileFailures=0;layer.on('tileerror',function(){tileFailures++;if(tileFailures>5){$('#journey-map').classList.add('is-fallback');map.removeLayer(layer)}});
+ map.setView([-25.5,133.3],4,{animate:false});
+}
+if(reduce){journey.classList.add('is-static')}
+else{journey.classList.add('is-playing')}
+if(!reduce){if(window.L){initMap()}else{window.addEventListener('load',function(){initMap();schedule()},{once:true})}}
+function renderJourney(){
+ if(reduce)return;
+ var rect=track.getBoundingClientRect();
+ var p=clamp(-rect.top/Math.max(1,track.offsetHeight-innerHeight));
+ var mp=clamp(p/.78),smooth=mp*mp*(3-2*mp);
+ if(map){
+  var lat=-25.5+(south[0]+25.5)*smooth,lon=133.3+(south[1]-133.3)*smooth;
+  var nextZoom=Math.min(14,Math.max(4,Math.round(4+10*smooth))); map.setView([lat,lon],nextZoom,{animate:false});
+ }
+ var sink=clamp((p-.72)/.13);
+ $('#journey-fade').style.opacity=String(sink);
+ var arrive=clamp((p-.81)/.13);arrive=arrive*arrive*(3-2*arrive);
+ $('#journey-arrival').style.opacity=String(arrive);
+ $('#journey-arrival').style.transform='scale('+(1.09-.09*arrive)+')';
+ var c=clamp((p-.90)/.075);c=c*c*(3-2*c);
+ $('#journey-arrival-copy').style.opacity=String(c);
+ $('#journey-arrival-copy').style.transform='translateY('+((1-c)*24)+'px)';
+ var guide=$('#journey-guidance');
+ guide.style.opacity=String(1-clamp((p-.76)/.11));
+ guide.firstChild.textContent=p<.24?'AUSTRALIA':p<.57?'SOUTH AUSTRALIA':'THE OUTBACK';
+ $('#journey-progress-fill').style.width=(p*100).toFixed(1)+'%';
+}
+/* The story titles illuminate at the exact vertical centre, then dim. */
+var beats=$$('.story-beat');
+function renderStory(){
+ if(reduce){beats.forEach(function(b){$('h3',b).style.setProperty('--lum',1)});return}
+ var active=0,best=Infinity;
+ beats.forEach(function(beat,index){
+  var r=beat.getBoundingClientRect(),center=r.top+r.height/2;
+  var distance=Math.abs(center-innerHeight*.5)/Math.max(1,innerHeight*.76);
+  var focus=1-clamp(distance);
+  $('h3',beat).style.setProperty('--lum',(.54+.46*focus).toFixed(3));
+  $('h3',beat).style.setProperty('--glow',(focus*focus).toFixed(3));
+  if(distance<best){best=distance;active=index}
+ });
+ var depth=Number(beats[active].getAttribute('data-depth'))||0;
+ $('#depth-fill').style.height=(100*depth/38).toFixed(1)+'%';
+}
+var raf=0;function draw(){raf=0;renderJourney();renderStory()}
+function schedule(){if(!raf)raf=requestAnimationFrame(draw)}
+window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',function(){if(map)map.invalidateSize();schedule()});schedule();
+/* Enquiry remains mailto-based: never claim it was sent. */
+var addr='info@australianprovenanceproject.com.au';
+function buildEmail(){
+ var role=$('#interest-role').value,name=$('#interest-name').value.trim(),org=$('#interest-org').value.trim(),msg=$('#interest-message').value.trim();
+ var body='Hello,\n\n'+(name?'My name is '+name+(org?' from '+org:'')+'.\n':'')+'I am interested in BLACKLIGHT as '+role.toLowerCase()+'.\n\n'+(msg?msg+'\n\n':'')+'Please send me the full treatment and details of the next steps.\n\nThank you.';
+ $('#treatment-email').href='mailto:'+addr+'?subject='+encodeURIComponent('BLACKLIGHT — treatment request'+(name?' from '+name:''))+'&body='+encodeURIComponent(body);
+}
+$$('#treatment-form input, #treatment-form textarea, #treatment-form select').forEach(function(el){el.addEventListener('input',buildEmail);el.addEventListener('change',buildEmail)});buildEmail();
+$('#treatment-form').addEventListener('submit',function(e){e.preventDefault();window.location.href=$('#treatment-email').href});
+$('#copy-email').addEventListener('click',function(){
+ var st=$('#treatment-status');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(addr).then(function(){st.textContent='Email address copied.'}).catch(function(){st.textContent='Copy the email address displayed above.'})}
+ else st.textContent='Copy the email address displayed above.';
+});
 })();
-</script>
-
-</body>
-</html>
+</script></body></html>
