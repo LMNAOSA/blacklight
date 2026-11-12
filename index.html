@@ -310,7 +310,7 @@ a { color: inherit; }
 .excavation__chapter p:not(.excavation__chapter-meta) {
   max-width:39ch; margin:0; color:rgba(232,232,232,.82); font-size:clamp(1.04rem,1.35vw,1.22rem); line-height:1.48;
 }
-.excavation__chapter--rupture blockquote {
+.excavation__chapter--rupture h3 {
   margin:0 0 25px; max-width:12ch; color:var(--uv);
   font:900 clamp(3.6rem,7.8vw,8.4rem)/.78 var(--display); text-transform:uppercase;
   text-wrap:balance; text-shadow:0 0 38px rgba(185,252,245,.22);
@@ -356,7 +356,7 @@ a { color: inherit; }
   }
   .excavation__chapter.is-active { opacity:1; }
   .excavation__chapter h3 { font-size:clamp(3.2rem,14vw,5.5rem); margin-bottom:18px; }
-  .excavation__chapter--rupture blockquote { font-size:clamp(3.6rem,15vw,6.2rem); }
+  .excavation__chapter--rupture h3 { font-size:clamp(3.6rem,15vw,6.2rem); }
   .excavation__chapter p:not(.excavation__chapter-meta) { max-width:42ch; font-size:1.03rem; }
   .excavation__chapter-meta { margin-bottom:18px; font-size:.6rem; }
 }
@@ -643,6 +643,114 @@ footer .tagline { width: min(100%, 880px); }
   .film-window,.film-window img { transition:none!important; }
 }
 
+
+/* SETTING JOURNEY — a scroll-controlled geographical arrival into the BLACKLIGHT underworld */
+.setting-journey { position:relative; z-index:5; background:#050509; color:var(--bone); }
+.setting-journey__track { height:760vh; position:relative; }
+.setting-journey__viewport {
+  position:sticky; top:0; width:100%; height:100svh; min-height:560px;
+  overflow:hidden; isolation:isolate; background:#050509;
+}
+.setting-journey__maps,.setting-journey__surface,.setting-journey__arrival,.setting-journey__vignette {
+  position:absolute; inset:0;
+}
+.setting-journey__maps { z-index:0; overflow:hidden; background:#111; }
+.setting-journey__frame {
+  position:absolute; inset:0; opacity:0; background-image:url("assets/setting/satellite-atlas.webp");
+  background-repeat:no-repeat; background-size:400% 300%;
+  transform:scale(1.015); will-change:opacity,transform;
+}
+.journey-frame--1 { background-position:0% 0%; }
+.journey-frame--2 { background-position:33.3333% 0%; }
+.journey-frame--3 { background-position:66.6667% 0%; }
+.journey-frame--4 { background-position:100% 0%; }
+.journey-frame--5 { background-position:0% 50%; }
+.journey-frame--6 { background-position:33.3333% 50%; }
+.journey-frame--7 { background-position:66.6667% 50%; }
+.journey-frame--8 { background-position:100% 50%; }
+.journey-frame--9 { background-position:0% 100%; }
+.setting-journey__surface {
+  z-index:1; pointer-events:none; opacity:0;
+  background:
+    radial-gradient(ellipse at 50% 48%,rgba(7,5,5,.08),rgba(4,3,5,.8) 75%),
+    linear-gradient(180deg,rgba(7,5,5,.08),rgba(7,5,5,.56));
+  will-change:opacity;
+}
+.setting-journey__arrival {
+  z-index:2; opacity:0; background:#09070a url("assets/setting/underworld-arrival.webp") center 50% / cover no-repeat;
+  transform:scale(1.1); filter:brightness(.78) saturate(.82);
+  will-change:opacity,transform;
+}
+.setting-journey__arrival::after {
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg,rgba(4,3,4,.64),transparent 62%),linear-gradient(0deg,rgba(4,3,4,.4),transparent 55%);
+}
+.setting-journey__vignette {
+  z-index:3; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 48%,transparent 38%,rgba(0,0,0,.18) 74%,rgba(0,0,0,.45));
+}
+.setting-journey__hud {
+  position:absolute; z-index:4; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+  padding:clamp(28px,6vh,64px) var(--gut) clamp(28px,5vh,54px); text-align:center;
+  transition:opacity .25s;
+}
+.setting-journey__hud p { margin:0; font:500 .68rem var(--util); letter-spacing:.2em; color:rgba(255,255,255,.88); }
+.setting-journey__location {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font:900 clamp(2.8rem,8.5vw,9rem)/.82 var(--display)!important;
+  letter-spacing:.015em!important; color:#fff!important; text-shadow:0 3px 30px rgba(0,0,0,.35);
+}
+.setting-journey__scroll {
+  display:flex; align-items:center; gap:12px; color:rgba(255,255,255,.78);
+  font-size:.62rem!important; letter-spacing:.19em!important;
+}
+.setting-journey__scroll i { font-style:normal; font-size:1.1rem; animation:setting-scroll-hint 1.8s ease-in-out infinite; }
+@keyframes setting-scroll-hint { 0%,100% { transform:translateY(0); } 50% { transform:translateY(7px); } }
+.setting-journey__arrival-copy {
+  position:absolute; z-index:5; left:max(var(--gut),calc((100vw - 1320px)/2)); bottom:clamp(44px,9vh,104px);
+  width:min(760px,calc(100% - var(--gut) - var(--gut))); opacity:0; transform:translateY(22px);
+  transition:none; text-shadow:0 2px 24px rgba(0,0,0,.52); pointer-events:none;
+}
+.setting-journey__arrival-copy > p:first-child {
+  margin:0 0 16px; color:var(--uv); font:500 .68rem var(--util); letter-spacing:.2em;
+}
+.setting-journey__arrival-copy h2 {
+  margin:0 0 20px; color:#fff; font:900 clamp(4rem,11vw,11rem)/.78 var(--display);
+  letter-spacing:-.025em; text-transform:uppercase;
+}
+.setting-journey__line {
+  max-width:39ch; margin:0; color:#f1ece8; font:italic clamp(1.2rem,2vw,1.75rem)/1.25 var(--body);
+}
+.setting-journey__welcome {
+  margin:30px 0 0; color:var(--uv); font-size:.66rem; letter-spacing:.19em;
+}
+.setting-journey__progress {
+  position:absolute; z-index:6; left:0; right:0; bottom:0; height:2px; background:rgba(255,255,255,.15);
+}
+.setting-journey__progress span {
+  display:block; width:100%; height:100%; transform:scaleX(0); transform-origin:left center;
+  background:var(--uv); box-shadow:0 0 12px rgba(185,252,245,.8);
+}
+@media (max-width:760px) {
+  .setting-journey__track { height:650vh; }
+  .setting-journey__viewport { min-height:520px; }
+  .setting-journey__frame { background-size:400% 300%; }
+  .setting-journey__arrival { background-position:54% center; }
+  .setting-journey__hud { padding:calc(25px + env(safe-area-inset-top,0px)) 18px calc(24px + env(safe-area-inset-bottom,0px)); }
+  .setting-journey__hud p { font-size:.58rem; }
+  .setting-journey__location { width:100%; font-size:clamp(3.2rem,15vw,6rem)!important; }
+  .setting-journey__arrival-copy {
+    left:22px; bottom:calc(36px + env(safe-area-inset-bottom,0px)); width:calc(100% - 44px);
+  }
+  .setting-journey__arrival-copy > p:first-child { font-size:.58rem; }
+  .setting-journey__arrival-copy h2 { font-size:clamp(3.8rem,17vw,6rem); margin-bottom:15px; }
+  .setting-journey__line { max-width:33ch; font-size:1.14rem; line-height:1.26; }
+  .setting-journey__welcome { margin-top:22px; font-size:.58rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .setting-journey__scroll i { animation:none; }
+}
+
 </style>
 <style>html{color-scheme:dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -854,8 +962,8 @@ footer .tagline { width: min(100%, 880px); }
 
       <article class="excavation__chapter excavation__chapter--rupture" id="excavation-05" data-depth="30" data-layer="THE RUPTURE">
         <p class="excavation__chapter-meta"><span>05 / THE RUPTURE</span><span>30 METRES</span></p>
-        <blockquote>“Because he knows me!”</blockquote>
-        <p>The father hides what happened. Taj takes the boy's side. Father and son split. The mother sees the damage—and cannot stop it.</p>
+        <h3>The truth<br>divides them.</h3>
+        <p>The father hides what happened. Taj takes the boy's side. Father and son are driven apart, while the mother sees the damage and cannot stop it.</p>
       </article>
 
       <article class="excavation__chapter excavation__chapter--deeper" id="excavation-06" data-depth="38" data-layer="DEEPER">
@@ -895,49 +1003,38 @@ footer .tagline { width: min(100%, 880px); }
   </div>
 </section>
 
-<section class="setting uv cut" id="setting" aria-labelledby="s-h" data-home=".62,.3">
-  <div class="uv__base" role="img" aria-label="A freshly cut mine face in Andamooka: layers of white clay and rust-red rock, with drill holes along the rock."></div>
-  <div class="uv__lit"></div>
-  <div class="uv__glow"></div>
-  <div class="uv__scrim"></div>
-  <div class="setting__in wrap">
-    <p class="word" aria-hidden="true">Andamooka</p>
-    <div class="setting__grid">
-      <div>
-        <h2 class="h-xl" id="s-h" style="font-size:clamp(2.4rem,6vw,6rem)">A town that lives under itself</h2>
-        <p>Andamooka sits roughly 600 km north of Adelaide, in opal country. Opal was first found here in 1930, and the town grew around the digging.</p>
-        <p>People live in dugouts cut into the hillside, work claims by hand, and noodle through mullock heaps hoping for a flash of colour. The film is set in the late 1980s and early 1990s, when a big find still felt one shaft away.</p>
+<section class="setting-journey" id="setting" aria-label="A journey into Andamooka">
+  <div class="setting-journey__track" id="setting-journey-track">
+    <div class="setting-journey__viewport" id="setting-journey-viewport">
+      <div class="setting-journey__maps" aria-hidden="true">
+        <div class="setting-journey__frame journey-frame--1"></div>
+        <div class="setting-journey__frame journey-frame--2"></div>
+        <div class="setting-journey__frame journey-frame--3"></div>
+        <div class="setting-journey__frame journey-frame--4"></div>
+        <div class="setting-journey__frame journey-frame--5"></div>
+        <div class="setting-journey__frame journey-frame--6"></div>
+        <div class="setting-journey__frame journey-frame--7"></div>
+        <div class="setting-journey__frame journey-frame--8"></div>
+        <div class="setting-journey__frame journey-frame--9"></div>
       </div>
-      <dl>
-        <div><dt>Where</dt><dd>About 600 km north of Adelaide</dd></div>
-        <div><dt>Opal first found</dt><dd>1930</dd></div>
-        <div><dt>Homes</dt><dd>Dugouts cut into the hill</dd></div>
-        <div><dt>The film's years</dt><dd>Late 1980s into the early 1990s</dd></div>
-      </dl>
-    </div>
-  </div>
-</section>
+      <div class="setting-journey__surface" id="setting-journey-surface" aria-hidden="true"></div>
+      <div class="setting-journey__arrival" id="setting-journey-arrival" role="img" aria-label="A dark passage cut through the red and white rock beneath Andamooka."></div>
+      <div class="setting-journey__vignette" aria-hidden="true"></div>
 
-<section class="hut cut" id="huts" aria-labelledby="h-h">
-  <div class="wrap hut__grid">
-    <div>
-      <p class="util small">1950s</p>
-      <h2 class="h-xl" id="h-h">Built from what was lying around</h2>
-      <p>Local stone, tin and brush fencing, a bench of rough opal outside the door. Miners' huts in the 1950s were made to be lived in and left. A lot of Andamooka still looks like this.</p>
-      <p class="small">Concept footage.</p>
-    </div>
-    <div class="hut__video">
-      <video id="hutv" src="assets/hut.mp4" poster="assets/hut-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Concept footage of miners at a stone hut in the 1950s, sorting opal in the sun."></video>
-    </div>
-  </div>
-</section>
+      <div class="setting-journey__hud" id="setting-journey-hud" aria-live="polite">
+        <p class="util">BLACKLIGHT / THE SETTING</p>
+        <p class="setting-journey__location" id="setting-journey-location">AUSTRALIA</p>
+        <span class="setting-journey__scroll util">SCROLL TO ARRIVE <i aria-hidden="true">↓</i></span>
+      </div>
 
-<section class="sea cut" id="deep" aria-labelledby="d-h">
-  <div class="sea__img" role="img" aria-label="Concept image of this country 100 million years ago: an inland sea with turquoise shallows, coral-covered limestone ledges and red hills behind."></div>
-  <div class="sea__in wrap">
-    <p class="util small">100 million years ago</p>
-    <h2 class="h-xl" id="d-h">Before the town, a sea</h2>
-    <p>This country was once the floor and shoreline of an inland sea. Silica-rich water seeped into the cracks and hollows of the sediment and set, slowly, as opal. The colour the miners chase is what's left of that water.</p>
+      <div class="setting-journey__arrival-copy" id="setting-journey-copy">
+        <p class="util">THE SETTING / BLACKLIGHT</p>
+        <h2>ANDAMOOKA</h2>
+        <p class="setting-journey__line">On the surface, a town shaped by the desert. Beneath it, an underworld of debts, secrets and rules written in stone.</p>
+        <p class="setting-journey__welcome util">WELCOME TO THE UNDERWORLD.</p>
+      </div>
+      <div class="setting-journey__progress" aria-hidden="true"><span id="setting-journey-progress"></span></div>
+    </div>
   </div>
 </section>
 
@@ -1198,6 +1295,69 @@ footer .tagline { width: min(100%, 880px); }
       }, { threshold:0, rootMargin:"-38% 0px -42% 0px" });
       excavationChapters.forEach(function (chapter) { excavationObserver.observe(chapter); });
     }
+  }
+
+
+  /* Geographic arrival: nine satellite frames dissolve in sequence, then give way to the mine interior. */
+  var settingJourney = $("#setting-journey-track");
+  var settingFrames = settingJourney ? [].slice.call(settingJourney.querySelectorAll(".setting-journey__frame")) : [];
+  var settingSurface = $("#setting-journey-surface");
+  var settingArrival = $("#setting-journey-arrival");
+  var settingCopy = $("#setting-journey-copy");
+  var settingHud = $("#setting-journey-hud");
+  var settingLocation = $("#setting-journey-location");
+  var settingProgress = $("#setting-journey-progress");
+  if (settingJourney && settingFrames.length) {
+    var journeyTick = 0;
+    var journeyClamp = function (v) { return Math.max(0, Math.min(1, v)); };
+    var journeyEase = function (v) { v = journeyClamp(v); return v * v * (3 - 2 * v); };
+    var drawSettingJourney = function () {
+      journeyTick = 0;
+      var rect = settingJourney.getBoundingClientRect();
+      var scrollRange = Math.max(1, settingJourney.offsetHeight - window.innerHeight);
+      var progress = journeyClamp(-rect.top / scrollRange);
+
+      /* Frames 1–9: crossfade only between adjacent, successively closer locations. */
+      var mapProgress = journeyClamp(progress / .78) * (settingFrames.length - 1);
+      var frameIndex = Math.min(settingFrames.length - 1, Math.floor(mapProgress));
+      var blend = frameIndex === settingFrames.length - 1 ? 0 : mapProgress - frameIndex;
+      settingFrames.forEach(function (frame, index) {
+        var opacity = index === frameIndex ? 1 - blend : (index === frameIndex + 1 ? blend : 0);
+        frame.style.opacity = opacity.toFixed(3);
+        var localScale = index === frameIndex ? blend : (index === frameIndex + 1 ? 1 - blend : 0);
+        frame.style.transform = "scale(" + (1.015 + localScale * .032).toFixed(3) + ")";
+      });
+
+      /* Fade through the ground, then settle into the supplied underground photograph. */
+      var descent = journeyEase((progress - .755) / .105);
+      var arrival = journeyEase((progress - .815) / .14);
+      if (settingSurface) settingSurface.style.opacity = descent.toFixed(3);
+      if (settingArrival) {
+        settingArrival.style.opacity = arrival.toFixed(3);
+        settingArrival.style.transform = "scale(" + (1.105 - arrival * .105).toFixed(3) + ")";
+      }
+
+      /* Location label disappears as the final place is reached. */
+      if (settingHud) settingHud.style.opacity = (1 - journeyEase((progress - .79) / .09)).toFixed(3);
+      if (settingLocation) {
+        var place = progress < .17 ? "AUSTRALIA" : progress < .43 ? "SOUTH AUSTRALIA" : progress < .7 ? "THE OUTBACK" : "ANDAMOOKA";
+        if (settingLocation.textContent !== place) settingLocation.textContent = place;
+      }
+
+      /* The title resolves only once the visitor has arrived underground. */
+      var copyProgress = journeyEase((progress - .91) / .085);
+      if (settingCopy) {
+        settingCopy.style.opacity = copyProgress.toFixed(3);
+        settingCopy.style.transform = "translateY(" + ((1 - copyProgress) * 22).toFixed(1) + "px)";
+      }
+      if (settingProgress) settingProgress.style.transform = "scaleX(" + progress.toFixed(4) + ")";
+    };
+    var requestSettingJourney = function () {
+      if (!journeyTick) journeyTick = requestAnimationFrame(drawSettingJourney);
+    };
+    window.addEventListener("scroll", requestSettingJourney, { passive:true });
+    window.addEventListener("resize", requestSettingJourney);
+    requestSettingJourney();
   }
 
   /* Scroll reveals stay progressive but all content remains available without JavaScript */
