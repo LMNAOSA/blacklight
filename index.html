@@ -271,7 +271,7 @@ a { color: inherit; }
 .excavation__marker::after { width:1px; height:14px; }
 .excavation__opal {
   position:absolute; left:0; right:0; bottom:4%; width:100%; height:24%;
-  opacity:calc(.12 + var(--dig-progress) * .88); transform:scaleX(calc(.65 + var(--dig-progress) * .35));
+  opacity:var(--seam-opacity,.12); transform:scaleX(var(--seam-scale,.65));
   transform-origin:center; transition:opacity .8s,transform .8s; filter:drop-shadow(0 0 14px rgba(185,252,245,.32));
 }
 .excavation__meter {
@@ -338,13 +338,19 @@ a { color: inherit; }
   .excavation__surface figcaption { left:0; right:auto; bottom:-30px; font-size:.65rem; }
   .excavation__layout { display:block; }
   .excavation__visual {
-    position:relative; top:auto; height:300px; min-height:300px; margin-bottom:24px;
-    background-position:center 46%;
+    position:sticky; top:76px; z-index:10; height:88px; min-height:88px; margin-bottom:16px;
+    background-position:center 46%; box-shadow:0 12px 30px rgba(0,0,0,.32);
   }
-  .excavation__cross-section { inset:8% 0 7%; }
-  .excavation__visual-top,.excavation__visual-bottom { padding:12px; }
-  .excavation__visual-bottom strong { font-size:3.6rem; }
-  .excavation__meter { left:11px; }
+  .excavation__cross-section { inset:0; }
+  .excavation__visual-top { display:none; }
+  .excavation__visual-bottom {
+    height:100%; padding:7px 14px 7px 22px; align-items:center;
+    background:linear-gradient(90deg,rgba(7,6,12,.92),rgba(7,6,12,.65) 55%,rgba(7,6,12,.14));
+  }
+  .excavation__visual-bottom strong { font-size:2.75rem; }
+  .excavation__visual-bottom .util { font-size:.52rem; }
+  .excavation__visual-note { font-size:.57rem; max-width:12ch; }
+  .excavation__meter { left:8px; top:12px; bottom:12px; }
   .excavation__chapter {
     min-height:0; padding:56px 2px 62px; opacity:.72;
   }
@@ -537,7 +543,10 @@ footer .tagline { width: min(100%, 880px); }
 }
 .film-window img { display:block; width:100%; height:100%; object-fit:cover; filter:saturate(.78) contrast(1.04); transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .7s; }
 /* Portrait source files are tall; anchor their crop to the top of frame so faces lead. */
-.window--b img,.window--d img,.window--e img { object-position:50% 7%; }
+.window--b img,.window--d img,.window--e img {
+  object-position:50% 3%; transform:scale(1.13); transform-origin:50% 14%;
+}
+.film-window.window--b:hover img,.film-window.window--d:hover img,.film-window.window--e:hover img { transform:scale(1.22); }
 
 .film-window::after {
   content:""; position:absolute; inset:35% 0 0; pointer-events:none;
@@ -1170,10 +1179,14 @@ footer .tagline { width: min(100%, 880px); }
     if (index < 0) return;
     excavationChapters.forEach(function (item) { item.classList.toggle("is-active", item === chapter); });
     var depth = parseInt(chapter.getAttribute("data-depth"),10) || 0;
-    var progress = excavationChapters.length > 1 ? index / (excavationChapters.length - 1) : 0;
+    var progress = Math.max(0, Math.min(1, depth / 38));
     if (excavationDepth) excavationDepth.innerHTML = depth + ' <small>m</small>';
     if (excavationLayer) excavationLayer.textContent = chapter.getAttribute("data-layer") || "BELOW";
-    if (excavationVisual) excavationVisual.style.setProperty("--dig-progress", progress.toFixed(3));
+    if (excavationVisual) {
+      excavationVisual.style.setProperty("--dig-progress", progress.toFixed(3));
+      excavationVisual.style.setProperty("--seam-opacity", (0.12 + progress * 0.88).toFixed(3));
+      excavationVisual.style.setProperty("--seam-scale", (0.65 + progress * 0.35).toFixed(3));
+    }
     if (excavationMarker) excavationMarker.style.top = (progress * 82 + 6).toFixed(1) + "%";
     if (excavationMeter) excavationMeter.style.height = (progress * 100).toFixed(1) + "%";
   }
