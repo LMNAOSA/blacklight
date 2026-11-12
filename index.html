@@ -104,43 +104,110 @@ a { color: inherit; }
   background: radial-gradient(circle at var(--tx) var(--ty), color-mix(in srgb, var(--uv) 26%, transparent), transparent calc(var(--r) * .6));
 }
 
-/* hero */
-.hero { min-height: max(640px, min(100svh, 62rem)); display: grid; align-items: end; background: var(--void); }
-.hero.uv { animation: ignite 2.6s .3s cubic-bezier(.2, .7, .2, 1) both; }
-@keyframes ignite { from { --r: 12vmax; } to { --r: 46vmax; } }
-.hero__stage { position: absolute; inset: 0; }
-.hero__stage > * { position: absolute; inset: 0; }
-.bg-hero { background-image: url(assets/hero.jpg); background-size: cover; background-position: 50% 0; }
-.hero__base { filter: grayscale(1) contrast(1.2) brightness(.5); }
-.hero__lit { filter: saturate(1.12) contrast(1.05); }
-.hero__shade { z-index: 3; background: linear-gradient(to bottom, rgba(11,8,19,.55) 0, transparent 22%, transparent 42%, var(--void) 94%); }
+/* hero — withholding, not announcing */
+.hero {
+  min-height:max(640px,min(100svh,62rem));
+  display:grid; align-items:end; background:var(--void);
+  --r:clamp(190px,30vmax,430px);
+  touch-action:pan-y;
+}
+.hero__stage { position:absolute; inset:0; }
+.hero__stage > * { position:absolute; inset:0; }
+.bg-hero { background-image:url(assets/hero.jpg); background-size:cover; background-position:50% 0; }
+.hero__base { filter:grayscale(1) contrast(1.2) brightness(.38); }
+.hero__lit { filter:saturate(1.12) contrast(1.05); }
+.hero__ghost-shadow {
+  z-index:3; pointer-events:none;
+  /* A broad, graded fall-off holds the entire left figure in shadow. No hard face-shaped patch. */
+  background:
+    linear-gradient(90deg,
+      rgba(3,2,6,.9) 0%,
+      rgba(3,2,6,.84) 13%,
+      rgba(3,2,6,.74) 25%,
+      rgba(3,2,6,.52) 36%,
+      rgba(3,2,6,.2) 48%,
+      transparent 61%),
+    radial-gradient(ellipse 34% 78% at 23% 43%,
+      rgba(2,1,4,.44) 0%,
+      rgba(2,1,4,.28) 57%,
+      transparent 100%);
+}
+.hero__shade {
+  z-index:3;
+  background:linear-gradient(to bottom,rgba(11,8,19,.46) 0,transparent 20%,transparent 42%,rgba(11,8,19,.38) 70%,var(--void) 96%);
+}
 .hero__copy {
-  position: relative; z-index: 4; display: grid; gap: clamp(14px, 2vw, 26px);
-  padding-top: 40vh; padding-bottom: calc(var(--cut) + 24px);
-  padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px));
+  position:relative; z-index:4; display:grid; gap:clamp(12px,1.6vw,22px);
+  padding-top:40vh; padding-bottom:calc(var(--cut) + 24px);
+  padding-left:max(var(--gut),env(safe-area-inset-left,0px));
+  padding-right:max(var(--gut),env(safe-area-inset-right,0px));
 }
-.logo { display: block; width: 100%; height: auto; overflow: visible; }
-.lt { animation: tube 1.9s .5s both; }
-@keyframes tube {
-  0% { opacity: .14; } 8% { opacity: .14; } 9% { opacity: .95; } 11% { opacity: .2; } 15% { opacity: 1; }
-  17% { opacity: .35; } 21% { opacity: 1; } 100% { opacity: 1; }
+.hero__brand {
+  position:relative; width:clamp(280px,56vw,760px); max-width:100%;
+  --beam-x:-50%; --beam-y:50%;
 }
-.tagline { display: block; width: min(62%, 760px); height: auto; margin-top: 6px; }
-.hero__row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 22px 40px; margin-top: clamp(8px, 2vw, 24px); }
-.facts { display: grid; grid-template-columns: repeat(3, auto); gap: 6px clamp(20px, 4vw, 56px); margin: 0; }
-.facts dt { font-family: var(--util); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--haze); }
-.facts dd { margin: 2px 0 0; font-family: var(--body); font-size: 1.05rem; max-width: 22ch; }
-.hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
-@media (max-width: 820px) {
-  .hero { display: block; min-height: 0; }
-  .hero__stage { position: relative; aspect-ratio: 1150 / 860; max-height: 70svh; width: 100%; }
-  .hero__shade { background: linear-gradient(to bottom, rgba(11,8,19,.5) 0, transparent 25%, transparent 70%, var(--void) 100%); }
-  .hero__copy { padding-top: 6px; }
-  .tagline { width: min(100%, 520px); }
-  .facts { grid-template-columns: 1fr; }
-  .bg-hero { background-position: 50% 0; }
+.logo { display:block; width:100%; height:auto; overflow:visible; }
+.logo--light {
+  position:absolute; inset:0; pointer-events:none;
+  -webkit-mask-image:radial-gradient(circle var(--beam-radius,148px) at var(--beam-x) var(--beam-y),
+    #000 0,rgba(0,0,0,.96) 44%,rgba(0,0,0,.72) 67%,transparent 100%);
+  mask-image:radial-gradient(circle var(--beam-radius,148px) at var(--beam-x) var(--beam-y),
+    #000 0,rgba(0,0,0,.96) 44%,rgba(0,0,0,.72) 67%,transparent 100%);
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  filter:drop-shadow(0 0 12px rgba(185,252,245,.42));
 }
-
+.hero__torch-hint {
+  position:absolute; right:0; bottom:-18px; margin:0; pointer-events:none;
+  color:rgba(185,252,245,.62); font:500 .57rem var(--util);
+  letter-spacing:.18em; text-transform:uppercase;
+}
+.hero__torch-hint i { display:inline-block; margin-left:8px; color:var(--uv); font-style:normal; }
+.hero__hint-mobile { display:none; }
+.tagline { display:block; width:min(54%,620px); height:auto; margin-top:5px; }
+.hero__row {
+  display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between;
+  gap:20px 36px; margin-top:clamp(8px,1.5vw,20px);
+}
+.facts { display:grid; grid-template-columns:repeat(3,auto); gap:6px clamp(18px,3.5vw,48px); margin:0; }
+.facts dt { font-family:var(--util); font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--haze); }
+.facts dd { margin:2px 0 0; font-family:var(--body); font-size:1.05rem; max-width:22ch; }
+.hero__cta { display:flex; flex-wrap:wrap; gap:12px; }
+@media (max-width:820px) {
+  .hero { display:block; min-height:0; --r:clamp(150px,42vw,220px); }
+  .hero__stage { position:relative; aspect-ratio:1150 / 860; max-height:66svh; width:100%; }
+  .hero__shade {
+    background:linear-gradient(to bottom,rgba(11,8,19,.22) 0,transparent 26%,rgba(11,8,19,.12) 54%,var(--void) 100%);
+  }
+  .hero__ghost-shadow {
+    background:
+      linear-gradient(90deg,
+        rgba(3,2,6,.9) 0%,
+        rgba(3,2,6,.84) 13%,
+        rgba(3,2,6,.74) 25%,
+        rgba(3,2,6,.52) 36%,
+        rgba(3,2,6,.2) 48%,
+        transparent 61%),
+      radial-gradient(ellipse 36% 78% at 23% 43%,
+        rgba(2,1,4,.44) 0%,
+        rgba(2,1,4,.28) 57%,
+        transparent 100%);
+  }
+  .hero__copy { padding-top:10px; padding-bottom:calc(26px + env(safe-area-inset-bottom,0px)); gap:13px; }
+  .hero__brand { width:clamp(250px,76vw,340px); --beam-radius:92px; }
+  .hero__torch-hint { bottom:-15px; font-size:.49rem; letter-spacing:.15em; }
+  .hero__hint-desktop { display:none; }
+  .hero__hint-mobile { display:inline; }
+  .tagline { width:min(84%,360px); }
+  .facts { grid-template-columns:1fr; gap:8px; }
+  .facts dd { font-size:.98rem; }
+  .hero__row { align-items:start; gap:16px; }
+  .hero__cta { gap:9px; }
+  .hero__cta .btn { font-size:1.02rem; }
+  .bg-hero { background-position:50% 0; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .logo--light { transition:none; }
+}
 /* slanted cut: each section's top edge leans like a shaft wall */
 .cut { position: relative; margin-top: calc(var(--cut) * -1); padding-top: calc(var(--cut) + clamp(32px, 5vw, 80px)); clip-path: polygon(0 var(--cut), 100% 0, 100% 100%, 0 100%); }
 
@@ -165,27 +232,204 @@ a { color: inherit; }
 .trailer__note { margin: 20px 0 0; min-height: 1.5em; color: var(--haze); font-family: var(--util); font-weight: 300; }
 .trailer__note a { color: var(--uv); }
 
-/* story: surface to shaft */
-.story { background: linear-gradient(to bottom, var(--dirt) 0, #6b2717 18%, #2a1522 46%, var(--void) 78%); z-index: 3; padding-bottom: clamp(24px, 4vw, 60px); }
-.beat:last-of-type { margin-bottom: clamp(36px, 5vw, 72px); }
-.logline { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(1.7rem, 3.6vw, 3.4rem); line-height: 1; max-width: 22ch; margin: 0 0 clamp(60px, 10vw, 150px); text-wrap: balance; }
-.beat { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px clamp(14px, 2vw, 32px); align-items: start; margin-bottom: clamp(70px, 11vw, 190px); }
-.beat__depth { grid-column: 1 / -1; margin: 0; color: color-mix(in srgb, var(--bone) 78%, transparent); }
-.beat h2 { grid-column: 1 / 9; margin: 0; font-size: clamp(2.8rem, 8.2vw, 8.6rem); }
-.beat p.copy { grid-column: 9 / -1; margin: .6em 0 0; max-width: 34ch; }
-.beat:nth-of-type(even) h2 { grid-column: 4 / -1; grid-row: 2; }
-.beat:nth-of-type(even) p.copy { grid-column: 1 / 4; grid-row: 2; margin-top: 1.2em; }
-.beat:nth-of-type(even) .beat__depth { text-align: right; }
-@media (max-width: 820px) {
-  .beat h2, .beat p.copy, .beat:nth-of-type(even) h2, .beat:nth-of-type(even) p.copy { grid-column: 1 / -1; grid-row: auto; }
-  .beat:nth-of-type(even) .beat__depth { text-align: left; }
-  .beat p.copy { max-width: 46ch; }
+/* STORY / EXCAVATION — the synopsis reads like a descent through the diggings */
+.story.excavation {
+  z-index:3; padding-top:calc(var(--cut) + clamp(44px,6vw,92px));
+  padding-bottom:clamp(44px,7vw,104px);
+  color:var(--bone);
+  background:
+    radial-gradient(ellipse at 82% 21%,rgba(185,252,245,.055),transparent 34%),
+    linear-gradient(180deg,#7b351f 0%,#381c1b 18%,#1b1420 48%,#0b0813 100%);
 }
-.quote { margin: 0 0 clamp(70px, 11vw, 190px); }
-.quote blockquote { margin: 8px 0 0; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.6rem, 11.5vw, 12.5rem); line-height: .84; color: var(--uv); text-shadow: 0 0 44px color-mix(in srgb, var(--uv) 55%, transparent), 0 0 120px color-mix(in srgb, var(--uv) 30%, transparent); text-wrap: balance; }
-.quote p { max-width: 44ch; margin: 28px 0 0 auto; }
-.advisory { margin: 0; max-width: 60ch; border-top: 1px solid color-mix(in srgb, var(--haze) 35%, transparent); padding-top: 14px; }
-
+.excavation__intro {
+  display:grid; grid-template-columns:minmax(0,1.1fr) minmax(250px,.62fr);
+  align-items:end; gap:clamp(28px,6vw,90px); margin-bottom:clamp(38px,6vw,86px);
+}
+.excavation__eyebrow { color:var(--uv); margin:0 0 18px; }
+.excavation__title {
+  margin:0; font:900 clamp(4rem,10vw,10.8rem)/.78 var(--display);
+  letter-spacing:-.035em; text-transform:uppercase; text-wrap:balance;
+}
+.excavation__title span { color:var(--uv); }
+.excavation__intro-copy { max-width:36ch; padding-bottom:4px; }
+.excavation__intro-copy p:first-child {
+  margin:0 0 14px; font:500 clamp(1.3rem,2vw,2rem)/1.08 var(--body); color:var(--bone);
+}
+.excavation__intro-copy .small { margin:0; }
+.excavation__start {
+  display:inline-flex; align-items:center; gap:18px; margin-top:28px; padding-bottom:8px;
+  border-bottom:1px solid rgba(185,252,245,.55); color:var(--uv); text-decoration:none;
+  font:500 .7rem var(--util); letter-spacing:.16em;
+}
+.excavation__start span { font-size:1rem; transition:transform .25s; }
+.excavation__start:hover span { transform:translateY(4px); }
+.excavation__surface {
+  position:relative; display:grid; grid-template-columns:2fr 1fr; gap:8px;
+  height:clamp(230px,35vw,460px); margin:0 0 clamp(54px,8vw,116px);
+}
+.excavation__surface-day,.excavation__surface-night {
+  position:relative; background-size:cover; background-position:center;
+  overflow:hidden;
+}
+.excavation__surface-day { background-image:linear-gradient(0deg,rgba(8,6,12,.42),transparent 65%),url(assets/street-day.jpg); }
+.excavation__surface-night { background-image:linear-gradient(0deg,rgba(8,6,12,.46),transparent 65%),url(assets/street-night.jpg); }
+.excavation__surface-day span,.excavation__surface-night span {
+  position:absolute; left:18px; bottom:16px; color:#fff; font-size:.67rem; letter-spacing:.16em;
+}
+.excavation__surface figcaption {
+  position:absolute; right:0; bottom:-30px; margin:0; color:rgba(232,232,232,.7);
+  font-size:.72rem; letter-spacing:.07em;
+}
+.excavation__layout {
+  display:grid; grid-template-columns:minmax(260px,.78fr) minmax(0,1.22fr);
+  gap:clamp(32px,7vw,112px); align-items:start;
+}
+.excavation__visual {
+  --dig-progress:0;
+  position:sticky; top:clamp(88px,12vh,140px); height:min(70vh,680px); min-height:500px;
+  display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; isolation:isolate;
+  border:1px solid rgba(232,232,232,.18);
+  background:#100d16 url(assets/mine.jpg) center 50% / cover no-repeat;
+  box-shadow:0 28px 90px rgba(0,0,0,.25);
+}
+.excavation__visual::before {
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(180deg,rgba(9,7,13,.68),rgba(9,7,13,.06) 35%,rgba(9,7,13,.62));
+}
+.excavation__visual-top,.excavation__visual-bottom {
+  position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; gap:12px;
+  padding:18px 18px; color:rgba(255,255,255,.82);
+}
+.excavation__visual-top { font-size:.62rem; letter-spacing:.15em; }
+.excavation__cross-section {
+  position:absolute; inset:7% 0 9%; overflow:hidden; opacity:.95;
+  background:linear-gradient(180deg,rgba(140,60,29,.12),rgba(17,13,24,.2) 40%,rgba(8,7,12,.58));
+}
+.excavation__strata { position:absolute; left:-12%; width:124%; height:30%; opacity:.48; mix-blend-mode:multiply; }
+.excavation__strata--one { top:12%; background:#9b4d2b; clip-path:polygon(0 12%,25% 0,50% 13%,76% 4%,100% 17%,100% 100%,0 100%); }
+.excavation__strata--two { top:35%; height:26%; background:#b2a08a; opacity:.35; clip-path:polygon(0 20%,22% 8%,45% 18%,70% 0,100% 12%,100% 100%,0 100%); }
+.excavation__strata--three { top:58%; height:27%; background:#4a3540; opacity:.62; clip-path:polygon(0 8%,28% 18%,53% 0,77% 18%,100% 6%,100% 100%,0 100%); }
+.excavation__strata--four { bottom:0; height:26%; background:#171322; opacity:.8; clip-path:polygon(0 15%,24% 0,52% 20%,75% 4%,100% 12%,100% 100%,0 100%); }
+.excavation__shaft-wall {
+  position:absolute; left:43%; top:0; width:14%; height:100%;
+  background:linear-gradient(90deg,rgba(4,3,8,.2),rgba(4,3,8,.94) 30%,rgba(4,3,8,.95) 70%,rgba(4,3,8,.2));
+  clip-path:polygon(15% 0,85% 0,100% 100%,0 100%);
+  box-shadow:0 0 32px rgba(0,0,0,.5);
+}
+.excavation__shaft {
+  position:absolute; left:50%; top:1%; bottom:0; width:2px; transform:translateX(-50%);
+  background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,.14),rgba(185,252,245,.25));
+}
+.excavation__rope { position:absolute; inset:0; width:1px; margin:auto; background:rgba(232,232,232,.62); }
+.excavation__bucket {
+  position:absolute; top:0; left:50%; width:13px; height:13px; transform:translate(-50%,-50%);
+  border:1px solid var(--uv); border-radius:50%; background:#090812; box-shadow:0 0 18px rgba(185,252,245,.75);
+}
+.excavation__marker {
+  position:absolute; top:0; left:50%; width:34px; height:34px; transform:translate(-50%,-50%);
+  border:1px solid var(--uv); border-radius:50%; background:rgba(9,8,18,.76);
+  box-shadow:0 0 0 7px rgba(185,252,245,.08),0 0 32px rgba(185,252,245,.55);
+  transition:top .8s cubic-bezier(.2,.75,.2,1);
+}
+.excavation__marker::before,.excavation__marker::after {
+  content:""; position:absolute; left:50%; top:50%; background:var(--uv); transform:translate(-50%,-50%);
+}
+.excavation__marker::before { width:14px; height:1px; }
+.excavation__marker::after { width:1px; height:14px; }
+.excavation__opal {
+  position:absolute; left:0; right:0; bottom:4%; width:100%; height:24%;
+  opacity:var(--seam-opacity,.12); transform:scaleX(var(--seam-scale,.65));
+  transform-origin:center; transition:opacity .8s,transform .8s; filter:drop-shadow(0 0 14px rgba(185,252,245,.32));
+}
+.excavation__meter {
+  position:absolute; z-index:2; left:16px; top:19%; bottom:20%; width:2px;
+  background:rgba(255,255,255,.25);
+}
+.excavation__meter span {
+  display:block; width:100%; height:0; background:var(--uv); box-shadow:0 0 12px var(--uv);
+  transition:height .8s cubic-bezier(.2,.75,.2,1);
+}
+.excavation__visual-bottom {
+  align-items:end; padding-top:14px; padding-bottom:20px;
+  background:linear-gradient(0deg,rgba(7,6,12,.72),transparent);
+}
+.excavation__visual-bottom div { display:grid; gap:2px; }
+.excavation__visual-bottom .util { color:rgba(255,255,255,.68); font-size:.61rem; letter-spacing:.16em; }
+.excavation__visual-bottom strong { font:900 clamp(3.4rem,6vw,5.6rem)/.8 var(--display); color:#fff; }
+.excavation__visual-bottom strong small { font-size:.34em; color:var(--uv); }
+.excavation__visual-note { max-width:12ch; text-align:right; color:var(--uv); font:500 .66rem var(--util); letter-spacing:.13em; }
+.excavation__chapters { min-width:0; }
+.excavation__chapter {
+  position:relative; min-height:clamp(440px,66vh,660px); padding:clamp(44px,7vw,94px) 0;
+  display:flex; flex-direction:column; justify-content:center; border-bottom:1px solid rgba(232,232,232,.18);
+  opacity:.58; transform:translateY(12px); transition:opacity .65s,transform .7s,border-color .5s;
+}
+.excavation__chapter:first-child { border-top:1px solid rgba(232,232,232,.18); }
+.excavation__chapter.is-active { opacity:1; transform:translateY(0); border-color:rgba(185,252,245,.4); }
+.excavation__chapter-meta {
+  display:flex; justify-content:space-between; gap:12px; margin:0 0 25px;
+  color:var(--uv); font:500 .65rem var(--util); letter-spacing:.17em; text-transform:uppercase;
+}
+.excavation__chapter h3 {
+  max-width:11ch; margin:0 0 24px; font:900 clamp(3.2rem,6vw,6.8rem)/.83 var(--display);
+  letter-spacing:-.025em; text-transform:uppercase; text-wrap:balance;
+}
+.excavation__chapter p:not(.excavation__chapter-meta) {
+  max-width:39ch; margin:0; color:rgba(232,232,232,.82); font-size:clamp(1.04rem,1.35vw,1.22rem); line-height:1.48;
+}
+.excavation__chapter--rupture h3 {
+  margin:0 0 25px; max-width:12ch; color:var(--uv);
+  font:900 clamp(3.6rem,7.8vw,8.4rem)/.78 var(--display); text-transform:uppercase;
+  text-wrap:balance; text-shadow:0 0 38px rgba(185,252,245,.22);
+}
+.excavation__request {
+  display:inline-flex; align-items:center; gap:20px; margin-top:30px; padding-bottom:9px; width:max-content;
+  border-bottom:1px solid rgba(185,252,245,.6); color:var(--uv); text-decoration:none;
+  font:500 .7rem var(--util); letter-spacing:.16em;
+}
+.excavation__request span { transition:transform .25s; }
+.excavation__request:hover span { transform:translate(4px,-4px); }
+.excavation .advisory { margin-top:clamp(44px,7vw,92px); }
+@media (max-width:900px) {
+  .excavation__intro { grid-template-columns:1fr; gap:26px; }
+  .excavation__intro-copy { max-width:44ch; }
+  .excavation__layout { grid-template-columns:minmax(210px,.72fr) minmax(0,1.28fr); gap:28px; }
+  .excavation__visual { top:95px; min-height:440px; height:65vh; }
+  .excavation__chapter { min-height:58vh; }
+}
+@media (max-width:650px) {
+  .story.excavation { padding-top:calc(var(--cut) + 38px); }
+  .excavation__title { font-size:clamp(4rem,16vw,6.8rem); }
+  .excavation__surface { grid-template-columns:1fr 1fr; height:220px; gap:5px; margin-bottom:70px; }
+  .excavation__surface-day span,.excavation__surface-night span { left:10px; bottom:10px; font-size:.55rem; }
+  .excavation__surface figcaption { left:0; right:auto; bottom:-30px; font-size:.65rem; }
+  .excavation__layout { display:block; }
+  .excavation__visual {
+    position:sticky; top:76px; z-index:10; height:88px; min-height:88px; margin-bottom:16px;
+    background-position:center 46%; box-shadow:0 12px 30px rgba(0,0,0,.32);
+  }
+  .excavation__cross-section { inset:0; }
+  .excavation__visual-top { display:none; }
+  .excavation__visual-bottom {
+    height:100%; padding:7px 14px 7px 22px; align-items:center;
+    background:linear-gradient(90deg,rgba(7,6,12,.92),rgba(7,6,12,.65) 55%,rgba(7,6,12,.14));
+  }
+  .excavation__visual-bottom strong { font-size:2.75rem; }
+  .excavation__visual-bottom .util { font-size:.52rem; }
+  .excavation__visual-note { font-size:.57rem; max-width:12ch; }
+  .excavation__meter { left:8px; top:12px; bottom:12px; }
+  .excavation__chapter {
+    min-height:0; padding:56px 2px 62px; opacity:.72;
+  }
+  .excavation__chapter.is-active { opacity:1; }
+  .excavation__chapter h3 { font-size:clamp(3.2rem,14vw,5.5rem); margin-bottom:18px; }
+  .excavation__chapter--rupture h3 { font-size:clamp(3.6rem,15vw,6.2rem); }
+  .excavation__chapter p:not(.excavation__chapter-meta) { max-width:42ch; font-size:1.03rem; }
+  .excavation__chapter-meta { margin-bottom:18px; font-size:.6rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .excavation__chapter,.excavation__marker,.excavation__meter span,.excavation__opal { transition:none!important; }
+}
 /* characters */
 .chars { background: var(--void); z-index: 4; padding-bottom: clamp(60px, 10vw, 150px); }
 .chars__head { display: grid; gap: 22px; margin-bottom: clamp(32px, 5vw, 72px); }
@@ -306,6 +550,274 @@ footer .tagline { width: min(100%, 880px); }
   .hero.uv, .lt { animation: none; }
   .panel img { transition: none; }
 }
+
+/* MONUMENT-INSPIRED MOTION SYSTEM — drifting film windows, editorial scale, soft reveals */
+:root { --window-ink:#090812; --window-line:rgba(232,232,232,.18); }
+.window-world {
+  position:relative; z-index:3; overflow:hidden; isolation:isolate;
+  padding:clamp(74px,9vw,132px) 0 clamp(52px,7vw,100px);
+  background:
+    radial-gradient(ellipse at 52% 42%, rgba(76,58,104,.24), transparent 48%),
+    linear-gradient(180deg,#0d0a16 0%,#08070d 72%,#0b0813 100%);
+}
+.window-world::before {
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.18; z-index:-1;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:84px 84px; mask-image:linear-gradient(to bottom,transparent,black 18%,black 80%,transparent);
+}
+.window-world__head {
+  display:grid; grid-template-columns:minmax(0,1.15fr) minmax(240px,.65fr);
+  align-items:end; gap:30px; position:relative; z-index:2; margin-bottom:clamp(14px,3vw,42px);
+}
+.window-world__eyebrow { margin:0 0 16px; color:var(--uv); }
+.window-world__title {
+  margin:0; max-width:8ch; font-family:var(--display); font-size:clamp(4rem,10.5vw,11rem);
+  line-height:.78; letter-spacing:-.035em; text-transform:uppercase; font-weight:900;
+}
+.window-world__title em { color:var(--uv); font-style:normal; }
+.window-world__intro { max-width:34ch; margin:0 0 7px; color:var(--haze); font-size:clamp(1.05rem,1.35vw,1.28rem); }
+.window-world__tools { display:flex; align-items:center; justify-content:flex-end; gap:18px; margin-top:22px; }
+.motion-control {
+  display:inline-flex; align-items:center; gap:10px; padding:9px 0; border:0; border-bottom:1px solid var(--window-line);
+  color:var(--bone); background:transparent; font:500 .72rem var(--util); letter-spacing:.15em; text-transform:uppercase; cursor:pointer;
+}
+.motion-control:hover { color:var(--uv); border-color:var(--uv); }
+.motion-control__glyph { width:22px; height:22px; display:grid; place-items:center; border:1px solid currentColor; border-radius:50%; font-size:.65rem; line-height:1; }
+.window-stage {
+  position:relative; width:min(calc(100% - var(--gut) - var(--gut)), 1500px); height:clamp(520px,57vw,790px);
+  margin:0 auto; perspective:1200px; isolation:isolate;
+}
+.window-stage::before {
+  content:""; position:absolute; width:min(52vw,700px); aspect-ratio:1; left:50%; top:48%;
+  transform:translate(-50%,-50%); border-radius:50%;
+  background:radial-gradient(circle,rgba(185,252,245,.09),rgba(185,252,245,.018) 45%,transparent 70%);
+  filter:blur(15px); pointer-events:none;
+}
+.window-stage__word {
+  position:absolute; z-index:0; left:50%; top:49%; transform:translate(-50%,-50%);
+  width:100%; text-align:center; pointer-events:none; font:900 clamp(4.2rem,12vw,13rem)/.76 var(--display);
+  letter-spacing:-.045em; text-transform:uppercase; color:rgba(232,232,232,.105);
+}
+.film-window {
+  --rot:0deg; --depth:1; --move-x:0px; --move-y:0px;
+  position:absolute; z-index:1; display:block; padding:0; border:1px solid rgba(232,232,232,.18);
+  background:#09080e; overflow:hidden; cursor:zoom-in; text-align:left;
+  box-shadow:0 28px 75px rgba(0,0,0,.42);
+  transform:translate3d(var(--move-x),var(--move-y),0) rotate(var(--rot));
+  transition:transform .42s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s,filter .5s;
+  animation:window-float var(--float-time,8s) ease-in-out var(--float-delay,0s) infinite;
+  will-change:transform;
+}
+.film-window img { display:block; width:100%; height:100%; object-fit:cover; filter:saturate(.78) contrast(1.04); transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .7s; }
+/* Portrait source files are tall; anchor their crop to the top of frame so faces lead. */
+.window--b img,.window--d img,.window--e img {
+  object-position:50% 3%; transform:scale(1.13); transform-origin:50% 14%;
+}
+.film-window.window--b:hover img,.film-window.window--d:hover img,.film-window.window--e:hover img { transform:scale(1.22); }
+
+.film-window::after {
+  content:""; position:absolute; inset:35% 0 0; pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(7,6,12,.88));
+}
+.film-window__label {
+  position:absolute; z-index:1; left:14px; right:14px; bottom:12px; display:flex; justify-content:space-between; align-items:end; gap:10px;
+  color:#fff; font:500 .64rem/1.2 var(--util); letter-spacing:.15em; text-transform:uppercase; text-shadow:0 1px 10px #000;
+}
+.film-window__label b { color:var(--uv); font-weight:500; }
+.film-window:hover,.film-window:focus-visible {
+  z-index:8; border-color:var(--uv); box-shadow:0 34px 90px rgba(0,0,0,.65),0 0 28px rgba(185,252,245,.12);
+  animation-play-state:paused; transform:translate3d(var(--move-x),calc(var(--move-y) - 8px),0) rotate(0deg) scale(1.055);
+}
+.film-window:hover img,.film-window:focus-visible img { transform:scale(1.075); filter:saturate(1.12) contrast(1.05); }
+.window--a { left:2%; top:9%; width:23%; height:49%; --rot:-5deg; --depth:1.5; --float-time:9s; }
+.window--b { left:27%; top:34%; width:21%; height:33%; --rot:3deg; --depth:2.4; --float-delay:-2s; --float-time:7s; }
+.window--c { left:33%; top:1%; width:19%; height:30%; --rot:4deg; --depth:1.1; --float-delay:-4s; }
+.window--d { right:4%; top:8%; width:24%; height:48%; --rot:4deg; --depth:2; --float-delay:-1s; --float-time:10s; }
+.window--e { right:29%; bottom:4%; width:22%; height:35%; --rot:-3deg; --depth:1.7; --float-delay:-3s; }
+.window--f { left:8%; bottom:0; width:17%; height:27%; --rot:3deg; --depth:2.8; --float-delay:-5s; --float-time:7.5s; }
+.window--g { right:3%; bottom:0; width:18%; height:30%; --rot:-4deg; --depth:1.4; --float-delay:-2.7s; --float-time:8.5s; }
+@keyframes window-float { 0%,100% { translate:0 0; } 50% { translate:0 -15px; } }
+.window-world__foot {
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:18px;
+  margin-top:8px; padding-top:20px; border-top:1px solid var(--window-line);
+}
+.window-world__foot p { margin:0; }
+.window-world__foot .small { letter-spacing:.14em; text-transform:uppercase; font-size:.72rem; }
+.window-world__foot .window-count { color:var(--uv); }
+.window-marquee { overflow:hidden; padding:17px 0; border-top:1px solid var(--window-line); border-bottom:1px solid var(--window-line); background:#0b0912; }
+.window-marquee__track { display:flex; width:max-content; animation:marquee-travel 32s linear infinite; }
+.window-marquee span { padding:0 24px; color:rgba(232,232,232,.72); font:800 clamp(1.25rem,2.8vw,2.8rem)/1 var(--display); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
+.window-marquee span b { color:var(--uv); font-weight:900; }
+@keyframes marquee-travel { to { transform:translateX(-50%); } }
+.window-world.is-paused .film-window { animation-play-state:paused; }
+.window-marquee.is-paused .window-marquee__track { animation-play-state:paused; }
+.motion-control:disabled { opacity:.48; cursor:not-allowed; }
+.window-viewer {
+  width:min(94vw,1200px); max-width:none; max-height:92svh; padding:0; border:1px solid rgba(185,252,245,.28);
+  background:#08070d; color:var(--bone); box-shadow:0 30px 140px rgba(0,0,0,.8);
+}
+.window-viewer::backdrop { background:rgba(4,3,8,.88); backdrop-filter:blur(12px); }
+.window-viewer__inner { position:relative; display:grid; grid-template-columns:minmax(0,1.55fr) minmax(220px,.65fr); min-height:300px; }
+.window-viewer__image { display:block; width:100%; height:min(76vh,820px); object-fit:contain; background:#030306; }
+.window-viewer__copy { display:flex; flex-direction:column; justify-content:end; padding:clamp(22px,4vw,54px); }
+.window-viewer__copy .util { color:var(--uv); }
+.window-viewer__copy h2 { margin:8px 0 14px; font:900 clamp(2.4rem,5vw,5.8rem)/.86 var(--display); text-transform:uppercase; }
+.window-viewer__copy p:last-child { color:var(--haze); margin:0; }
+.window-viewer__close {
+  position:absolute; top:14px; right:14px; z-index:3; width:42px; height:42px; border:1px solid rgba(255,255,255,.35);
+  color:#fff; background:rgba(5,4,8,.7); font:400 1.35rem var(--util); cursor:pointer;
+}
+.window-viewer__close:hover { color:var(--uv); border-color:var(--uv); }
+.motion-ready .reveal { opacity:0; transform:translateY(34px); transition:opacity .8s ease,transform .9s cubic-bezier(.2,.7,.2,1); }
+.motion-ready .reveal.is-visible { opacity:1; transform:translateY(0); }
+@media (max-width:900px) {
+  .window-world__head { grid-template-columns:1fr; gap:18px; }
+  .window-world__tools { justify-content:flex-start; margin-top:8px; }
+  .window-stage { height:clamp(500px,80vw,680px); width:calc(100% - 24px); }
+  .window--a { left:1%; width:25%; }
+  .window--d { right:1%; width:25%; }
+}
+@media (max-width:650px) {
+  .window-world { padding-top:68px; }
+  .window-world__head { padding-left:20px; padding-right:20px; }
+  .window-world__title { font-size:clamp(4.1rem,17vw,7rem); }
+  .window-world__intro { max-width:38ch; }
+  .window-stage {
+    display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; width:auto; height:auto;
+    margin:30px 14px 0; perspective:none;
+  }
+  .window-stage::before,.window-stage__word { display:none; }
+  .film-window,.window--a,.window--b,.window--c,.window--d,.window--e,.window--f,.window--g {
+    position:relative; inset:auto; width:auto; height:auto; aspect-ratio:4/5; min-width:0; margin:0;
+    transform:none; animation:none; grid-column:span 1;
+  }
+  .window--b,.window--e { aspect-ratio:5/4; }
+  .window--c { grid-column:span 2; aspect-ratio:16/8; }
+  .window--d { aspect-ratio:4/5; }
+  .window--g { grid-column:span 2; aspect-ratio:16/8; }
+  .film-window__label { left:10px; right:10px; bottom:10px; font-size:.58rem; }
+  .window-world__foot { margin:22px 20px 0; }
+  .window-marquee { padding:13px 0; }
+  .window-viewer { width:94vw; max-height:88svh; overflow:auto; }
+  .window-viewer__inner { grid-template-columns:1fr; }
+  .window-viewer__image { height:auto; max-height:58svh; aspect-ratio:4/3; }
+  .window-viewer__copy { padding:22px; }
+  .window-viewer__copy h2 { font-size:3.2rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .film-window,.window-marquee__track { animation:none!important; }
+  .motion-ready .reveal { opacity:1; transform:none; transition:none; }
+  .film-window,.film-window img { transition:none!important; }
+}
+
+
+/* SETTING JOURNEY — a scroll-controlled geographical arrival into the BLACKLIGHT underworld */
+.setting-journey { position:relative; z-index:5; background:#050509; color:var(--bone); }
+.setting-journey__track { height:760vh; position:relative; }
+.setting-journey__viewport {
+  position:sticky; top:0; width:100%; height:100svh; min-height:560px;
+  overflow:hidden; isolation:isolate; background:#050509;
+}
+.setting-journey__maps,.setting-journey__surface,.setting-journey__arrival,.setting-journey__vignette {
+  position:absolute; inset:0;
+}
+.setting-journey__maps { z-index:0; overflow:hidden; background:#111; }
+.setting-journey__frame {
+  position:absolute; inset:0; opacity:0; background-image:url("assets/setting/satellite-atlas.webp");
+  background-repeat:no-repeat; background-size:400% 300%;
+  transform:scale(1.015); will-change:opacity,transform;
+}
+.journey-frame--1 { background-position:0% 0%; }
+.journey-frame--2 { background-position:33.3333% 0%; }
+.journey-frame--3 { background-position:66.6667% 0%; }
+.journey-frame--4 { background-position:100% 0%; }
+.journey-frame--5 { background-position:0% 50%; }
+.journey-frame--6 { background-position:33.3333% 50%; }
+.journey-frame--7 { background-position:66.6667% 50%; }
+.journey-frame--8 { background-position:100% 50%; }
+.journey-frame--9 { background-position:0% 100%; }
+.setting-journey__surface {
+  z-index:1; pointer-events:none; opacity:0;
+  background:
+    radial-gradient(ellipse at 50% 48%,rgba(7,5,5,.08),rgba(4,3,5,.8) 75%),
+    linear-gradient(180deg,rgba(7,5,5,.08),rgba(7,5,5,.56));
+  will-change:opacity;
+}
+.setting-journey__arrival {
+  z-index:2; opacity:0; background:#09070a url("assets/setting/underworld-arrival.webp") center 50% / cover no-repeat;
+  transform:scale(1.1); filter:brightness(.78) saturate(.82);
+  will-change:opacity,transform;
+}
+.setting-journey__arrival::after {
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg,rgba(4,3,4,.64),transparent 62%),linear-gradient(0deg,rgba(4,3,4,.4),transparent 55%);
+}
+.setting-journey__vignette {
+  z-index:3; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 48%,transparent 38%,rgba(0,0,0,.18) 74%,rgba(0,0,0,.45));
+}
+.setting-journey__hud {
+  position:absolute; z-index:4; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+  padding:clamp(28px,6vh,64px) var(--gut) clamp(28px,5vh,54px); text-align:center;
+  transition:opacity .25s;
+}
+.setting-journey__hud p { margin:0; font:500 .68rem var(--util); letter-spacing:.2em; color:rgba(255,255,255,.88); }
+.setting-journey__location {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font:900 clamp(2.8rem,8.5vw,9rem)/.82 var(--display)!important;
+  letter-spacing:.015em!important; color:#fff!important; text-shadow:0 3px 30px rgba(0,0,0,.35);
+}
+.setting-journey__scroll {
+  display:flex; align-items:center; gap:12px; color:rgba(255,255,255,.78);
+  font-size:.62rem!important; letter-spacing:.19em!important;
+}
+.setting-journey__scroll i { font-style:normal; font-size:1.1rem; animation:setting-scroll-hint 1.8s ease-in-out infinite; }
+@keyframes setting-scroll-hint { 0%,100% { transform:translateY(0); } 50% { transform:translateY(7px); } }
+.setting-journey__arrival-copy {
+  position:absolute; z-index:5; left:max(var(--gut),calc((100vw - 1320px)/2)); bottom:clamp(44px,9vh,104px);
+  width:min(760px,calc(100% - var(--gut) - var(--gut))); opacity:0; transform:translateY(22px);
+  transition:none; text-shadow:0 2px 24px rgba(0,0,0,.52); pointer-events:none;
+}
+.setting-journey__arrival-copy > p:first-child {
+  margin:0 0 16px; color:var(--uv); font:500 .68rem var(--util); letter-spacing:.2em;
+}
+.setting-journey__arrival-copy h2 {
+  margin:0 0 20px; color:#fff; font:900 clamp(4rem,11vw,11rem)/.78 var(--display);
+  letter-spacing:-.025em; text-transform:uppercase;
+}
+.setting-journey__line {
+  max-width:39ch; margin:0; color:#f1ece8; font:italic clamp(1.2rem,2vw,1.75rem)/1.25 var(--body);
+}
+.setting-journey__welcome {
+  margin:30px 0 0; color:var(--uv); font-size:.66rem; letter-spacing:.19em;
+}
+.setting-journey__progress {
+  position:absolute; z-index:6; left:0; right:0; bottom:0; height:2px; background:rgba(255,255,255,.15);
+}
+.setting-journey__progress span {
+  display:block; width:100%; height:100%; transform:scaleX(0); transform-origin:left center;
+  background:var(--uv); box-shadow:0 0 12px rgba(185,252,245,.8);
+}
+@media (max-width:760px) {
+  .setting-journey__track { height:650vh; }
+  .setting-journey__viewport { min-height:520px; }
+  .setting-journey__frame { background-size:400% 300%; }
+  .setting-journey__arrival { background-position:54% center; }
+  .setting-journey__hud { padding:calc(25px + env(safe-area-inset-top,0px)) 18px calc(24px + env(safe-area-inset-bottom,0px)); }
+  .setting-journey__hud p { font-size:.58rem; }
+  .setting-journey__location { width:100%; font-size:clamp(3.2rem,15vw,6rem)!important; }
+  .setting-journey__arrival-copy {
+    left:22px; bottom:calc(36px + env(safe-area-inset-bottom,0px)); width:calc(100% - 44px);
+  }
+  .setting-journey__arrival-copy > p:first-child { font-size:.58rem; }
+  .setting-journey__arrival-copy h2 { font-size:clamp(3.8rem,17vw,6rem); margin-bottom:15px; }
+  .setting-journey__line { max-width:33ch; font-size:1.14rem; line-height:1.26; }
+  .setting-journey__welcome { margin-top:22px; font-size:.58rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .setting-journey__scroll i { animation:none; }
+}
+
 </style>
 <style>html{color-scheme:dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -313,11 +825,8 @@ footer .tagline { width: min(100%, 880px); }
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
-    <symbol id="logo-art" viewBox="71 19 2296 223">
-      <image class="lt" href="assets/glow.webp" x="1237.9" y="18.8" width="1129" height="223" opacity="1"/>
-      <g fill="#e8e8e8"><path d="M71.051,197.131V62.912h45.877c32.986,0,48.342,13.08,48.342,35.071,0,13.649-8.531,24.834-21.612,28.436v.569c17.63,4.17,27.488,15.355,27.488,32.038,0,24.645-16.683,38.104-53.65,38.104h-46.446ZM104.227,117.7h11.753c12.512,0,18.579-5.119,18.579-15.166,0-9.479-6.066-14.219-19.526-14.219h-10.806v29.385ZM104.227,170.97h11.753c16.683,0,23.508-5.498,23.508-16.304,0-10.427-7.204-16.114-22.56-16.114h-12.702v32.418Z" /><path d="M305.368,62.912h33.176v104.835h55.735l-3.602,29.384h-85.309V62.912Z" /><path d="M601.677,62.912l48.911,133.271-.758.948h-36.588l-8.152-24.645h-46.825l-7.962,24.645h-36.02l-.758-.948,49.479-133.271h38.673ZM565.658,149.358h31.849l-7.204-22.18c-2.654-8.342-6.256-22.37-8.342-34.882h-.568c-2.275,12.512-5.877,26.54-8.531,35.071l-7.204,21.99Z" /><path d="M767.18,130.401c0-42.844,28.815-71.28,68.626-71.28,16.303,0,31.28,4.55,45.688,13.46l-4.739,32.038h-1.138c-11.185-9.668-23.697-14.787-36.398-14.787-22.18,0-36.588,15.925-36.588,40.001,0,24.455,14.597,40.379,37.157,40.379,12.512,0,25.403-5.118,36.588-14.787h1.137l4.55,31.85c-14.218,8.909-29.763,13.648-46.066,13.648-40.948,0-68.816-28.246-68.816-70.521Z" /><path d="M1091.546,119.406l50.048,76.588-.758,1.138h-37.915l-33.555-52.133-15.166,17.44v34.692h-33.176V62.912h33.176v21.611c0,11.185-.758,26.351-1.517,38.862h.569c7.204-10.427,13.27-18.768,20.095-27.108l27.868-33.365h37.915l.569,1.137-48.152,55.356Z" /></g>
-      <g class="lt" fill="#b9fcf5" transform="translate(1207.331 0)"><path d="M71.282,62.913h33.176v104.835h55.735v29.384h-88.911V62.913Z" /><path d="M300.815,62.913h33.176v134.219h-33.176V62.913Z" /><path d="M479.919,130.78c0-42.844,30.522-71.659,70.901-71.659,21.232,0,38.294,6.635,51.375,14.598l-5.688,31.469h-1.137c-12.133-9.289-25.782-15.924-41.896-15.924-24.266,0-38.104,16.872-38.104,41.517,0,24.455,13.08,40.569,33.934,40.569,7.772,0,14.787-1.706,21.991-5.308v-20.475h-23.318v-22.749h53.081v63.318c-20.474,11.563-36.777,14.786-53.46,14.786-41.706,0-67.679-28.814-67.679-70.143Z" /><path d="M837.226,62.913h32.986v134.219h-32.986v-53.271h-51.186v53.271h-33.176V62.913h33.176v52.133h51.186v-52.133Z" /><path d="M1119.271,62.913v30.521h-38.294v103.697h-32.985v-103.697h-38.295v-30.521h109.574Z" /></g>
-    </symbol>
+    <symbol id="logo-black-art" viewBox="71 19 2296 223"><g fill="#e8e8e8"><path d="M71.051,197.131V62.912h45.877c32.986,0,48.342,13.08,48.342,35.071,0,13.649-8.531,24.834-21.612,28.436v.569c17.63,4.17,27.488,15.355,27.488,32.038,0,24.645-16.683,38.104-53.65,38.104h-46.446ZM104.227,117.7h11.753c12.512,0,18.579-5.119,18.579-15.166,0-9.479-6.066-14.219-19.526-14.219h-10.806v29.385ZM104.227,170.97h11.753c16.683,0,23.508-5.498,23.508-16.304,0-10.427-7.204-16.114-22.56-16.114h-12.702v32.418Z" /><path d="M305.368,62.912h33.176v104.835h55.735l-3.602,29.384h-85.309V62.912Z" /><path d="M601.677,62.912l48.911,133.271-.758.948h-36.588l-8.152-24.645h-46.825l-7.962,24.645h-36.02l-.758-.948,49.479-133.271h38.673ZM565.658,149.358h31.849l-7.204-22.18c-2.654-8.342-6.256-22.37-8.342-34.882h-.568c-2.275,12.512-5.877,26.54-8.531,35.071l-7.204,21.99Z" /><path d="M767.18,130.401c0-42.844,28.815-71.28,68.626-71.28,16.303,0,31.28,4.55,45.688,13.46l-4.739,32.038h-1.138c-11.185-9.668-23.697-14.787-36.398-14.787-22.18,0-36.588,15.925-36.588,40.001,0,24.455,14.597,40.379,37.157,40.379,12.512,0,25.403-5.118,36.588-14.787h1.137l4.55,31.85c-14.218,8.909-29.763,13.648-46.066,13.648-40.948,0-68.816-28.246-68.816-70.521Z" /><path d="M1091.546,119.406l50.048,76.588-.758,1.138h-37.915l-33.555-52.133-15.166,17.44v34.692h-33.176V62.912h33.176v21.611c0,11.185-.758,26.351-1.517,38.862h.569c7.204-10.427,13.27-18.768,20.095-27.108l27.868-33.365h37.915l.569,1.137-48.152,55.356Z" /></g></symbol>
+<symbol id="logo-light-art" viewBox="71 19 2296 223"><image href="assets/glow.webp" x="1237.9" y="18.8" width="1129" height="223" opacity="1"/><g fill="#b9fcf5" transform="translate(1207.331 0)"><path d="M71.282,62.913h33.176v104.835h55.735v29.384h-88.911V62.913Z" /><path d="M300.815,62.913h33.176v134.219h-33.176V62.913Z" /><path d="M479.919,130.78c0-42.844,30.522-71.659,70.901-71.659,21.232,0,38.294,6.635,51.375,14.598l-5.688,31.469h-1.137c-12.133-9.289-25.782-15.924-41.896-15.924-24.266,0-38.104,16.872-38.104,41.517,0,24.455,13.08,40.569,33.934,40.569,7.772,0,14.787-1.706,21.991-5.308v-20.475h-23.318v-22.749h53.081v63.318c-20.474,11.563-36.777,14.786-53.46,14.786-41.706,0-67.679-28.814-67.679-70.143Z" /><path d="M837.226,62.913h32.986v134.219h-32.986v-53.271h-51.186v53.271h-33.176V62.913h33.176v52.133h51.186v-52.133Z" /><path d="M1119.271,62.913v30.521h-38.294v103.697h-32.985v-103.697h-38.295v-30.521h109.574Z" /></g></symbol>
     <symbol id="tag-art" viewBox="36 28 2288 70">
       <path d="M41.626,84.805c.249-.249.582-.166.831.249,2.824,3.986,10.298,7.143,15.78,7.143,8.72,0,17.275-4.568,17.275-13.704,0-19.684-32.557-11.627-32.557-31.311,0-7.807,5.814-13.621,16.279-13.621,5.896,0,11.71,2.159,14.783,5.481.167.166.25.415.083.581-.25.25-.499.167-.665,0-3.571-3.571-8.804-5.232-14.451-5.232-9.302,0-15.199,5.149-15.199,12.707,0,19.186,32.557,10.714,32.557,31.394,0,8.97-7.973,14.534-17.939,14.534-6.312,0-13.372-3.072-16.86-7.724-.083-.166-.083-.332.083-.498Z" fill="#e7e4f9"/><path d="M147.939,33.561c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM147.939,92.197c15.614,0,27.574-12.458,27.574-28.903s-11.96-28.902-27.574-28.902-27.574,12.458-27.574,28.902,11.959,28.903,27.574,28.903Z" fill="#e7e4f9"/><path d="M226.451,37.135c-.349-.474-1.101-.228-1.101.361v54.867c0,.166-.166.332-.415.332s-.416-.166-.416-.332v-57.805c0-.333.166-.499.416-.499.332,0,.498.166.664.416l25.08,34.119c.246.335.748.331.989-.009l24.178-34.11c.166-.25.333-.416.665-.416.249,0,.498.249.498.499v57.805c0,.166-.166.332-.415.332s-.415-.166-.415-.332v-55.057c0-.595-.764-.838-1.108-.352l-23.227,32.819c-.332.499-.997.499-1.329.083l-24.064-32.721Z" fill="#e7e4f9"/><path d="M361.813,91.533c.166,0,.332.166.332.415s-.166.415-.332.415h-30.73c-.498,0-.914-.415-.914-.914v-56.31c0-.498.416-.914.914-.914h29.899c.166,0,.332.167.332.416s-.166.415-.332.415h-29.982v27.242h27.491c.166,0,.333.166.333.416s-.167.415-.333.415h-27.491v28.405h30.813Z" fill="#e7e4f9"/><path d="M488.312,34.308c-16.527,0-27.324,12.874-27.324,28.986,0,17.441,11.378,28.903,27.74,28.903,6.894,0,12.707-2.408,16.86-5.813.166-.083.415-.083.582.083.166.166.083.498-.083.581-4.235,3.82-11.046,5.979-17.358,5.979-16.943,0-28.57-11.627-28.57-29.733,0-16.694,11.378-29.816,28.072-29.816,6.645,0,12.126,1.495,16.777,5.066.166.083.25.416.083.582-.166.166-.498.166-.664,0-4.402-3.488-9.884-4.817-16.113-4.817Z" fill="#e7e4f9"/><path d="M574.363,33.561c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM574.363,92.197c15.614,0,27.574-12.458,27.574-28.903s-11.96-28.902-27.574-28.902-27.574,12.458-27.574,28.902,11.959,28.903,27.574,28.903Z" fill="#e7e4f9"/><path d="M685.078,91.533c.166,0,.332.166.332.415s-.166.415-.332.415h-33.222c-.498,0-.914-.415-.914-.914v-56.891c0-.166.166-.416.416-.416s.415.25.415.416v56.975h33.305Z" fill="#e7e4f9"/><path d="M750.363,33.561c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM750.363,92.197c15.614,0,27.574-12.458,27.574-28.903s-11.96-28.902-27.574-28.902-27.574,12.458-27.574,28.902,11.959,28.903,27.574,28.903Z" fill="#e7e4f9"/><path d="M869.384,67.613v-33.055c0-.166.166-.416.416-.416s.415.25.415.416v33.304c0,17.773-9.883,24.999-21.262,24.999-12.873,0-22.84-8.555-22.84-25.58v-32.723c0-.166.167-.416.416-.416s.415.25.415.416v32.806c0,16.278,9.634,24.667,22.009,24.667,11.129,0,20.431-7.226,20.431-24.418Z" fill="#e7e4f9"/><path d="M959.087,92.446l-21.677-26.245h-14.036v26.162c0,.166-.166.332-.415.332s-.416-.166-.416-.332v-57.224c0-.498.416-.914.914-.914,3.488,0,9.053-.166,10.548-.166,15.863,0,19.85,7.89,19.85,15.946,0,7.309-5.731,14.285-15.448,16.029l21.511,25.996c.167.249,0,.664-.415.664-.166,0-.249-.083-.416-.249ZM923.374,65.371h12.292c8.389,0,17.358-6.479,17.358-15.448,0-8.638-4.983-15.033-19.103-15.033-1.661,0-7.807.083-10.548.166v30.315Z" fill="#e7e4f9"/><path d="M1001.948,84.805c.249-.249.582-.166.831.249,2.824,3.986,10.298,7.143,15.78,7.143,8.72,0,17.275-4.568,17.275-13.704,0-19.684-32.557-11.627-32.557-31.311,0-7.807,5.814-13.621,16.279-13.621,5.896,0,11.71,2.159,14.783,5.481.167.166.25.415.083.581-.25.25-.499.167-.665,0-3.571-3.571-8.804-5.232-14.451-5.232-9.302,0-15.199,5.149-15.199,12.707,0,19.186,32.557,10.714,32.557,31.394,0,8.97-7.973,14.534-17.939,14.534-6.312,0-13.372-3.072-16.86-7.724-.083-.166-.083-.332.083-.498Z" fill="#e7e4f9"/><path d="M1184.839,62.003c0,16.776-11.129,30.231-33.304,30.231-4.734,0-7.973-.166-11.794-.166-.498,0-.914-.415-.914-.914v-56.31c0-.498.416-.914.914-.914,4.568,0,6.811-.249,12.458-.249,23.255,0,32.64,13.372,32.64,28.321ZM1139.658,91.239c5.897,0,11.877.166,11.96.166,21.76,0,32.391-13.372,32.391-29.401,0-14.617-8.97-27.491-31.976-27.491-5.564,0-8.139.249-12.375.249v56.477Z" fill="#e7e4f9"/><path d="M1256.437,33.267c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM1256.437,91.903c15.614,0,27.574-12.458,27.574-28.903s-11.96-28.902-27.574-28.902-27.574,12.458-27.574,28.902,11.959,28.903,27.574,28.903Z" fill="#e7e4f9"/><path d="M1378.697,34.264c0-.166.166-.416.415-.416s.416.25.416.416v57.888c0,.249-.166.415-.416.415-.166,0-.332,0-.498-.249l-44.766-57.141v56.892c0,.166-.166.332-.415.332s-.416-.166-.416-.332v-58.055c0-.249.166-.415.333-.415s.332,0,.498.249l44.849,57.224v-56.808Z" fill="#e7e4f9"/><path d="M1431.857,34.059c-.166-.249-.166-.498.083-.747.167-.167.416-.083.582.083.748.914,1.495,2.408,1.495,4.568,0,4.236-1.495,6.894-4.485,8.555-.166.083-.416.083-.499-.167-.083-.249.083-.415.249-.498,2.575-1.495,3.904-4.319,3.904-7.724,0-1.993-.665-3.322-1.329-4.07Z" fill="#e7e4f9"/><path d="M1500.046,92.401c-.249,0-.415-.166-.415-.332v-57.307h-22.923c-.166,0-.333-.166-.333-.415s.167-.416.333-.416h46.676c.166,0,.332.167.332.416s-.166.415-.332.415h-22.923v57.307c0,.166-.166.332-.415.332Z" fill="#e7e4f9"/><path d="M1650.548,34.181c.083-.25.249-.333.415-.333s.332.083.415.333l19.435,56.476,16.195-56.31c.084-.249.25-.499.582-.499.415,0,.498.333.415.665l-16.776,57.722c-.083.249-.167.332-.416.332-.166,0-.332-.083-.415-.332l-19.435-56.809-18.937,56.809c-.083.249-.249.332-.415.332s-.415-.083-.498-.332l-17.524-57.722c-.083-.332.083-.665.498-.665.166,0,.333.083.416.333l17.108,56.476,18.937-56.476Z" fill="#e7e4f9"/><path d="M1762.427,69.063h-29.898l-10.133,23.089c-.083.166-.249.249-.415.249-.25,0-.416-.249-.333-.498l25.166-57.39c.083-.249.332-.582.664-.582s.581.333.664.582l25.249,57.39c.083.249,0,.498-.416.498-.166,0-.249-.083-.332-.249l-10.216-23.089ZM1747.478,34.928l-14.617,33.305h29.234l-14.617-33.305Z" fill="#e7e4f9"/><path d="M1814.425,84.511c.249-.249.581-.166.83.249,2.824,3.986,10.299,7.143,15.78,7.143,8.721,0,17.275-4.568,17.275-13.704,0-19.684-32.557-11.627-32.557-31.311,0-7.807,5.813-13.621,16.278-13.621,5.896,0,11.71,2.159,14.783,5.481.166.166.249.415.083.581-.249.25-.498.167-.664,0-3.571-3.571-8.804-5.232-14.451-5.232-9.303,0-15.199,5.149-15.199,12.707,0,19.186,32.558,10.714,32.558,31.394,0,8.97-7.974,14.534-17.94,14.534-6.312,0-13.371-3.072-16.859-7.724-.083-.166-.083-.332.083-.498Z" fill="#e7e4f9"/><path d="M1941.75,34.264v57.805c0,.166-.166.332-.416.332s-.415-.166-.415-.332v-29.235h-42.772v29.235c0,.166-.166.332-.415.332s-.415-.166-.415-.332v-57.805c0-.166.166-.416.415-.416s.415.25.415.416v27.74h42.772v-27.74c0-.166.166-.416.415-.416s.416.25.416.416Z" fill="#e7e4f9"/><path d="M2072.32,33.267c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM2072.32,91.903c15.614,0,27.573-12.458,27.573-28.903s-11.959-28.902-27.573-28.902-27.574,12.458-27.574,28.902,11.96,28.903,27.574,28.903Z" fill="#e7e4f9"/><path d="M2191.341,67.319v-33.055c0-.166.166-.416.415-.416s.415.25.415.416v33.304c0,17.773-9.884,24.999-21.262,24.999-12.873,0-22.84-8.555-22.84-25.58v-32.723c0-.166.166-.416.415-.416s.416.25.416.416v32.806c0,16.278,9.634,24.667,22.009,24.667,11.129,0,20.432-7.226,20.432-24.418Z" fill="#e7e4f9"/><path d="M2259.035,92.401c-.249,0-.415-.166-.415-.332v-57.307h-22.923c-.166,0-.333-.166-.333-.415s.167-.416.333-.416h46.676c.166,0,.332.167.332.416s-.166.415-.332.415h-22.923v57.307c0,.166-.166.332-.415.332Z" fill="#e7e4f9"/><path d="M2316.43,90.989c0-.498.498-.996,1.079-.996.499,0,.997.498.997.996,0,.582-.498,1.08-.997,1.08-.581,0-1.079-.498-1.079-1.08Z" fill="#e7e4f9"/><path d="M41.626,84.805c.249-.249.582-.166.831.249,2.824,3.986,10.298,7.143,15.78,7.143,8.72,0,17.275-4.568,17.275-13.704,0-19.684-32.557-11.627-32.557-31.311,0-7.807,5.814-13.621,16.279-13.621,5.896,0,11.71,2.159,14.783,5.481.167.166.25.415.083.581-.25.25-.499.167-.665,0-3.571-3.571-8.804-5.232-14.451-5.232-9.302,0-15.199,5.149-15.199,12.707,0,19.186,32.557,10.714,32.557,31.394,0,8.97-7.973,14.534-17.939,14.534-6.312,0-13.372-3.072-16.86-7.724-.083-.166-.083-.332.083-.498Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M147.939,33.561c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM147.939,92.197c15.614,0,27.574-12.458,27.574-28.903s-11.96-28.902-27.574-28.902-27.574,12.458-27.574,28.902,11.959,28.903,27.574,28.903Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M226.451,37.135c-.349-.474-1.101-.228-1.101.361v54.867c0,.166-.166.332-.415.332s-.416-.166-.416-.332v-57.805c0-.333.166-.499.416-.499.332,0,.498.166.664.416l25.08,34.119c.246.335.748.331.989-.009l24.178-34.11c.166-.25.333-.416.665-.416.249,0,.498.249.498.499v57.805c0,.166-.166.332-.415.332s-.415-.166-.415-.332v-55.057c0-.595-.764-.838-1.108-.352l-23.227,32.819c-.332.499-.997.499-1.329.083l-24.064-32.721Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M361.813,91.533c.166,0,.332.166.332.415s-.166.415-.332.415h-30.73c-.498,0-.914-.415-.914-.914v-56.31c0-.498.416-.914.914-.914h29.899c.166,0,.332.167.332.416s-.166.415-.332.415h-29.982v27.242h27.491c.166,0,.333.166.333.416s-.167.415-.333.415h-27.491v28.405h30.813Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M488.312,34.308c-16.527,0-27.324,12.874-27.324,28.986,0,17.441,11.378,28.903,27.74,28.903,6.894,0,12.707-2.408,16.86-5.813.166-.083.415-.083.582.083.166.166.083.498-.083.581-4.235,3.82-11.046,5.979-17.358,5.979-16.943,0-28.57-11.627-28.57-29.733,0-16.694,11.378-29.816,28.072-29.816,6.645,0,12.126,1.495,16.777,5.066.166.083.25.416.083.582-.166.166-.498.166-.664,0-4.402-3.488-9.884-4.817-16.113-4.817Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M574.363,33.561c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM574.363,92.197c15.614,0,27.574-12.458,27.574-28.903s-11.96-28.902-27.574-28.902-27.574,12.458-27.574,28.902,11.959,28.903,27.574,28.903Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M685.078,91.533c.166,0,.332.166.332.415s-.166.415-.332.415h-33.222c-.498,0-.914-.415-.914-.914v-56.891c0-.166.166-.416.416-.416s.415.25.415.416v56.975h33.305Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M750.363,33.561c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM750.363,92.197c15.614,0,27.574-12.458,27.574-28.903s-11.96-28.902-27.574-28.902-27.574,12.458-27.574,28.902,11.959,28.903,27.574,28.903Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M869.384,67.613v-33.055c0-.166.166-.416.416-.416s.415.25.415.416v33.304c0,17.773-9.883,24.999-21.262,24.999-12.873,0-22.84-8.555-22.84-25.58v-32.723c0-.166.167-.416.416-.416s.415.25.415.416v32.806c0,16.278,9.634,24.667,22.009,24.667,11.129,0,20.431-7.226,20.431-24.418Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M959.087,92.446l-21.677-26.245h-14.036v26.162c0,.166-.166.332-.415.332s-.416-.166-.416-.332v-57.224c0-.498.416-.914.914-.914,3.488,0,9.053-.166,10.548-.166,15.863,0,19.85,7.89,19.85,15.946,0,7.309-5.731,14.285-15.448,16.029l21.511,25.996c.167.249,0,.664-.415.664-.166,0-.249-.083-.416-.249ZM923.374,65.371h12.292c8.389,0,17.358-6.479,17.358-15.448,0-8.638-4.983-15.033-19.103-15.033-1.661,0-7.807.083-10.548.166v30.315Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1001.948,84.805c.249-.249.582-.166.831.249,2.824,3.986,10.298,7.143,15.78,7.143,8.72,0,17.275-4.568,17.275-13.704,0-19.684-32.557-11.627-32.557-31.311,0-7.807,5.814-13.621,16.279-13.621,5.896,0,11.71,2.159,14.783,5.481.167.166.25.415.083.581-.25.25-.499.167-.665,0-3.571-3.571-8.804-5.232-14.451-5.232-9.302,0-15.199,5.149-15.199,12.707,0,19.186,32.557,10.714,32.557,31.394,0,8.97-7.973,14.534-17.939,14.534-6.312,0-13.372-3.072-16.86-7.724-.083-.166-.083-.332.083-.498Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1184.839,62.003c0,16.776-11.129,30.231-33.304,30.231-4.734,0-7.973-.166-11.794-.166-.498,0-.914-.415-.914-.914v-56.31c0-.498.416-.914.914-.914,4.568,0,6.811-.249,12.458-.249,23.255,0,32.64,13.372,32.64,28.321ZM1139.658,91.239c5.897,0,11.877.166,11.96.166,21.76,0,32.391-13.372,32.391-29.401,0-14.617-8.97-27.491-31.976-27.491-5.564,0-8.139.249-12.375.249v56.477Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1256.437,33.267c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM1256.437,91.903c15.614,0,27.574-12.458,27.574-28.903s-11.96-28.902-27.574-28.902-27.574,12.458-27.574,28.902,11.959,28.903,27.574,28.903Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1378.697,34.264c0-.166.166-.416.415-.416s.416.25.416.416v57.888c0,.249-.166.415-.416.415-.166,0-.332,0-.498-.249l-44.766-57.141v56.892c0,.166-.166.332-.415.332s-.416-.166-.416-.332v-58.055c0-.249.166-.415.333-.415s.332,0,.498.249l44.849,57.224v-56.808Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1431.857,34.059c-.166-.249-.166-.498.083-.747.167-.167.416-.083.582.083.748.914,1.495,2.408,1.495,4.568,0,4.236-1.495,6.894-4.485,8.555-.166.083-.416.083-.499-.167-.083-.249.083-.415.249-.498,2.575-1.495,3.904-4.319,3.904-7.724,0-1.993-.665-3.322-1.329-4.07Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1500.046,92.401c-.249,0-.415-.166-.415-.332v-57.307h-22.923c-.166,0-.333-.166-.333-.415s.167-.416.333-.416h46.676c.166,0,.332.167.332.416s-.166.415-.332.415h-22.923v57.307c0,.166-.166.332-.415.332Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1650.548,34.181c.083-.25.249-.333.415-.333s.332.083.415.333l19.435,56.476,16.195-56.31c.084-.249.25-.499.582-.499.415,0,.498.333.415.665l-16.776,57.722c-.083.249-.167.332-.416.332-.166,0-.332-.083-.415-.332l-19.435-56.809-18.937,56.809c-.083.249-.249.332-.415.332s-.415-.083-.498-.332l-17.524-57.722c-.083-.332.083-.665.498-.665.166,0,.333.083.416.333l17.108,56.476,18.937-56.476Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1762.427,69.063h-29.898l-10.133,23.089c-.083.166-.249.249-.415.249-.25,0-.416-.249-.333-.498l25.166-57.39c.083-.249.332-.582.664-.582s.581.333.664.582l25.249,57.39c.083.249,0,.498-.416.498-.166,0-.249-.083-.332-.249l-10.216-23.089ZM1747.478,34.928l-14.617,33.305h29.234l-14.617-33.305Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1814.425,84.511c.249-.249.581-.166.83.249,2.824,3.986,10.299,7.143,15.78,7.143,8.721,0,17.275-4.568,17.275-13.704,0-19.684-32.557-11.627-32.557-31.311,0-7.807,5.813-13.621,16.278-13.621,5.896,0,11.71,2.159,14.783,5.481.166.166.249.415.083.581-.249.25-.498.167-.664,0-3.571-3.571-8.804-5.232-14.451-5.232-9.303,0-15.199,5.149-15.199,12.707,0,19.186,32.558,10.714,32.558,31.394,0,8.97-7.974,14.534-17.94,14.534-6.312,0-13.371-3.072-16.859-7.724-.083-.166-.083-.332.083-.498Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M1941.75,34.264v57.805c0,.166-.166.332-.416.332s-.415-.166-.415-.332v-29.235h-42.772v29.235c0,.166-.166.332-.415.332s-.415-.166-.415-.332v-57.805c0-.166.166-.416.415-.416s.415.25.415.416v27.74h42.772v-27.74c0-.166.166-.416.415-.416s.416.25.416.416Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M2072.32,33.267c16.029,0,28.404,12.873,28.404,29.733s-12.375,29.733-28.404,29.733-28.404-12.873-28.404-29.733,12.375-29.733,28.404-29.733ZM2072.32,91.903c15.614,0,27.573-12.458,27.573-28.903s-11.959-28.902-27.573-28.902-27.574,12.458-27.574,28.902,11.96,28.903,27.574,28.903Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M2191.341,67.319v-33.055c0-.166.166-.416.415-.416s.415.25.415.416v33.304c0,17.773-9.884,24.999-21.262,24.999-12.873,0-22.84-8.555-22.84-25.58v-32.723c0-.166.166-.416.415-.416s.416.25.416.416v32.806c0,16.278,9.634,24.667,22.009,24.667,11.129,0,20.432-7.226,20.432-24.418Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M2259.035,92.401c-.249,0-.415-.166-.415-.332v-57.307h-22.923c-.166,0-.333-.166-.333-.415s.167-.416.333-.416h46.676c.166,0,.332.167.332.416s-.166.415-.332.415h-22.923v57.307c0,.166-.166.332-.415.332Z" fill="none" stroke="#fff" stroke-width="3"/><path d="M2316.43,90.989c0-.498.498-.996,1.079-.996.499,0,.997.498.997.996,0,.582-.498,1.08-.997,1.08-.581,0-1.079-.498-1.079-1.08Z" fill="none" stroke="#fff" stroke-width="3"/>
     </symbol>
@@ -327,6 +836,7 @@ footer .tagline { width: min(100%, 880px); }
 <header class="topbar" id="topbar">
   <a href="#top" aria-label="BLACKLIGHT, back to top"><svg class="topbar__logo" viewBox="71 55 2255 150" role="img" aria-label="BLACKLIGHT"><g fill="#e8e8e8"><path d="M71.051,197.131V62.912h45.877c32.986,0,48.342,13.08,48.342,35.071,0,13.649-8.531,24.834-21.612,28.436v.569c17.63,4.17,27.488,15.355,27.488,32.038,0,24.645-16.683,38.104-53.65,38.104h-46.446ZM104.227,117.7h11.753c12.512,0,18.579-5.119,18.579-15.166,0-9.479-6.066-14.219-19.526-14.219h-10.806v29.385ZM104.227,170.97h11.753c16.683,0,23.508-5.498,23.508-16.304,0-10.427-7.204-16.114-22.56-16.114h-12.702v32.418Z" /><path d="M305.368,62.912h33.176v104.835h55.735l-3.602,29.384h-85.309V62.912Z" /><path d="M601.677,62.912l48.911,133.271-.758.948h-36.588l-8.152-24.645h-46.825l-7.962,24.645h-36.02l-.758-.948,49.479-133.271h38.673ZM565.658,149.358h31.849l-7.204-22.18c-2.654-8.342-6.256-22.37-8.342-34.882h-.568c-2.275,12.512-5.877,26.54-8.531,35.071l-7.204,21.99Z" /><path d="M767.18,130.401c0-42.844,28.815-71.28,68.626-71.28,16.303,0,31.28,4.55,45.688,13.46l-4.739,32.038h-1.138c-11.185-9.668-23.697-14.787-36.398-14.787-22.18,0-36.588,15.925-36.588,40.001,0,24.455,14.597,40.379,37.157,40.379,12.512,0,25.403-5.118,36.588-14.787h1.137l4.55,31.85c-14.218,8.909-29.763,13.648-46.066,13.648-40.948,0-68.816-28.246-68.816-70.521Z" /><path d="M1091.546,119.406l50.048,76.588-.758,1.138h-37.915l-33.555-52.133-15.166,17.44v34.692h-33.176V62.912h33.176v21.611c0,11.185-.758,26.351-1.517,38.862h.569c7.204-10.427,13.27-18.768,20.095-27.108l27.868-33.365h37.915l.569,1.137-48.152,55.356Z" /></g><g fill="#b9fcf5" transform="translate(1207.331 0)"><path d="M71.282,62.913h33.176v104.835h55.735v29.384h-88.911V62.913Z" /><path d="M300.815,62.913h33.176v134.219h-33.176V62.913Z" /><path d="M479.919,130.78c0-42.844,30.522-71.659,70.901-71.659,21.232,0,38.294,6.635,51.375,14.598l-5.688,31.469h-1.137c-12.133-9.289-25.782-15.924-41.896-15.924-24.266,0-38.104,16.872-38.104,41.517,0,24.455,13.08,40.569,33.934,40.569,7.772,0,14.787-1.706,21.991-5.308v-20.475h-23.318v-22.749h53.081v63.318c-20.474,11.563-36.777,14.786-53.46,14.786-41.706,0-67.679-28.814-67.679-70.143Z" /><path d="M837.226,62.913h32.986v134.219h-32.986v-53.271h-51.186v53.271h-33.176V62.913h33.176v52.133h51.186v-52.133Z" /><path d="M1119.271,62.913v30.521h-38.294v103.697h-32.985v-103.697h-38.295v-30.521h109.574Z" /></g></svg></a>
   <nav aria-label="Sections">
+    <a href="#world" class="hide-s">World</a>
     <a href="#trailer" class="hide-s">Trailer</a>
     <a href="#story" class="hide-s">Story</a>
     <a href="#characters" class="hide-s">Characters</a>
@@ -340,15 +850,20 @@ footer .tagline { width: min(100%, 880px); }
 <aside class="rail rail--r" aria-hidden="true"><span id="depth">Depth 0 m</span><span id="clock">Andamooka</span></aside>
 
 <main>
-<section class="hero uv" id="top" data-home=".5,.34" data-uv>
-  <div class="hero__stage" role="img" aria-label="Three men in front of a rusted mine headframe in red desert country: the Ghost, the Son and the Father.">
+<section class="hero uv" id="top" data-home=".72,.40" data-uv>
+  <div class="hero__stage" role="img" aria-label="Three figures before a rusted mine headframe in red desert country; the Ghost remains obscured in shadow.">
     <div class="hero__base bg-hero"></div>
     <div class="hero__lit uv__lit bg-hero"></div>
     <div class="uv__glow"></div>
+    <div class="hero__ghost-shadow" aria-hidden="true"></div>
     <div class="hero__shade"></div>
   </div>
   <div class="hero__copy">
-    <svg class="logo" viewBox="0 0 2296 223" role="img" aria-label="BLACKLIGHT"><use href="#logo-art" width="2296" height="223"/></svg>
+    <div class="hero__brand" id="hero-brand" role="img" aria-label="BLACKLIGHT">
+      <svg class="logo logo--base" viewBox="71 19 2296 223" aria-hidden="true"><use href="#logo-black-art" width="2296" height="223"/></svg>
+      <svg class="logo logo--light" viewBox="71 19 2296 223" aria-hidden="true"><use href="#logo-light-art" width="2296" height="223"/></svg>
+      <p class="hero__torch-hint"><span class="hero__hint-desktop">MOVE THE LIGHT TO REVEAL</span><span class="hero__hint-mobile">TAP THE WORD TO REVEAL</span><i aria-hidden="true">↗</i></p>
+    </div>
     <svg class="tagline" viewBox="0 0 2288 70" role="img" aria-label="Some colours don't wash out."><use href="#tag-art" width="2288" height="70"/></svg>
     <div class="hero__row">
       <dl class="facts">
@@ -363,6 +878,54 @@ footer .tagline { width: min(100%, 880px); }
     </div>
   </div>
 </section>
+
+
+<section class="window-world" id="world" aria-labelledby="world-title">
+  <div class="window-world__head wrap">
+    <div>
+      <p class="window-world__eyebrow util">BLACKLIGHT / ANDAMOOKA / SOUTH AUSTRALIA</p>
+      <h2 class="window-world__title" id="world-title">LOOK<br>CLOSER<span>.</span></h2>
+    </div>
+    <div>
+      <p class="window-world__intro">A town built on secrets. A world that shifts with the light. Step inside the fragments that make BLACKLIGHT.</p>
+      <div class="window-world__tools">
+        <button class="motion-control" id="motion-control" type="button" aria-pressed="true">
+          <span class="motion-control__glyph" aria-hidden="true">Ⅱ</span><span id="motion-label">Pause motion</span>
+        </button>
+        <span class="small">Select a frame to explore</span>
+      </div>
+    </div>
+  </div>
+  <div class="window-stage" id="window-stage" aria-label="Moving windows into the world of BLACKLIGHT">
+    <p class="window-stage__word" aria-hidden="true">BENEATH<br>THE SURFACE</p>
+    <button class="film-window window--a" type="button" data-depth="1.3" data-kicker="THE TOWN" data-title="A place of its own" data-copy="Andamooka. Red earth, long shadows and a town shaped by what lies beneath it." aria-label="Explore the town of Andamooka">
+      <img src="assets/street-day.jpg" alt="Andamooka's red dirt main street at dusk" loading="lazy"><span class="film-window__label"><b>01 / THE TOWN</b><span>AT DUSK</span></span>
+    </button>
+    <button class="film-window window--b" type="button" data-depth="2.1" data-kicker="THE GHOST" data-title="Everyone has a price" data-copy="Taj is the town's unofficial power broker. Part criminal, part folk hero. Easy to like. Hard to escape." aria-label="Explore the Ghost, Taj">
+      <img src="assets/taj.jpg" alt="Portrait of Taj, the Ghost" loading="lazy"><span class="film-window__label"><b>02 / THE GHOST</b><span>TAJ</span></span>
+    </button>
+    <button class="film-window window--c" type="button" data-depth="1" data-kicker="AFTER DARK" data-title="The other side of town" data-copy="By day the town works its claims. By night it settles its debts." aria-label="Explore Andamooka after dark">
+      <img src="assets/street-night.jpg" alt="Andamooka street at night" loading="lazy"><span class="film-window__label"><b>03 / AFTER DARK</b><span>THE DEBTS</span></span>
+    </button>
+    <button class="film-window window--d" type="button" data-depth="1.8" data-kicker="THE SON" data-title="Two heroes" data-copy="A teenager caught between the two men he admires most. Until one terrible choice changes everything." aria-label="Explore the Son">
+      <img src="assets/son.jpg" alt="Portrait of the Son" loading="lazy"><span class="film-window__label"><b>04 / THE SON</b><span>THE CHOICE</span></span>
+    </button>
+    <button class="film-window window--e" type="button" data-depth="2.5" data-kicker="THE FATHER" data-title="One find from everything" data-copy="A charismatic miner chasing the big strike. He answers to nobody, but leans on Taj more than he admits." aria-label="Explore the Father">
+      <img src="assets/father.jpg" alt="Portrait of the Father" loading="lazy"><span class="film-window__label"><b>05 / THE FATHER</b><span>THE FIND</span></span>
+    </button>
+    <button class="film-window window--f" type="button" data-depth="2.8" data-kicker="THE DIGGINGS" data-title="An underworld" data-copy="Hand-cut shafts, white clay and rust-red rock. The ground keeps its own secrets." aria-label="Explore the opal diggings">
+      <img src="assets/mine.jpg" alt="A cut mine face in Andamooka" loading="lazy"><span class="film-window__label"><b>06 / THE DIGGINGS</b><span>BELOW</span></span>
+    </button>
+    <button class="film-window window--g" type="button" data-depth="1.5" data-kicker="DEEP TIME" data-title="Before the town" data-copy="Long before the miners, this country sat beneath an inland sea. The colour they chase is part of that ancient story." aria-label="Explore the ancient inland sea">
+      <img src="assets/sea.jpg" alt="Concept art of an ancient inland sea" loading="lazy"><span class="film-window__label"><b>07 / DEEP TIME</b><span>100M YEARS</span></span>
+    </button>
+  </div>
+  <div class="window-world__foot wrap">
+    <p class="small">A closer look at the world of BLACKLIGHT</p>
+    <p class="small window-count">07 FRAMES <span aria-hidden="true">↗</span></p>
+  </div>
+</section>
+<div class="window-marquee" aria-hidden="true"><div class="window-marquee__track"><span>THE TOWN REMEMBERS <b>✳</b></span><span>THE EARTH KEEPS SECRETS <b>✳</b></span><span>NOTHING STAYS BURIED <b>✳</b></span><span>THE TOWN REMEMBERS <b>✳</b></span><span>THE EARTH KEEPS SECRETS <b>✳</b></span><span>NOTHING STAYS BURIED <b>✳</b></span></div></div>
 
 <section class="trailer cut" id="trailer" aria-labelledby="t-h">
   <div class="wrap">
@@ -382,59 +945,106 @@ footer .tagline { width: min(100%, 880px); }
   </div>
 </section>
 
-<section class="story cut" id="story" aria-label="Story">
-  <div class="wrap">
-    <p class="logline">In an opal town where everyone owes someone, a boy does something he can't take back, and the man who takes his side is the one who holds the debts.</p>
-
-    <div class="beat">
-      <p class="beat__depth util">0 m. The surface</p>
-      <h2 class="h-xl">Above, red dirt. Below, a labyrinth.</h2>
-      <p class="copy">Andamooka, South Australia, the late 1980s. The sun flattens everything on top. Underneath, hand-cut shafts run in every direction. Opal is fortune and freedom here, and everyone owes someone for the chance to dig.</p>
+<section class="story cut excavation" id="story" aria-label="The BLACKLIGHT synopsis">
+  <div class="excavation__intro wrap">
+    <div>
+      <p class="util excavation__eyebrow">THE SYNOPSIS / A DESCENT INTO BLACKLIGHT</p>
+      <h2 class="excavation__title">EVERYTHING<br>HAS A DEPTH<span>.</span></h2>
     </div>
-
-    <figure class="street" style="margin-left:0;margin-right:0">
-      <div class="street__day" role="img" aria-label="Andamooka's main dirt street at sunset, with tin sheds, power poles and white mullock hills behind."><span>Dusk</span></div>
-      <div class="street__night" role="img" aria-label="The same kind of street after dark, with a street lamp and lit windows in tin sheds."><span>After dark</span></div>
-    </figure>
-    <p class="cap small">By day the town works its claims. By night it settles its debts.</p>
-
-    <div class="beat">
-      <p class="beat__depth util">6 m. The Ghost</p>
-      <h2 class="h-xl">Taj takes a percentage.</h2>
-      <p class="copy">Part criminal, part folk hero, Taj is the town's unofficial power broker. He settles disputes, takes his cut, and is easy to like. That's what makes him dangerous.</p>
+    <div class="excavation__intro-copy">
+      <p>In Andamooka, the best things are buried. So are the worst.</p>
+      <p class="small">Start at the surface. Scroll down. See what comes to light.</p>
+      <a class="excavation__start" href="#excavation-01">BEGIN THE DESCENT <span aria-hidden="true">↓</span></a>
     </div>
-
-    <div class="beat">
-      <p class="beat__depth util">14 m. The Father</p>
-      <h2 class="h-xl">One find from everything.</h2>
-      <p class="copy">The father is a charismatic miner chasing the big strike. He drinks. He answers to nobody, though he leans on Taj more than he would ever say.</p>
-    </div>
-
-    <figure class="wide">
-      <img src="assets/dwelling.jpg" alt="Inside a miner's tin shed: a lantern, sieves and picks on the walls, a table of rough opal, and a fire in a stone hearth." loading="lazy">
-      <figcaption class="small" style="color:var(--bone)">A miner's dwelling. A lantern, a sieve, a table of rough opal.</figcaption>
-    </figure>
-
-    <div class="beat">
-      <p class="beat__depth util">22 m. The Son</p>
-      <h2 class="h-xl">A boy with two heroes.</h2>
-      <p class="copy">The son idolises his father, and he idolises Taj. Then a girl he cares about is harmed by an older man the town prefers not to see. The boy goes out into the diggings to face him. The man doesn't come back.</p>
-    </div>
-
-    <div class="quote">
-      <p class="beat__depth util">30 m. The rupture</p>
-      <blockquote>Because he knows me!</blockquote>
-      <p>The father hides what happened. Taj knows, and takes the boy's side. Father and son split over it, and the mother sees the damage and has no power to stop it.</p>
-    </div>
-
-    <div class="beat">
-      <p class="beat__depth util">38 m. Deeper</p>
-      <h2 class="h-xl">The rest stays underground.</h2>
-      <p class="copy">The full treatment and script are available on request to people who want to help make this film.</p>
-    </div>
-
-    <p class="advisory small">Content advisory for readers of the treatment: violence, sexual assault (never shown on screen), alcohol and coarse language. Intended for mature audiences.</p>
   </div>
+
+  <figure class="excavation__surface wrap" aria-label="Andamooka at dusk, above and below ground">
+    <div class="excavation__surface-day"><span class="util">THE SURFACE / DUSK</span></div>
+    <div class="excavation__surface-night"><span class="util">AFTER DARK</span></div>
+    <figcaption class="small">By day, the town works its claims. By night, it settles its debts.</figcaption>
+  </figure>
+
+  <div class="excavation__layout wrap">
+    <aside class="excavation__visual" id="excavation-visual" aria-label="A cutaway view of the opal diggings. The depth marker moves as the synopsis is explored.">
+      <div class="excavation__visual-top">
+        <span class="util">FIELD / ANDAMOOKA</span>
+        <span class="util">LATE 1980s</span>
+      </div>
+      <div class="excavation__cross-section" aria-hidden="true">
+        <div class="excavation__strata excavation__strata--one"></div>
+        <div class="excavation__strata excavation__strata--two"></div>
+        <div class="excavation__strata excavation__strata--three"></div>
+        <div class="excavation__strata excavation__strata--four"></div>
+        <div class="excavation__shaft-wall"></div>
+        <div class="excavation__shaft">
+          <span class="excavation__rope"></span>
+          <span class="excavation__bucket"></span>
+          <span class="excavation__marker" id="excavation-marker"></span>
+        </div>
+        <svg class="excavation__opal" viewBox="0 0 460 180" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="opal-seam" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#a5f5e9" stop-opacity=".1"/>
+              <stop offset=".35" stop-color="#9bf6ed"/>
+              <stop offset=".58" stop-color="#f5a3d0"/>
+              <stop offset=".78" stop-color="#e7dcff"/>
+              <stop offset="1" stop-color="#a5f5e9" stop-opacity=".15"/>
+            </linearGradient>
+            <filter id="opal-glow"><feGaussianBlur stdDeviation="7"/></filter>
+          </defs>
+          <path d="M8 116 C58 100 75 123 119 105 S190 76 226 91 S302 116 345 80 S410 58 452 67" fill="none" stroke="url(#opal-seam)" stroke-width="15" opacity=".6" filter="url(#opal-glow)"/>
+          <path d="M8 116 C58 100 75 123 119 105 S190 76 226 91 S302 116 345 80 S410 58 452 67" fill="none" stroke="url(#opal-seam)" stroke-width="4"/>
+          <path d="M48 142 L98 119 L144 133 L189 104 L243 119 L288 132 L338 103 L392 93" fill="none" stroke="#d9fff9" stroke-width="1" opacity=".72"/>
+        </svg>
+      </div>
+      <div class="excavation__meter" aria-hidden="true"><span id="excavation-meter-fill"></span></div>
+      <div class="excavation__visual-bottom" aria-live="polite" aria-atomic="true">
+        <div><span class="util">CURRENT DEPTH</span><strong id="excavation-depth">0 <small>m</small></strong></div>
+        <span class="excavation__visual-note" id="excavation-layer">THE SURFACE</span>
+      </div>
+    </aside>
+
+    <div class="excavation__chapters" id="excavation-chapters">
+      <article class="excavation__chapter is-active" id="excavation-01" data-depth="0" data-layer="THE SURFACE">
+        <p class="excavation__chapter-meta"><span>01 / THE SURFACE</span><span>0 METRES</span></p>
+        <h3>Above, red dirt.<br>Below, a labyrinth.</h3>
+        <p>Andamooka. Late 1980s. Above ground: dust and heat. Beneath it: hand-cut shafts running in every direction. Opal promises fortune. Every claim carries a debt.</p>
+      </article>
+
+      <article class="excavation__chapter" id="excavation-02" data-depth="6" data-layer="THE GHOST">
+        <p class="excavation__chapter-meta"><span>02 / THE GHOST</span><span>6 METRES</span></p>
+        <h3>Taj takes<br>a percentage.</h3>
+        <p>Part criminal, part folk hero. Taj settles disputes and takes his cut. His charm makes him easy to like. That's what makes him dangerous.</p>
+      </article>
+
+      <article class="excavation__chapter" id="excavation-03" data-depth="14" data-layer="THE FATHER">
+        <p class="excavation__chapter-meta"><span>03 / THE FATHER</span><span>14 METRES</span></p>
+        <h3>One find<br>from everything.</h3>
+        <p>A charismatic miner chasing the big strike. He drinks. He answers to nobody—though he leans on Taj more than he would ever admit.</p>
+      </article>
+
+      <article class="excavation__chapter" id="excavation-04" data-depth="22" data-layer="THE SON">
+        <p class="excavation__chapter-meta"><span>04 / THE SON</span><span>22 METRES</span></p>
+        <h3>Two heroes.<br>One terrible choice.</h3>
+        <p>The son idolises his father. He idolises Taj. When a girl he cares about is harmed by an older man the town prefers not to see, he goes into the diggings to confront him. The man never comes back.</p>
+      </article>
+
+      <article class="excavation__chapter excavation__chapter--rupture" id="excavation-05" data-depth="30" data-layer="THE RUPTURE">
+        <p class="excavation__chapter-meta"><span>05 / THE RUPTURE</span><span>30 METRES</span></p>
+        <h3>The truth<br>divides them.</h3>
+        <p>The father hides what happened. Taj takes the boy's side. Father and son are driven apart, while the mother sees the damage and cannot stop it.</p>
+      </article>
+
+      <article class="excavation__chapter excavation__chapter--deeper" id="excavation-06" data-depth="38" data-layer="DEEPER">
+        <p class="excavation__chapter-meta"><span>06 / DEEPER</span><span>38 METRES</span></p>
+        <h3>The rest stays<br>underground.</h3>
+        <p>Some things are left to be found. The full treatment and screenplay are available to prospective cast, crew and financing partners.</p>
+        <a class="excavation__request" href="#interest">REQUEST THE TREATMENT <span aria-hidden="true">↗</span></a>
+      </article>
+    </div>
+  </div>
+
+  <p class="advisory small wrap">Content advisory for readers of the treatment: violence, sexual assault (never shown on screen), alcohol and coarse language. Intended for mature audiences.</p>
 </section>
 
 <section class="chars cut" id="characters" aria-labelledby="c-h">
@@ -462,49 +1072,38 @@ footer .tagline { width: min(100%, 880px); }
   </div>
 </section>
 
-<section class="setting uv cut" id="setting" aria-labelledby="s-h" data-home=".62,.3">
-  <div class="uv__base" role="img" aria-label="A freshly cut mine face in Andamooka: layers of white clay and rust-red rock, with drill holes along the rock."></div>
-  <div class="uv__lit"></div>
-  <div class="uv__glow"></div>
-  <div class="uv__scrim"></div>
-  <div class="setting__in wrap">
-    <p class="word" aria-hidden="true">Andamooka</p>
-    <div class="setting__grid">
-      <div>
-        <h2 class="h-xl" id="s-h" style="font-size:clamp(2.4rem,6vw,6rem)">A town that lives under itself</h2>
-        <p>Andamooka sits roughly 600 km north of Adelaide, in opal country. Opal was first found here in 1930, and the town grew around the digging.</p>
-        <p>People live in dugouts cut into the hillside, work claims by hand, and noodle through mullock heaps hoping for a flash of colour. The film is set in the late 1980s and early 1990s, when a big find still felt one shaft away.</p>
+<section class="setting-journey" id="setting" aria-label="A journey into Andamooka">
+  <div class="setting-journey__track" id="setting-journey-track">
+    <div class="setting-journey__viewport" id="setting-journey-viewport">
+      <div class="setting-journey__maps" aria-hidden="true">
+        <div class="setting-journey__frame journey-frame--1"></div>
+        <div class="setting-journey__frame journey-frame--2"></div>
+        <div class="setting-journey__frame journey-frame--3"></div>
+        <div class="setting-journey__frame journey-frame--4"></div>
+        <div class="setting-journey__frame journey-frame--5"></div>
+        <div class="setting-journey__frame journey-frame--6"></div>
+        <div class="setting-journey__frame journey-frame--7"></div>
+        <div class="setting-journey__frame journey-frame--8"></div>
+        <div class="setting-journey__frame journey-frame--9"></div>
       </div>
-      <dl>
-        <div><dt>Where</dt><dd>About 600 km north of Adelaide</dd></div>
-        <div><dt>Opal first found</dt><dd>1930</dd></div>
-        <div><dt>Homes</dt><dd>Dugouts cut into the hill</dd></div>
-        <div><dt>The film's years</dt><dd>Late 1980s into the early 1990s</dd></div>
-      </dl>
-    </div>
-  </div>
-</section>
+      <div class="setting-journey__surface" id="setting-journey-surface" aria-hidden="true"></div>
+      <div class="setting-journey__arrival" id="setting-journey-arrival" role="img" aria-label="A dark passage cut through the red and white rock beneath Andamooka."></div>
+      <div class="setting-journey__vignette" aria-hidden="true"></div>
 
-<section class="hut cut" id="huts" aria-labelledby="h-h">
-  <div class="wrap hut__grid">
-    <div>
-      <p class="util small">1950s</p>
-      <h2 class="h-xl" id="h-h">Built from what was lying around</h2>
-      <p>Local stone, tin and brush fencing, a bench of rough opal outside the door. Miners' huts in the 1950s were made to be lived in and left. A lot of Andamooka still looks like this.</p>
-      <p class="small">Concept footage.</p>
-    </div>
-    <div class="hut__video">
-      <video id="hutv" src="assets/hut.mp4" poster="assets/hut-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Concept footage of miners at a stone hut in the 1950s, sorting opal in the sun."></video>
-    </div>
-  </div>
-</section>
+      <div class="setting-journey__hud" id="setting-journey-hud" aria-live="polite">
+        <p class="util">BLACKLIGHT / THE SETTING</p>
+        <p class="setting-journey__location" id="setting-journey-location">AUSTRALIA</p>
+        <span class="setting-journey__scroll util">SCROLL TO ARRIVE <i aria-hidden="true">↓</i></span>
+      </div>
 
-<section class="sea cut" id="deep" aria-labelledby="d-h">
-  <div class="sea__img" role="img" aria-label="Concept image of this country 100 million years ago: an inland sea with turquoise shallows, coral-covered limestone ledges and red hills behind."></div>
-  <div class="sea__in wrap">
-    <p class="util small">100 million years ago</p>
-    <h2 class="h-xl" id="d-h">Before the town, a sea</h2>
-    <p>This country was once the floor and shoreline of an inland sea. Silica-rich water seeped into the cracks and hollows of the sediment and set, slowly, as opal. The colour the miners chase is what's left of that water.</p>
+      <div class="setting-journey__arrival-copy" id="setting-journey-copy">
+        <p class="util">THE SETTING / BLACKLIGHT</p>
+        <h2>ANDAMOOKA</h2>
+        <p class="setting-journey__line">On the surface, a town shaped by the desert. Beneath it, an underworld of debts, secrets and rules written in stone.</p>
+        <p class="setting-journey__welcome util">WELCOME TO THE UNDERWORLD.</p>
+      </div>
+      <div class="setting-journey__progress" aria-hidden="true"><span id="setting-journey-progress"></span></div>
+    </div>
   </div>
 </section>
 
@@ -549,6 +1148,19 @@ footer .tagline { width: min(100%, 880px); }
 </section>
 </main>
 
+<dialog class="window-viewer" id="window-viewer" aria-labelledby="window-viewer-title">
+  <div class="window-viewer__inner">
+    <button class="window-viewer__close" id="window-viewer-close" type="button" aria-label="Close image viewer">×</button>
+    <img class="window-viewer__image" id="window-viewer-image" src="" alt="">
+    <div class="window-viewer__copy">
+      <p class="util" id="window-viewer-kicker"></p>
+      <h2 id="window-viewer-title"></h2>
+      <p id="window-viewer-text"></p>
+    </div>
+  </div>
+</dialog>
+
+
 <footer>
   <div class="wrap">
     <svg class="tagline" viewBox="0 0 2288 70" role="img" aria-label="Some colours don't wash out."><use href="#tag-art" width="2288" height="70"/></svg>
@@ -591,10 +1203,20 @@ footer .tagline { width: min(100%, 880px); }
   var T = torches.map(function (el) {
     var h = (el.getAttribute("data-home") || ".5,.4").split(",").map(parseFloat);
     var s = { el: el, hx: h[0], hy: h[1], x: h[0], y: h[1], tx: h[0], ty: h[1], last: -1e9, vis: false, ph: Math.random() * 6 };
-    el.addEventListener("pointermove", function (e) {
+    function placeTorch(e) {
       var r = el.getBoundingClientRect();
-      s.tx = (e.clientX - r.left) / r.width; s.ty = (e.clientY - r.top) / r.height; s.last = performance.now();
-    }, { passive: true });
+      s.tx = Math.max(0,Math.min(1,(e.clientX - r.left) / r.width));
+      s.ty = Math.max(0,Math.min(1,(e.clientY - r.top) / r.height));
+      s.last = performance.now();
+      if (e.pointerType === "touch") s.manual = true;
+      if (e.pointerType === "touch" || reduce) {
+        /* A tap should reveal immediately; a drag then follows smoothly. */
+        s.x = s.tx; s.y = s.ty; setPos(s);
+        if (s.el.id === "top") syncLogoBeam(s);
+      }
+    }
+    el.addEventListener("pointermove",placeTorch,{passive:true});
+    el.addEventListener("pointerdown",placeTorch,{passive:true});
     return s;
   });
   if ("IntersectionObserver" in window) {
@@ -602,7 +1224,23 @@ footer .tagline { width: min(100%, 880px); }
     T.forEach(function (s) { io.observe(s.el); });
   } else { T.forEach(function (s) { s.vis = true; }); }
   function setPos(s) { s.el.style.setProperty("--tx", (s.x * 100).toFixed(2) + "%"); s.el.style.setProperty("--ty", (s.y * 100).toFixed(2) + "%"); }
-  T.forEach(setPos);
+  var heroBrand = document.getElementById("hero-brand");
+  function syncLogoBeam(torch) {
+    if (!heroBrand) return;
+    var heroRect = torch.el.getBoundingClientRect();
+    var brandRect = heroBrand.getBoundingClientRect();
+    if (!brandRect.width || !brandRect.height) return;
+    var screenX = heroRect.left + torch.x * heroRect.width;
+    var screenY = heroRect.top + torch.y * heroRect.height;
+    var x = ((screenX - brandRect.left) / brandRect.width) * 100;
+    var y = ((screenY - brandRect.top) / brandRect.height) * 100;
+    heroBrand.style.setProperty("--beam-x", x.toFixed(2) + "%");
+    heroBrand.style.setProperty("--beam-y", y.toFixed(2) + "%");
+  }
+  T.forEach(function (torch) {
+    setPos(torch);
+    if (torch.el.id === "top") syncLogoBeam(torch);
+  });
 
   /* opal colour field, drawn small and scaled up */
   var fields = [].slice.call(document.querySelectorAll("canvas[data-opal]")).map(function (cv) {
@@ -633,8 +1271,9 @@ footer .tagline { width: min(100%, 880px); }
     var t = (now - t0) / 1000;
     T.forEach(function (s) {
       if (!s.vis) return;
-      if (!reduce && now - s.last > 2200) { s.tx = s.hx + .22 * Math.sin(t * .31 + s.ph); s.ty = s.hy + .1 * Math.sin(t * .47 + s.ph * 1.3); }
+      if (!reduce && !s.manual && now - s.last > 2200) { s.tx = s.hx + .22 * Math.sin(t * .31 + s.ph); s.ty = s.hy + .1 * Math.sin(t * .47 + s.ph * 1.3); }
       s.x += (s.tx - s.x) * .07; s.y += (s.ty - s.y) * .07; setPos(s);
+      if (s.el.id === "top") syncLogoBeam(s);
     });
     if (!reduce && now - lastDraw > 50) { lastDraw = now; fields.forEach(function (f) { if (f.vis) f.draw(t); }); }
     requestAnimationFrame(frame);
@@ -656,6 +1295,183 @@ footer .tagline { width: min(100%, 880px); }
       new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { var p = hv.play(); if (p && p.catch) p.catch(function () {}); } else { hv.pause(); } }); }, { threshold: .2 }).observe(hv);
     }
   }
+
+
+  /* Monument-inspired moving windows: pointer parallax, pause control and accessible image viewer */
+  var world = $("#world"), stage = $("#window-stage"), motionButton = $("#motion-control"), motionLabel = $("#motion-label"), marquee = document.querySelector(".window-marquee");
+  var windows = world ? [].slice.call(world.querySelectorAll(".film-window")) : [];
+  var viewer = $("#window-viewer"), viewerImage = $("#window-viewer-image");
+  var viewerKicker = $("#window-viewer-kicker"), viewerTitle = $("#window-viewer-title"), viewerText = $("#window-viewer-text");
+  var viewerClose = $("#window-viewer-close");
+  if (world && stage) {
+    if (reduce) { world.classList.add("is-paused"); if (marquee) marquee.classList.add("is-paused"); }
+    if (motionButton) {
+      if (reduce) {
+        motionButton.disabled = true;
+        motionButton.setAttribute("aria-pressed","false");
+        motionLabel.textContent = "Reduced motion";
+        motionButton.querySelector(".motion-control__glyph").textContent = "—";
+      } else {
+        motionButton.addEventListener("click", function () {
+          var paused = world.classList.toggle("is-paused");
+          if (marquee) marquee.classList.toggle("is-paused", paused);
+          motionButton.setAttribute("aria-pressed", String(!paused));
+          motionLabel.textContent = paused ? "Play motion" : "Pause motion";
+          motionButton.querySelector(".motion-control__glyph").textContent = paused ? "▶" : "Ⅱ";
+        });
+      }
+    }
+    if (!reduce) {
+      var pointerFrame = 0;
+      stage.addEventListener("pointermove", function (event) {
+        if (event.pointerType === "touch" || world.classList.contains("is-paused")) return;
+        var bounds = stage.getBoundingClientRect();
+        var x = ((event.clientX - bounds.left) / bounds.width - .5) * 2;
+        var y = ((event.clientY - bounds.top) / bounds.height - .5) * 2;
+        if (pointerFrame) cancelAnimationFrame(pointerFrame);
+        pointerFrame = requestAnimationFrame(function () {
+          windows.forEach(function (card) {
+            var depth = parseFloat(card.getAttribute("data-depth")) || 1;
+            card.style.setProperty("--move-x", (x * depth * 13).toFixed(1) + "px");
+            card.style.setProperty("--move-y", (y * depth * 10).toFixed(1) + "px");
+          });
+        });
+      }, { passive:true });
+      stage.addEventListener("pointerleave", function () {
+        windows.forEach(function (card) { card.style.setProperty("--move-x","0px"); card.style.setProperty("--move-y","0px"); });
+      });
+    }
+    windows.forEach(function (card) {
+      card.addEventListener("click", function () {
+        if (!viewer || typeof viewer.showModal !== "function") return;
+        var image = $("img",card);
+        viewerImage.src = image.currentSrc || image.src;
+        viewerImage.alt = image.alt;
+        viewerKicker.textContent = card.getAttribute("data-kicker") || "BLACKLIGHT";
+        viewerTitle.textContent = card.getAttribute("data-title") || "BLACKLIGHT";
+        viewerText.textContent = card.getAttribute("data-copy") || "";
+        viewer.showModal();
+        viewerClose.focus();
+      });
+    });
+    if (viewerClose && viewer) viewerClose.addEventListener("click", function () { viewer.close(); });
+    if (viewer) viewer.addEventListener("click", function (event) {
+      if (event.target === viewer) viewer.close();
+    });
+  }
+
+  /* The synopsis behaves like a descent: chapter focus advances the shaft marker and opal seam. */
+  var excavationVisual = $("#excavation-visual");
+  var excavationDepth = $("#excavation-depth");
+  var excavationLayer = $("#excavation-layer");
+  var excavationMarker = $("#excavation-marker");
+  var excavationMeter = $("#excavation-meter-fill");
+  var excavationChapters = excavationVisual ? [].slice.call(document.querySelectorAll(".excavation__chapter")) : [];
+  function activateExcavationChapter(chapter) {
+    var index = excavationChapters.indexOf(chapter);
+    if (index < 0) return;
+    excavationChapters.forEach(function (item) { item.classList.toggle("is-active", item === chapter); });
+    var depth = parseInt(chapter.getAttribute("data-depth"),10) || 0;
+    var progress = Math.max(0, Math.min(1, depth / 38));
+    if (excavationDepth) excavationDepth.innerHTML = depth + ' <small>m</small>';
+    if (excavationLayer) excavationLayer.textContent = chapter.getAttribute("data-layer") || "BELOW";
+    if (excavationVisual) {
+      excavationVisual.style.setProperty("--dig-progress", progress.toFixed(3));
+      excavationVisual.style.setProperty("--seam-opacity", (0.12 + progress * 0.88).toFixed(3));
+      excavationVisual.style.setProperty("--seam-scale", (0.65 + progress * 0.35).toFixed(3));
+    }
+    if (excavationMarker) excavationMarker.style.top = (progress * 82 + 6).toFixed(1) + "%";
+    if (excavationMeter) excavationMeter.style.height = (progress * 100).toFixed(1) + "%";
+  }
+  if (excavationChapters.length) {
+    activateExcavationChapter(excavationChapters[0]);
+    if ("IntersectionObserver" in window) {
+      var excavationObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { if (entry.isIntersecting) activateExcavationChapter(entry.target); });
+      }, { threshold:0, rootMargin:"-38% 0px -42% 0px" });
+      excavationChapters.forEach(function (chapter) { excavationObserver.observe(chapter); });
+    }
+  }
+
+
+  /* Geographic arrival: nine satellite frames dissolve in sequence, then give way to the mine interior. */
+  var settingJourney = $("#setting-journey-track");
+  var settingFrames = settingJourney ? [].slice.call(settingJourney.querySelectorAll(".setting-journey__frame")) : [];
+  var settingSurface = $("#setting-journey-surface");
+  var settingArrival = $("#setting-journey-arrival");
+  var settingCopy = $("#setting-journey-copy");
+  var settingHud = $("#setting-journey-hud");
+  var settingLocation = $("#setting-journey-location");
+  var settingProgress = $("#setting-journey-progress");
+  if (settingJourney && settingFrames.length) {
+    var journeyTick = 0;
+    var journeyClamp = function (v) { return Math.max(0, Math.min(1, v)); };
+    var journeyEase = function (v) { v = journeyClamp(v); return v * v * (3 - 2 * v); };
+    var drawSettingJourney = function () {
+      journeyTick = 0;
+      var rect = settingJourney.getBoundingClientRect();
+      var scrollRange = Math.max(1, settingJourney.offsetHeight - window.innerHeight);
+      var progress = journeyClamp(-rect.top / scrollRange);
+
+      /* Frames 1–9: crossfade only between adjacent, successively closer locations. */
+      var mapProgress = journeyClamp(progress / .78) * (settingFrames.length - 1);
+      var frameIndex = Math.min(settingFrames.length - 1, Math.floor(mapProgress));
+      var blend = frameIndex === settingFrames.length - 1 ? 0 : mapProgress - frameIndex;
+      settingFrames.forEach(function (frame, index) {
+        var opacity = index === frameIndex ? 1 - blend : (index === frameIndex + 1 ? blend : 0);
+        frame.style.opacity = opacity.toFixed(3);
+        var localScale = index === frameIndex ? blend : (index === frameIndex + 1 ? 1 - blend : 0);
+        frame.style.transform = "scale(" + (1.015 + localScale * .032).toFixed(3) + ")";
+      });
+
+      /* Fade through the ground, then settle into the supplied underground photograph. */
+      var descent = journeyEase((progress - .755) / .105);
+      var arrival = journeyEase((progress - .815) / .14);
+      if (settingSurface) settingSurface.style.opacity = descent.toFixed(3);
+      if (settingArrival) {
+        settingArrival.style.opacity = arrival.toFixed(3);
+        settingArrival.style.transform = "scale(" + (1.105 - arrival * .105).toFixed(3) + ")";
+      }
+
+      /* Location label disappears as the final place is reached. */
+      if (settingHud) settingHud.style.opacity = (1 - journeyEase((progress - .79) / .09)).toFixed(3);
+      if (settingLocation) {
+        var place = progress < .17 ? "AUSTRALIA" : progress < .43 ? "SOUTH AUSTRALIA" : progress < .7 ? "THE OUTBACK" : "ANDAMOOKA";
+        if (settingLocation.textContent !== place) settingLocation.textContent = place;
+      }
+
+      /* The title resolves only once the visitor has arrived underground. */
+      var copyProgress = journeyEase((progress - .91) / .085);
+      if (settingCopy) {
+        settingCopy.style.opacity = copyProgress.toFixed(3);
+        settingCopy.style.transform = "translateY(" + ((1 - copyProgress) * 22).toFixed(1) + "px)";
+      }
+      if (settingProgress) settingProgress.style.transform = "scaleX(" + progress.toFixed(4) + ")";
+    };
+    var requestSettingJourney = function () {
+      if (!journeyTick) journeyTick = requestAnimationFrame(drawSettingJourney);
+    };
+    window.addEventListener("scroll", requestSettingJourney, { passive:true });
+    window.addEventListener("resize", requestSettingJourney);
+    requestSettingJourney();
+  }
+
+  /* Scroll reveals stay progressive but all content remains available without JavaScript */
+  if (!reduce && "IntersectionObserver" in window) {
+    var revealTargets = [].slice.call(document.querySelectorAll(".excavation__intro,.excavation__surface,.chars__head,.panel,.setting__grid,.hut__grid,.sea__in,.close__grid,.trailer__head,.frame,.wide"));
+    revealTargets.forEach(function (el) { el.classList.add("reveal"); });
+    document.documentElement.classList.add("motion-ready");
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold:.12, rootMargin:"0px 0px -4% 0px" });
+    revealTargets.forEach(function (el) { revealObserver.observe(el); });
+  }
+
 
   /* trailer */
   var play = $("#play"), note = $("#tnote"), vid = $("#vid"), slate = $("#slate");
