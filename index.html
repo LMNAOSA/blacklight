@@ -55,6 +55,15 @@
  .portrait-card.is-open .portrait-card__depth-inner{padding:30px 24px 38px}
 }
 @media(prefers-reduced-motion:reduce){.portrait-card__image,.portrait-card__image img{transition:none!important}}
+
+/* Refined photographic reveal, not a neon or injury effect. */
+.portrait-card.is-open .portrait-card__image .portrait-card__reveal-img{filter:saturate(.63) contrast(1.08) brightness(.88)}
+.portrait-card.is-open .portrait-card__image .portrait-card__surface-img{filter:saturate(.82) contrast(1.02) brightness(.98)}
+.portrait-card--girl.is-open .portrait-card__image .portrait-card__surface-img{filter:saturate(.93) contrast(1) brightness(1)}
+.portrait-card:not(.portrait-card--girl).is-open{box-shadow:0 16px 55px rgba(0,0,0,.5),0 0 12px rgba(135,165,205,.1),inset 0 0 0 1px rgba(172,192,216,.2)}
+.journey-map .leaflet-container{background:transparent!important}
+.journey-map .leaflet-tile{image-rendering:auto}
+.journey-map.is-fallback{background:url('assets/street-day.jpg') center/cover no-repeat}
 </style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="logo-black-art" viewBox="71 19 2296 223"><g fill="#e8e8e8"><path d="M71.051,197.131V62.912h45.877c32.986,0,48.342,13.08,48.342,35.071,0,13.649-8.531,24.834-21.612,28.436v.569c17.63,4.17,27.488,15.355,27.488,32.038,0,24.645-16.683,38.104-53.65,38.104h-46.446ZM104.227,117.7h11.753c12.512,0,18.579-5.119,18.579-15.166,0-9.479-6.066-14.219-19.526-14.219h-10.806v29.385ZM104.227,170.97h11.753c16.683,0,23.508-5.498,23.508-16.304,0-10.427-7.204-16.114-22.56-16.114h-12.702v32.418Z" /><path d="M305.368,62.912h33.176v104.835h55.735l-3.602,29.384h-85.309V62.912Z" /><path d="M601.677,62.912l48.911,133.271-.758.948h-36.588l-8.152-24.645h-46.825l-7.962,24.645h-36.02l-.758-.948,49.479-133.271h38.673ZM565.658,149.358h31.849l-7.204-22.18c-2.654-8.342-6.256-22.37-8.342-34.882h-.568c-2.275,12.512-5.877,26.54-8.531,35.071l-7.204,21.99Z" /><path d="M767.18,130.401c0-42.844,28.815-71.28,68.626-71.28,16.303,0,31.28,4.55,45.688,13.46l-4.739,32.038h-1.138c-11.185-9.668-23.697-14.787-36.398-14.787-22.18,0-36.588,15.925-36.588,40.001,0,24.455,14.597,40.379,37.157,40.379,12.512,0,25.403-5.118,36.588-14.787h1.137l4.55,31.85c-14.218,8.909-29.763,13.648-46.066,13.648-40.948,0-68.816-28.246-68.816-70.521Z" /><path d="M1091.546,119.406l50.048,76.588-.758,1.138h-37.915l-33.555-52.133-15.166,17.44v34.692h-33.176V62.912h33.176v21.611c0,11.185-.758,26.351-1.517,38.862h.569c7.204-10.427,13.27-18.768,20.095-27.108l27.868-33.365h37.915l.569,1.137-48.152,55.356Z" /></g></symbol>
@@ -185,9 +194,9 @@ $$('.portrait-card__trigger').forEach(function(btn){
 var journey=$('#setting'),track=$('#journey-track'),map=null;
 var south=[-30.44972,137.16365];
 function initMap(){
- if(!window.L||!$('#journey-map'))return;
+ if(!window.L||!$('#journey-map')){$('#journey-map').classList.add('is-fallback');return}
  map=L.map('journey-map',{zoomControl:false,attributionControl:true,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,touchZoom:false,zoomSnap:0,zoomDelta:.1,preferCanvas:true});
- L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+ var layer=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);var tileFailures=0;layer.on('tileerror',function(){tileFailures++;if(tileFailures>5){$('#journey-map').classList.add('is-fallback');map.removeLayer(layer)}});
  map.setView([-25.5,133.3],4,{animate:false});
 }
 if(reduce){journey.classList.add('is-static')}
@@ -200,7 +209,7 @@ function renderJourney(){
  var mp=clamp(p/.78),smooth=mp*mp*(3-2*mp);
  if(map){
   var lat=-25.5+(south[0]+25.5)*smooth,lon=133.3+(south[1]-133.3)*smooth;
-  map.setView([lat,lon],4+10*smooth,{animate:false});
+  var nextZoom=Math.min(14,Math.max(4,Math.round(4+10*smooth))); map.setView([lat,lon],nextZoom,{animate:false});
  }
  var sink=clamp((p-.72)/.13);
  $('#journey-fade').style.opacity=String(sink);
