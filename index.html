@@ -14,6 +14,47 @@
 @media(max-width:930px){.characters-header,.treatment-head,.treatment-layout{grid-template-columns:1fr;display:grid;gap:26px}.characters-header{justify-content:start}.portrait-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.portrait-card,.portrait-card:nth-child(4),.portrait-card:nth-child(5){grid-column:span 1}.portrait-card:nth-child(5){grid-column:1/-1;width:min(55%,450px);justify-self:center}.portrait-card__image{height:clamp(280px,48vw,480px)}}
 @media(max-width:620px){:root{--side:20px}.mini-nav{padding:22px var(--side)}.mini-nav__skip{font-size:.66rem}.hero{min-height:100svh}.hero-bg{background-position:50% top;background-size:auto 74%;background-repeat:no-repeat}.hero-ghost{background:linear-gradient(90deg,#020207 0%,rgba(3,2,6,.95) 23%,rgba(3,2,6,.75) 34%,transparent 58%),radial-gradient(ellipse 46% 38% at 22% 27%,#010103 0%,transparent 100%)}.hero-inner{padding-top:50vh;padding-bottom:60px}.wordmark{width:100%;margin-bottom:12px}.hero-line{font-size:1.24rem}.hero-controls{gap:16px;margin-top:24px}.threshold{padding-block:100px}.threshold h2{font-size:clamp(3.25rem,15vw,6rem)}.threshold p{font-size:1.3rem}.journey-track{height:290svh}.journey-guidance{top:24px;font-size:.61rem}.journey-arrival{background-position:52% center}.journey-arrival-copy{bottom:6vh}.journey-arrival-copy h2{font-size:clamp(3.1rem,14vw,5rem);margin-bottom:20px}.journey-arrival-copy p{font-size:1.15rem;max-width:28ch}.characters{padding-block:95px}.characters-header h2{font-size:clamp(2.25rem,9vw,4rem)}.portrait-grid{display:grid;grid-template-columns:1fr;gap:18px}.portrait-card,.portrait-card:nth-child(4),.portrait-card:nth-child(5){grid-column:auto;width:100%}.portrait-card__image{height:clamp(350px,105vw,560px)}.portrait-card__surface{min-height:108px}.story{padding-block:100px}.story-body{grid-template-columns:24px minmax(0,1fr);gap:17px}.depth-track{top:12vh;height:64vh;font-size:.6rem}.story-beat{min-height:65vh;padding-block:65px}.story-beat h3{font-size:clamp(1.72rem,7.1vw,3rem);letter-spacing:.06em}.story-beat p{font-size:1.11rem}.treatment{padding-block:110px}.treatment-head h2{font-size:clamp(2.8rem,12vw,5rem)}.treatment-form{padding:20px}.form-pair{grid-template-columns:1fr;gap:0}.btn-premium{width:100%}.endcap .wrap{align-items:start;flex-direction:column}.journey.is-static .journey-track{height:100svh}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.story-beat h3{opacity:1!important;text-shadow:none!important}}
+
+/* BLACKLIGHT / reveal v3: the photograph, not just the words, expands. */
+.portrait-grid{grid-auto-flow:row;align-items:start}
+.portrait-card{min-width:0;transition:background .4s,border-color .4s,box-shadow .4s}
+.portrait-card.is-open{grid-column:1/-1!important;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);column-gap:0;border-color:rgba(151,172,201,.55);background:#0d0e15;box-shadow:0 18px 55px #0009,0 0 20px rgba(91,115,168,.1),inset 0 0 0 1px rgba(177,201,225,.12)}
+.portrait-card.is-open .portrait-card__trigger{min-width:0;align-self:start}
+.portrait-card.is-open .portrait-card__depth{align-self:stretch;max-height:none;opacity:1;display:flex;border-left:1px solid rgba(149,178,211,.22)}
+.portrait-card.is-open .portrait-card__depth-inner{width:100%;display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4.5vw,68px);background:radial-gradient(ellipse at 10% 85%,rgba(48,53,81,.24),transparent 65%),#0c0c12;border-top:0}
+.portrait-card__image{height:clamp(280px,31vw,470px);transition:height .6s cubic-bezier(.2,.7,.2,1)}
+.portrait-card.is-open .portrait-card__image{height:clamp(440px,58vw,790px)}
+.portrait-card__image .portrait-card__surface-img,.portrait-card__image .portrait-card__reveal-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;transition:opacity .65s ease,transform .85s ease,filter .65s}
+.portrait-card__image .portrait-card__reveal-img{opacity:0;filter:saturate(.72) contrast(1.08)}
+.portrait-card.is-open .portrait-card__image .portrait-card__surface-img{opacity:0;transform:scale(1.025)}
+.portrait-card.is-open .portrait-card__image .portrait-card__reveal-img{opacity:1;transform:scale(1.025)}
+.portrait-card.is-open .portrait-card__image::after{background:linear-gradient(0deg,rgba(11,10,15,.75),transparent 33%)}
+.portrait-card.is-open .portrait-card__surface{background:#101015}
+.portrait-card__depth-inner h3{color:#b6c8dd}
+.portrait-card__depth-inner dt{color:#a5b7c8}
+.portrait-card.is-open:not(.portrait-card--girl) .portrait-card__image{box-shadow:inset 0 0 30px rgba(95,114,166,.18)}
+/* The Girl is the source of revelation, not another person put under the light. */
+.portrait-card--girl.is-open{border-color:rgba(238,210,184,.36);box-shadow:0 18px 55px #0009; background:#161217}
+.portrait-card--girl.is-open .portrait-card__image .portrait-card__surface-img{opacity:1;transform:scale(1.035)}
+.portrait-card--girl.is-open .portrait-card__depth-inner{background:linear-gradient(150deg,#1b1717,#110f13)}
+.portrait-card--girl .portrait-card__depth-inner h3{color:#e4d0b9}
+.portrait-card--girl .portrait-card__depth-inner dt{color:#c9b5a4}
+.characters.is-exposed .portrait-card:not(.portrait-card--girl){border-color:rgba(145,159,186,.32);box-shadow:0 0 18px rgba(101,118,166,.07)}
+@media(max-width:930px){
+ .portrait-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .portrait-card.is-open{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}
+ .portrait-card.is-open .portrait-card__image{height:clamp(440px,64vw,680px)}
+}
+@media(max-width:620px){
+ .portrait-grid{grid-template-columns:minmax(0,1fr)}
+ .portrait-card,.portrait-card:nth-child(4),.portrait-card:nth-child(5){width:100%}
+ .portrait-card.is-open{grid-template-columns:minmax(0,1fr)}
+ .portrait-card__image{height:clamp(350px,104vw,550px)}
+ .portrait-card.is-open .portrait-card__image{height:clamp(470px,145vw,720px)}
+ .portrait-card.is-open .portrait-card__depth{border-left:0;border-top:1px solid rgba(149,178,211,.22)}
+ .portrait-card.is-open .portrait-card__depth-inner{padding:30px 24px 38px}
+}
+@media(prefers-reduced-motion:reduce){.portrait-card__image,.portrait-card__image img{transition:none!important}}
 </style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="logo-black-art" viewBox="71 19 2296 223"><g fill="#e8e8e8"><path d="M71.051,197.131V62.912h45.877c32.986,0,48.342,13.08,48.342,35.071,0,13.649-8.531,24.834-21.612,28.436v.569c17.63,4.17,27.488,15.355,27.488,32.038,0,24.645-16.683,38.104-53.65,38.104h-46.446ZM104.227,117.7h11.753c12.512,0,18.579-5.119,18.579-15.166,0-9.479-6.066-14.219-19.526-14.219h-10.806v29.385ZM104.227,170.97h11.753c16.683,0,23.508-5.498,23.508-16.304,0-10.427-7.204-16.114-22.56-16.114h-12.702v32.418Z" /><path d="M305.368,62.912h33.176v104.835h55.735l-3.602,29.384h-85.309V62.912Z" /><path d="M601.677,62.912l48.911,133.271-.758.948h-36.588l-8.152-24.645h-46.825l-7.962,24.645h-36.02l-.758-.948,49.479-133.271h38.673ZM565.658,149.358h31.849l-7.204-22.18c-2.654-8.342-6.256-22.37-8.342-34.882h-.568c-2.275,12.512-5.877,26.54-8.531,35.071l-7.204,21.99Z" /><path d="M767.18,130.401c0-42.844,28.815-71.28,68.626-71.28,16.303,0,31.28,4.55,45.688,13.46l-4.739,32.038h-1.138c-11.185-9.668-23.697-14.787-36.398-14.787-22.18,0-36.588,15.925-36.588,40.001,0,24.455,14.597,40.379,37.157,40.379,12.512,0,25.403-5.118,36.588-14.787h1.137l4.55,31.85c-14.218,8.909-29.763,13.648-46.066,13.648-40.948,0-68.816-28.246-68.816-70.521Z" /><path d="M1091.546,119.406l50.048,76.588-.758,1.138h-37.915l-33.555-52.133-15.166,17.44v34.692h-33.176V62.912h33.176v21.611c0,11.185-.758,26.351-1.517,38.862h.569c7.204-10.427,13.27-18.768,20.095-27.108l27.868-33.365h37.915l.569,1.137-48.152,55.356Z" /></g></symbol>
@@ -52,38 +93,38 @@
     <div class="portrait-grid" id="portrait-grid">
       <article class="portrait-card" data-character="father">
         <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="father-depth" aria-label="Reveal the Father's private conflicts">
-          <div class="portrait-card__image"><img src="assets/father.jpg" alt="The Father, in work clothes against the desert" loading="lazy"></div>
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/father.jpg" alt="The Father, in work clothes against the desert" loading="lazy"><img class="portrait-card__reveal-img" src="assets/father.jpg" alt="The Father's guarded, weary expression" loading="lazy" aria-hidden="true"></div>
           <div class="portrait-card__surface"><span class="portrait-card__name">THE FATHER</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>A charismatic miner. One strike away from everything.</p></div>
         </button>
-        <div class="portrait-card__depth" id="father-depth" role="region" aria-label="The Father under blacklight"><div class="portrait-card__depth-inner"><h3>Under blacklight</h3><p>His pride is stronger than his judgement. He wants his son's admiration, but cannot face what protecting him may cost.</p><dl><div><dt>Age</dt><dd>Adult — age to be finalised</dd></div><div><dt>What he wants</dt><dd>The find that will vindicate his life.</dd></div><div><dt>What he hides</dt><dd>Dependence, denial and fear of failure.</dd></div></dl></div></div>
+        <div class="portrait-card__depth" id="father-depth" role="region" aria-label="The Father's private nature"><div class="portrait-card__depth-inner"><h3>What he conceals</h3><p>His pride is stronger than his judgement. He wants his son's admiration, but cannot face what protecting him may cost.</p><dl><div><dt>Age</dt><dd>Adult — age to be finalised</dd></div><div><dt>What he wants</dt><dd>The find that will vindicate his life.</dd></div><div><dt>What he hides</dt><dd>Dependence, denial and fear of failure.</dd></div></dl></div></div>
       </article>
       <article class="portrait-card" data-character="son">
         <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="son-depth" aria-label="Reveal the Son's private conflicts">
-          <div class="portrait-card__image"><img src="assets/son.jpg" alt="The Son, a young man standing in the outback" loading="lazy"></div>
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/son.jpg" alt="The Son, a young man standing in the outback" loading="lazy"><img class="portrait-card__reveal-img" src="assets/son.jpg" alt="The Son's troubled, conflicted expression" loading="lazy" aria-hidden="true"></div>
           <div class="portrait-card__surface"><span class="portrait-card__name">THE SON</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>A boy searching for someone worth becoming.</p></div>
         </button>
-        <div class="portrait-card__depth" id="son-depth" role="region" aria-label="The Son under blacklight"><div class="portrait-card__depth-inner"><h3>Under blacklight</h3><p>He loves the Father and admires the Ghost. The Girl changes what he believes about both. His idea of justice will take him somewhere he cannot return from.</p><dl><div><dt>Age</dt><dd>Teenager — age to be finalised</dd></div><div><dt>What he wants</dt><dd>Belonging, approval and a way to do right.</dd></div><div><dt>What he hides</dt><dd>Rage, confusion and a capacity for violence.</dd></div></dl></div></div>
+        <div class="portrait-card__depth" id="son-depth" role="region" aria-label="The Son's private nature"><div class="portrait-card__depth-inner"><h3>What he carries</h3><p>He loves the Father and admires the Ghost. The Girl changes what he believes about both. His idea of justice will take him somewhere he cannot return from.</p><dl><div><dt>Age</dt><dd>Teenager — age to be finalised</dd></div><div><dt>What he wants</dt><dd>Belonging, approval and a way to do right.</dd></div><div><dt>What he hides</dt><dd>Rage, confusion and a capacity for violence.</dd></div></dl></div></div>
       </article>
       <article class="portrait-card" data-character="ghost">
         <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="ghost-depth" aria-label="Reveal the Ghost's private conflicts">
-          <div class="portrait-card__image"><img src="assets/taj.jpg" alt="The Ghost, a charming but watchful man" loading="lazy"></div>
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/taj.jpg" alt="The Ghost, a charming but watchful man" loading="lazy"><img class="portrait-card__reveal-img" src="assets/taj.jpg" alt="The Ghost's watchful expression" loading="lazy" aria-hidden="true"></div>
           <div class="portrait-card__surface"><span class="portrait-card__name">THE GHOST</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>The man who knows everyone. And what they owe.</p></div>
         </button>
-        <div class="portrait-card__depth" id="ghost-depth" role="region" aria-label="The Ghost under blacklight"><div class="portrait-card__depth-inner"><h3>Under blacklight</h3><p>Part folk hero, part power broker. His protection is genuine, but it always comes with a price. Being needed is how he maintains control.</p><dl><div><dt>Age</dt><dd>Adult — age to be finalised</dd></div><div><dt>What he wants</dt><dd>Loyalty and influence.</dd></div><div><dt>What he hides</dt><dd>The cost of every favour.</dd></div></dl></div></div>
+        <div class="portrait-card__depth" id="ghost-depth" role="region" aria-label="The Ghost's private nature"><div class="portrait-card__depth-inner"><h3>What he never shows</h3><p>Part folk hero, part power broker. His protection is genuine, but it always comes with a price. Being needed is how he maintains control.</p><dl><div><dt>Age</dt><dd>Adult — age to be finalised</dd></div><div><dt>What he wants</dt><dd>Loyalty and influence.</dd></div><div><dt>What he hides</dt><dd>The cost of every favour.</dd></div></dl></div></div>
       </article>
       <article class="portrait-card" data-character="mother">
         <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="mother-depth" aria-label="Reveal the Mother's private conflicts">
-          <div class="portrait-card__image"><img src="assets/characters/mother.webp" alt="Concept portrait of the Mother, a thoughtful red-haired woman" loading="lazy"></div>
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/characters/mother.webp" alt="Concept portrait of the Mother, a thoughtful red-haired woman" loading="lazy"><img class="portrait-card__reveal-img" src="assets/characters/mother.webp" alt="The Mother, tired and overwhelmed" loading="lazy" aria-hidden="true"></div>
           <div class="portrait-card__surface"><span class="portrait-card__name">THE MOTHER</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>The steady centre of a family under pressure.</p></div>
         </button>
-        <div class="portrait-card__depth" id="mother-depth" role="region" aria-label="The Mother under blacklight"><div class="portrait-card__depth-inner"><h3>Under blacklight</h3><p>She can see the fractures long before anyone names them. Understanding the damage is not the same as having the power to prevent it.</p><dl><div><dt>Age</dt><dd>Adult — age to be finalised</dd></div><div><dt>What she wants</dt><dd>To keep her family from breaking.</dd></div><div><dt>What she hides</dt><dd>Exhaustion, anger and fear.</dd></div></dl></div></div>
+        <div class="portrait-card__depth" id="mother-depth" role="region" aria-label="The Mother's private nature"><div class="portrait-card__depth-inner"><h3>What she hides</h3><p>She can see the fractures long before anyone names them. Understanding the damage is not the same as having the power to prevent it.</p><dl><div><dt>Age</dt><dd>Adult — age to be finalised</dd></div><div><dt>What she wants</dt><dd>To keep her family from breaking.</dd></div><div><dt>What she hides</dt><dd>Exhaustion, anger and fear.</dd></div></dl></div></div>
       </article>
       <article class="portrait-card portrait-card--girl" data-character="girl">
         <button class="portrait-card__trigger" type="button" aria-expanded="false" aria-controls="girl-depth" aria-label="Reveal the Girl's place in the story">
-          <div class="portrait-card__image"><img src="assets/characters/girl.webp" alt="Concept portrait of the Girl, a young brunette new to town" loading="lazy"></div>
-          <div class="portrait-card__surface"><span class="portrait-card__name">THE GIRL</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>A newcomer. Curious, open, discovering a world with the Son.</p></div>
+          <div class="portrait-card__image"><img class="portrait-card__surface-img" src="assets/characters/girl.webp" alt="Concept portrait of the Girl, a teenage brunette from the town" loading="lazy"></div>
+          <div class="portrait-card__surface"><span class="portrait-card__name">THE GIRL</span><span class="portrait-card__sign" aria-hidden="true">+</span><p>Funny, independent, and familiar with the town's rough edges.</p></div>
         </button>
-        <div class="portrait-card__depth" id="girl-depth" role="region" aria-label="The Girl under blacklight"><div class="portrait-card__depth-inner"><h3>The revelation</h3><p>She arrives without the town's inherited loyalties. Through her eyes, everything seems possible. What happens to her exposes the silences and moral compromises everyone else has learned to live with.</p><dl><div><dt>Age</dt><dd>Mid-teens — age to be finalised</dd></div><div><dt>What she wants</dt><dd>Connection, trust and a place to belong.</dd></div><div><dt>What she reveals</dt><dd>The town's true colours.</dd></div></dl></div></div>
+        <div class="portrait-card__depth" id="girl-depth" role="region" aria-label="The Girl's character"><div class="portrait-card__depth-inner"><h3>Her own story</h3><p>She knows the town's rough edges, but she won't allow what happened to her to become another secret controlled by men. Her choices and refusal to be defined by the violence around her reveal what others would rather conceal.</p><dl><div><dt>Age</dt><dd>Mid-teens — age to be finalised</dd></div><div><dt>What she wants</dt><dd>Connection, trust and a place to belong.</dd></div><div><dt>What she reveals</dt><dd>The town's true colours.</dd></div></dl></div></div>
       </article>
     </div>
     <p class="portrait-foot">SELECT A FACE TO <em>REVEAL THE DEPTH BENEATH.</em> &nbsp; / &nbsp; CONCEPT CHARACTER PORTRAITS.</p>
@@ -94,12 +135,12 @@
   <div class="story-body">
     <aside class="depth-track" aria-hidden="true"><span>0 M</span><div class="depth-track__line"><span class="depth-track__fill" id="depth-fill"></span></div><span>38 M</span></aside>
     <div class="story-beats" id="story-beats">
-      <article class="story-beat" data-depth="0" data-key="light"><h3>A NEW LIGHT.</h3><p>A Girl moves to an isolated mining town. Through her eyes, the place is strange, magnetic and full of possibility. She meets the Son, who is still learning what kind of man he wants to become.</p></article>
+      <article class="story-beat" data-depth="0" data-key="light"><h3>THE WORLD AS IT APPEARS.</h3><p>A teenage girl and a miner's son share jokes, loyalty and a friendship neither quite knows how to name. Around them, Andamooka is harsh, generous, strange and full of unwritten rules.</p></article>
       <article class="story-beat" data-depth="6"><h3>TWO MEN. TWO KINDS OF LOYALTY.</h3><p>The Son looks up to his larger-than-life Father and the charming, influential Ghost. Each offers a different idea of what loyalty means.</p></article>
       <article class="story-beat" data-depth="14"><h3>THE TOWN HAS ITS OWN RULES.</h3><p>Claims, favours and debts bind the town together. The Ghost settles disputes. The Father chases one final big find. Everybody knows more than they say.</p></article>
-      <article class="story-beat" data-depth="22"><h3>THE SURFACE BREAKS.</h3><p>When the Girl is harmed by an older man the town prefers not to see, its apparent innocence fractures. The Son cannot look away.</p></article>
-      <article class="story-beat" data-depth="30"><h3>ONE CHOICE CANNOT BE UNDONE.</h3><p>The Son goes out to confront the man. The man does not return. The Father hides what happened. The Ghost takes the boy's side.</p></article>
-      <article class="story-beat" data-depth="38"><h3>THE TRUTH DIVIDES THEM.</h3><p>Father and Son are driven apart. The Mother sees the damage spreading through the family. What happened to the Girl has revealed what was buried in everyone else.</p></article>
+      <article class="story-beat" data-depth="22"><h3>THE SURFACE BREAKS.</h3><p>After a local man sexually assaults the Girl, the town's silence becomes impossible to ignore. She resists becoming someone else's story. The Son, overwhelmed by anger, wants to make things right.</p></article>
+      <article class="story-beat" data-depth="30"><h3>ONE CHOICE CANNOT BE UNDONE.</h3><p>The Son confronts the perpetrator among the diggings. The man dies. The Father conceals what happened, believing he can save his son by burying the truth.</p></article>
+      <article class="story-beat" data-depth="38"><h3>THE TRUTH DIVIDES THEM.</h3><p>The Ghost knows what the Son did—and offers acceptance without pretence. The harder the Father tries to keep them apart, the closer the boy moves to the Ghost. The Mother watches the family fracture, while the Girl refuses to disappear beneath their secrets.</p></article>
     </div>
   </div>
   <p class="story-advisory">The full treatment contains mature themes, including violence and sexual assault. The incident is not depicted on screen.</p>
