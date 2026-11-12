@@ -143,7 +143,7 @@ a { color: inherit; }
   padding-right:max(var(--gut),env(safe-area-inset-right,0px));
 }
 .hero__brand {
-  position:relative; width:clamp(300px,64vw,880px); max-width:100%;
+  position:relative; width:clamp(280px,56vw,760px); max-width:100%;
   --beam-x:-50%; --beam-y:50%;
 }
 .logo { display:block; width:100%; height:auto; overflow:visible; }
@@ -193,7 +193,7 @@ a { color: inherit; }
         transparent 100%);
   }
   .hero__copy { padding-top:10px; padding-bottom:calc(26px + env(safe-area-inset-bottom,0px)); gap:13px; }
-  .hero__brand { width:clamp(270px,84vw,390px); --beam-radius:100px; }
+  .hero__brand { width:clamp(250px,76vw,340px); --beam-radius:92px; }
   .hero__torch-hint { bottom:-15px; font-size:.49rem; letter-spacing:.15em; }
   .hero__hint-desktop { display:none; }
   .hero__hint-mobile { display:inline; }
@@ -1209,7 +1209,8 @@ footer .tagline { width: min(100%, 880px); }
       s.ty = Math.max(0,Math.min(1,(e.clientY - r.top) / r.height));
       s.last = performance.now();
       if (e.pointerType === "touch") s.manual = true;
-      if (reduce) {
+      if (e.pointerType === "touch" || reduce) {
+        /* A tap should reveal immediately; a drag then follows smoothly. */
         s.x = s.tx; s.y = s.ty; setPos(s);
         if (s.el.id === "top") syncLogoBeam(s);
       }
