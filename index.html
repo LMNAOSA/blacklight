@@ -151,7 +151,7 @@ function initMap(){
 }
 if(reduce){journey.classList.add('is-static')}
 else{journey.classList.add('is-playing')}
-if(!reduce){initMap()}
+if(!reduce){if(window.L){initMap()}else{window.addEventListener('load',function(){initMap();schedule()},{once:true})}}
 function renderJourney(){
  if(reduce)return;
  var rect=track.getBoundingClientRect();
